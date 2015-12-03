@@ -7,32 +7,43 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="de.hs_mannheim.stud.raumsuche.LoginActivity"
     android:orientation="vertical"
-    tools:context="de.hs_mannheim.stud.raumsuche.MainActivity"
     android:gravity="center_horizontal">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/welcome"
+        android:text="@string/login"
+        android:id="@+id/textView"
         android:textSize="30sp" />
 
-    <Button
+    <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/nextAvailableRoom"
-        android:id="@+id/buttonNextAvailableRoom" />
+        android:inputType="number"
+        android:ems="10"
+        android:hint="@string/studentID"
+        android:id="@+id/loginStudentID" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPassword"
+        android:ems="10"
+        android:hint="@string/password"
+        android:id="@+id/loginPassword" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/signUp"
+        android:id="@+id/linkSignUp" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/searchForOtherRoom"
-        android:id="@+id/buttonSearchForRoom" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/organizeGroups"
-        android:id="@+id/buttonOrganizeGroups" />
-
+        android:text="OK"
+        android:id="@+id/buttonLogin"
+        android:layout_gravity="right" />
 </LinearLayout>
