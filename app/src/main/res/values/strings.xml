@@ -9,4 +9,7 @@
     <string name="studentID">Matrikelnummer</string>
     <string name="password">Passwort</string>
     <string name="signUp">Registrieren</string>
+    <string name="OK">OK</string>
+    <string name="signUpConfirmationMessage">Das Passwort wurde an deine Hochschul E-Mail Adresse gesendet.</string>
+    <string name="signUpConfirmationMessageTitle">Bestätigung</string>
 </resources>

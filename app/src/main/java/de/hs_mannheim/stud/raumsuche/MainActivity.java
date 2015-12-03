@@ -48,12 +48,10 @@ public class MainActivity extends AppCompatActivity {
         organizeGroups.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent groups = new Intent();
-                groups.setClass(getApplicationContext(), GroupActivity.class);
-                startActivity(groups);
+                Intent login = new Intent();
+                login.setClass(getApplicationContext(), LoginActivity.class);
+                startActivity(login);
             }
         });
     }
-
-    ;
 }

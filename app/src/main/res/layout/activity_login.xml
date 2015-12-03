@@ -3,47 +3,56 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="de.hs_mannheim.stud.raumsuche.LoginActivity"
-    android:orientation="vertical"
-    android:gravity="center_horizontal">
+    tools:context="de.hs_mannheim.stud.raumsuche.LoginActivity">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/login"
-        android:id="@+id/textView"
         android:textSize="30sp" />
 
-    <EditText
+    <android.support.design.widget.TextInputLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="number"
-        android:ems="10"
-        android:hint="@string/studentID"
-        android:id="@+id/loginStudentID" />
+        android:layout_height="wrap_content">
 
-    <EditText
+        <EditText
+            android:id="@+id/inputLoginStudentID"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="@string/studentID"
+            android:inputType="number" />
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="textPassword"
-        android:ems="10"
-        android:hint="@string/password"
-        android:id="@+id/loginPassword" />
+        android:layout_height="wrap_content">
+
+        <EditText
+            android:id="@+id/inputLoginPassword"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="@string/password"
+            android:inputType="textPassword" />
+    </android.support.design.widget.TextInputLayout>
 
     <TextView
+        android:id="@+id/linkSignUp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/signUp"
-        android:id="@+id/linkSignUp" />
+        android:text="@string/signUp" />
 
     <Button
+        android:id="@+id/buttonLogin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="OK"
-        android:id="@+id/buttonLogin"
-        android:layout_gravity="right" />
+        android:layout_gravity="right"
+        android:text="OK" />
 </LinearLayout>
