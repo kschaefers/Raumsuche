@@ -15,24 +15,34 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/welcome"
-        android:textSize="30sp" />
+        android:textSize="40sp"
+        android:layout_weight="1" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/nextAvailableRoom"
-        android:id="@+id/buttonNextAvailableRoom" />
+        android:id="@+id/buttonNextAvailableRoom"
+        android:layout_weight="3" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/searchForOtherRoom"
-        android:id="@+id/buttonSearchForRoom" />
+        android:id="@+id/buttonSearchForRoom"
+        android:layout_weight="3" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/organizeGroups"
-        android:id="@+id/buttonOrganizeGroups" />
+        android:id="@+id/buttonOrganizeGroups"
+        android:layout_weight="3" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="3"
+        android:visibility="invisible"/>
 
 </LinearLayout>
