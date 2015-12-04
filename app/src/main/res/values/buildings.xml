@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="buildingNames">
+        <item>A</item>
+        <item>B</item>
+        <item>G</item>
+        <item>H</item>
+        <item>L</item>
+        <item>S</item>
+    </array>
+
+    <array name="buildingLocations">
+        <item>49.468391,8.482478</item>
+        <item>49.468728,8.483124</item>
+    </array>
+
+    <array name="buildingColors">
+        <item>@color/blue</item>
+        <item>@color/green</item>
+    </array>
+
+</resources>

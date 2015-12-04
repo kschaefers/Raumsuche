@@ -19,9 +19,14 @@
     <string name="looseSeating">Lose Bestuhlung</string>
     <string name="addGroup">Gruppe hinzufügen</string>
     <string name="Cancel">Cancel</string>
+
     <string name="anyBuilding">Gebäude beliebig</string>
     <string name="anyRoomSize">Raumgröße beliebig</string>
     <string name="anyTime">Zeitstunde beliebig</string>
+
+    <string name="availability_single_block">%1$d. Block</string>
+    <string name="availability_multiple_blocks">%1$d. - %2$d. Block</string>
+    <string name="title_activity_map">Map</string>
 
     <string-array name="buildings">
         <item>Hochhaus</item>
@@ -48,4 +53,6 @@
         <item>5. Block</item>
         <item>6. Block</item>
     </string-array>
+    <string name="title_activity_maps">Map</string>
+
 </resources>
