@@ -21,16 +21,17 @@
     <string name="Cancel">Cancel</string>
     <string name="anyBuilding">Gebäude beliebig</string>
     <string name="anyRoomSize">Raumgröße beliebig</string>
+    <string name="anyTime">Zeitstunde beliebig</string>
 
-    <array name="buildings">
+    <string-array name="buildings">
         <item>Hochhaus</item>
         <item>Gebäude A</item>
         <item>Gebäude B</item>
         <item>Gebäude G</item>
         <item>Gebäude L</item>
         <item>Gebäude S</item>
-    </array>
-    <array name="roomSizes">
+    </string-array>
+    <string-array name="roomSizes">
         <item>&lt; 30 Plätze</item>
         <item>30 Plätze</item>
         <item>40 Plätze</item>
@@ -38,5 +39,13 @@
         <item>60 Plätze</item>
         <item>70 Plätze</item>
         <item>≥ 80 Plätze</item>
-    </array>
+    </string-array>
+    <string-array name="times">
+        <item>1. Block</item>
+        <item>2. Block</item>
+        <item>3. Block</item>
+        <item>4. Block</item>
+        <item>5. Block</item>
+        <item>6. Block</item>
+    </string-array>
 </resources>
