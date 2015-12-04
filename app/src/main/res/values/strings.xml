@@ -12,4 +12,11 @@
     <string name="OK">OK</string>
     <string name="signUpConfirmationMessage">Das Passwort wurde an deine Hochschul E-Mail Adresse gesendet.</string>
     <string name="signUpConfirmationMessageTitle">Bestätigung</string>
+    <string name="pool">Pool</string>
+    <string name="computer">Computer</string>
+    <string name="beamer">Beamer</string>
+    <string name="video">Video</string>
+    <string name="looseSeating">Lose Bestuhlung</string>
+    <string name="addGroup">Gruppe hinzufügen</string>
+    <string name="Cancel">Cancel</string>
 </resources>

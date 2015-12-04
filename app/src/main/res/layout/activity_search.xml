@@ -1,12 +1,96 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="de.hs_mannheim.stud.raumsuche.SearchActivity">
 
-</RelativeLayout>
+    <TextView
+        android:id="@+id/textSearchDateAndTime"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Datum"
+        android:textSize="20sp"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp" />
+
+    <TextView
+        android:id="@+id/textSearchBuilding"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="H Gebäude"
+        android:textSize="20sp"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp" />
+
+    <TextView
+        android:id="@+id/textSearchRoomSize"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Größe beliebig"
+        android:textSize="20sp"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp" />
+
+    <Switch
+        android:id="@+id/switchSearchPool"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/pool"
+        android:checked="false"
+        android:textSize="20sp"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp" />
+
+    <Switch
+        android:id="@+id/switchSearchComputer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/computer"
+        android:checked="false"
+        android:textSize="20sp"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp" />
+
+    <Switch
+        android:id="@+id/switchSearchBeamer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/beamer"
+        android:checked="false"
+        android:textSize="20sp"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp" />
+
+    <Switch
+        android:id="@+id/switchSearchVideo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/video"
+        android:checked="false"
+        android:textSize="20sp"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp" />
+
+    <Switch
+        android:id="@+id/switchSearchLooseSeating"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/looseSeating"
+        android:checked="false"
+        android:textSize="20sp"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp" />
+
+    <Button
+        android:id="@+id/buttonAddGroupToRoomSearch"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/addGroup" />
+
+</LinearLayout>
