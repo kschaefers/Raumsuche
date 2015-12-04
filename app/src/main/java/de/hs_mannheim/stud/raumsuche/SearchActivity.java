@@ -7,22 +7,30 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CalendarView;
 import android.widget.TextView;
 
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 
 public class SearchActivity extends AppCompatActivity {
 
     private Button buttonAddGroupToRoomSearch;
-    private TextView textSearchDateAndTime;
+    private TextView textSearchDate;
+    private TextView textSearchTime;
     private TextView textSearchBuilding;
     private TextView textSearchRoomSize;
-    private boolean[] mSelectedBuilding;
-    private boolean[] mSelectedRoomSize;
+    private boolean[] mSelectedBuilding = new boolean[5];
+    private boolean[] mSelectedRoomSize = new boolean[5];
+
+    private GregorianCalendar selectedDate = new GregorianCalendar();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,7 +38,8 @@ public class SearchActivity extends AppCompatActivity {
         setContentView(R.layout.activity_search);
 
         buttonAddGroupToRoomSearch = (Button) findViewById(R.id.buttonAddGroupToRoomSearch);
-        textSearchDateAndTime = (TextView) findViewById(R.id.textSearchDateAndTime);
+        textSearchDate = (TextView) findViewById(R.id.textSearchDate);
+        textSearchTime = (TextView) findViewById(R.id.textSearchTime);
         textSearchBuilding = (TextView) findViewById(R.id.textSearchBuilding);
         textSearchRoomSize = (TextView) findViewById(R.id.textSearchRoomSize);
 
@@ -53,10 +62,10 @@ public class SearchActivity extends AppCompatActivity {
     }
 
     private void initializeTextViews() {
-        textSearchDateAndTime.setOnClickListener(new View.OnClickListener() {
+        textSearchDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                showDialogDate();
             }
         });
 
@@ -73,6 +82,40 @@ public class SearchActivity extends AppCompatActivity {
                 showSelectDialog("Raumgröße", getResources().getStringArray(R.array.roomSizes), mSelectedRoomSize, false);
             }
         });
+    }
+
+    private void showDialogDate() {
+        AlertDialog.Builder  builder = new AlertDialog.Builder(this);
+        LayoutInflater inflater = this.getLayoutInflater();
+        final CalendarView calendar = (CalendarView) inflater.inflate(R.layout.calendar_dialog, null);
+        calendar.setDate(selectedDate.getTimeInMillis());
+        calendar.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
+            @Override
+            public void onSelectedDayChange(CalendarView view, int year, int month, int dayOfMonth) {
+                selectedDate = new GregorianCalendar(year,month,dayOfMonth);
+                selectedDate.set(Calendar.HOUR_OF_DAY, 0);
+                selectedDate.set(Calendar.MINUTE, 0);
+                selectedDate.set(Calendar.SECOND, 0);
+                selectedDate.set(Calendar.MILLISECOND, 0);
+                GregorianCalendar today = new GregorianCalendar();
+                today.set(Calendar.HOUR_OF_DAY, 0);
+                today.set(Calendar.MINUTE, 0);
+                today.set(Calendar.SECOND, 0);
+                today.set(Calendar.MILLISECOND, 0);
+                if(selectedDate.compareTo(today) == 0){
+                    textSearchDate.setText("Heute");
+                }else{
+                    textSearchDate.setText(selectedDate.get(Calendar.DAY_OF_MONTH)+"."+(selectedDate.get(Calendar.MONTH)+1)+"."+selectedDate.get(Calendar.YEAR));
+                }
+            }
+        });
+        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        dialog.dismiss();
+                    }
+                });
+        builder.setView(calendar);
+        builder.show();
     }
 
     private void showSelectDialog(String title, final String[] choices, boolean[] mSelectedItems, final boolean isBuilding) {
