@@ -21,8 +21,8 @@ public class SearchActivity extends AppCompatActivity {
     private TextView textSearchDateAndTime;
     private TextView textSearchBuilding;
     private TextView textSearchRoomSize;
-    private ArrayList mSelectedBuilding = new ArrayList();
-    private ArrayList<Integer> mSelectedRoomSize = new ArrayList();
+    private boolean[] mSelectedBuilding = new boolean[5];
+    private boolean[] mSelectedRoomSize = new boolean[5];
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,37 +60,37 @@ public class SearchActivity extends AppCompatActivity {
         textSearchBuilding.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showDialogRoomSize("Gebäude", new String[]{"A Gebäude", "B Gebäude"}, mSelectedBuilding);
+                showSelectDialog("Gebäude", new String[]{"A Gebäude", "B Gebäude", "C Gebäude", "D Gebäude", "H Gebäude"}, mSelectedBuilding, true);
             }
         });
 
         textSearchRoomSize.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showDialogRoomSize("Raumgröße", new String[]{"10", "20"}, mSelectedRoomSize);
+                showSelectDialog("Raumgröße", new String[]{"10", "20", "30", "40", "50"}, mSelectedRoomSize, false);
             }
         });
     }
 
-    private void showDialogBuilding(String title, final String[] choices, ArrayList<Integer> mSelectedItems) {
+    private void showSelectDialog(String title, final String[] choices, boolean[] mSelectedItems, final boolean isBuilding) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        final ArrayList newSelectedItems = (ArrayList) mSelectedItems.clone();
+        final boolean[] newSelectedItems = mSelectedItems.clone();
 
-        builder.setTitle(title).setMultiChoiceItems(choices, toBooleanArray(choices, mSelectedItems), new DialogInterface.OnMultiChoiceClickListener() {
+        builder.setTitle(title).setMultiChoiceItems(choices, mSelectedItems, new DialogInterface.OnMultiChoiceClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which, boolean isChecked) {
-                if (isChecked) {
-                    newSelectedItems.add(which);
-                } else if (newSelectedItems.contains(which)) {
-                    newSelectedItems.remove(Integer.valueOf(which));
-                }
+                newSelectedItems[which] = isChecked;
             }
         });
 
         builder.setPositiveButton(R.string.OK, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int id) {
-                acceptSelectedItemsBuilding(newSelectedItems);
+                if (isBuilding) {
+                    acceptSelectedItemsBuilding(newSelectedItems);
+                } else {
+                    acceptSelectedItemsRoomSize(newSelectedItems);
+                }
                 dialog.dismiss();
             }
         }).setNegativeButton(getString(R.string.Cancel), new DialogInterface.OnClickListener() {
@@ -105,54 +105,11 @@ public class SearchActivity extends AppCompatActivity {
         dialog.show();
     }
 
-    private void showDialogRoomSize(String title, final String[] choices, ArrayList<Integer> mSelectedItems) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        final ArrayList newSelectedItems = (ArrayList) mSelectedItems.clone();
-
-        builder.setTitle(title).setMultiChoiceItems(choices, toBooleanArray(choices, mSelectedItems), new DialogInterface.OnMultiChoiceClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which, boolean isChecked) {
-                if (isChecked) {
-                    newSelectedItems.add(which);
-                } else if (newSelectedItems.contains(which)) {
-                    newSelectedItems.remove(Integer.valueOf(which));
-                }
-            }
-        });
-
-        builder.setPositiveButton(R.string.OK, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int id) {
-                acceptSelectedItemsRoomSize(newSelectedItems);
-                dialog.dismiss();
-            }
-        }).setNegativeButton(getString(R.string.Cancel), new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-            }
-        });
-
-        AlertDialog dialog = builder.create();
-
-        dialog.show();
-    }
-
-    private void acceptSelectedItemsRoomSize(ArrayList newList) {
+    private void acceptSelectedItemsRoomSize(boolean[] newList) {
         mSelectedRoomSize = newList;
     }
 
-    private void acceptSelectedItemsBuilding(ArrayList newList) {
+    private void acceptSelectedItemsBuilding(boolean[] newList) {
         mSelectedBuilding = newList;
-    }
-
-    private boolean[] toBooleanArray(String[] choices, ArrayList<Integer> list) {
-        boolean[] result = new boolean[choices.length];
-        for (int i = 0; i < choices.length; i++) {
-            if (list.contains(i)) {
-                result[i] = true;
-            }
-        }
-        return result;
     }
 }
