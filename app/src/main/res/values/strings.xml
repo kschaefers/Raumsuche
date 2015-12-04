@@ -19,4 +19,24 @@
     <string name="looseSeating">Lose Bestuhlung</string>
     <string name="addGroup">Gruppe hinzufügen</string>
     <string name="Cancel">Cancel</string>
+    <string name="anyBuilding">Gebäude beliebig</string>
+    <string name="anyRoomSize">Raumgröße beliebig</string>
+
+    <array name="buildings">
+        <item>Hochhaus</item>
+        <item>Gebäude A</item>
+        <item>Gebäude B</item>
+        <item>Gebäude G</item>
+        <item>Gebäude L</item>
+        <item>Gebäude S</item>
+    </array>
+    <array name="roomSizes">
+        <item>&lt; 30 Plätze</item>
+        <item>30 Plätze</item>
+        <item>40 Plätze</item>
+        <item>50 Plätze</item>
+        <item>60 Plätze</item>
+        <item>70 Plätze</item>
+        <item>≥ 80 Plätze</item>
+    </array>
 </resources>

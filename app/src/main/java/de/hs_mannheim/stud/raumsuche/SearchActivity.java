@@ -21,8 +21,8 @@ public class SearchActivity extends AppCompatActivity {
     private TextView textSearchDateAndTime;
     private TextView textSearchBuilding;
     private TextView textSearchRoomSize;
-    private boolean[] mSelectedBuilding = new boolean[5];
-    private boolean[] mSelectedRoomSize = new boolean[5];
+    private boolean[] mSelectedBuilding;
+    private boolean[] mSelectedRoomSize;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +33,9 @@ public class SearchActivity extends AppCompatActivity {
         textSearchDateAndTime = (TextView) findViewById(R.id.textSearchDateAndTime);
         textSearchBuilding = (TextView) findViewById(R.id.textSearchBuilding);
         textSearchRoomSize = (TextView) findViewById(R.id.textSearchRoomSize);
+
+        mSelectedBuilding = new boolean[getResources().getStringArray(R.array.buildings).length];
+        mSelectedRoomSize = new boolean[getResources().getStringArray(R.array.roomSizes).length];
 
         initializeButton();
         initializeTextViews();
@@ -60,14 +63,14 @@ public class SearchActivity extends AppCompatActivity {
         textSearchBuilding.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showSelectDialog("Gebäude", new String[]{"A Gebäude", "B Gebäude", "C Gebäude", "D Gebäude", "H Gebäude"}, mSelectedBuilding, true);
+                showSelectDialog("Gebäude", getResources().getStringArray(R.array.buildings), mSelectedBuilding, true);
             }
         });
 
         textSearchRoomSize.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showSelectDialog("Raumgröße", new String[]{"10", "20", "30", "40", "50"}, mSelectedRoomSize, false);
+                showSelectDialog("Raumgröße", getResources().getStringArray(R.array.roomSizes), mSelectedRoomSize, false);
             }
         });
     }
@@ -107,9 +110,37 @@ public class SearchActivity extends AppCompatActivity {
 
     private void acceptSelectedItemsRoomSize(boolean[] newList) {
         mSelectedRoomSize = newList;
+
+        String selectedRoomSizes = "";
+        for (int i = 0; i < mSelectedRoomSize.length; i++) {
+            if (mSelectedRoomSize[i]) {
+                if (!selectedRoomSizes.equals("")) {
+                    selectedRoomSizes += ", ";
+                }
+                selectedRoomSizes += getResources().getStringArray(R.array.roomSizes)[i];
+            }
+        }
+        if (selectedRoomSizes.equals("")) {
+            selectedRoomSizes = getString(R.string.anyRoomSize);
+        }
+        textSearchRoomSize.setText(selectedRoomSizes);
     }
 
     private void acceptSelectedItemsBuilding(boolean[] newList) {
         mSelectedBuilding = newList;
+
+        String selectedBuildings = "";
+        for (int i = 0; i < mSelectedBuilding.length; i++) {
+            if (mSelectedBuilding[i]) {
+                if (!selectedBuildings.equals("")) {
+                    selectedBuildings += ", ";
+                }
+                selectedBuildings += getResources().getStringArray(R.array.buildings)[i];
+            }
+        }
+        if (selectedBuildings.equals("")) {
+            selectedBuildings = getString(R.string.anyBuilding);
+        }
+        textSearchBuilding.setText(selectedBuildings);
     }
 }
