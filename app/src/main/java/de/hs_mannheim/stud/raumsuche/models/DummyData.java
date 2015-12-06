@@ -15,19 +15,16 @@ import de.hs_mannheim.stud.raumsuche.models.RoomResult;
  */
 public class DummyData {
 
-    public static RoomResult buildTestResult(Context context) {
+    public static RoomResult buildTestResult(Context context, String building) {
         List<String> propertyList = new ArrayList<String>();
         propertyList.add("Lose Bestuhlung");
         propertyList.add("Beamer");
         propertyList.add("Poolraum");
 
         Room room = new Room();
-        room.setIdentifier("A212");
-        room.setBuilding("A");
-        room.setBuildingColor(context.getResources().getColor(R.color.blue));
+        room.setIdentifier(building + "212");
+        room.setBuilding(building);
         room.setFloor(4);
-        room.setGeoPositionLat(49.468486);
-        room.setGeoPositionLng(8.482424);
         room.setSize(80);
         room.setRoomProperties(propertyList);
 

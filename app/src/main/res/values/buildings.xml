@@ -12,11 +12,19 @@
     <array name="buildingLocations">
         <item>49.468391,8.482478</item>
         <item>49.468728,8.483124</item>
+        <item>49.469711,8.481628</item>
+        <item>49.469542,8.482387</item>
+        <item>49.471039,8.482019</item>
+        <item>49.472128,8.479493</item>
     </array>
 
     <array name="buildingColors">
         <item>@color/blue</item>
         <item>@color/green</item>
+        <item>@color/magenta</item>
+        <item>@color/grey</item>
+        <item>@color/orange</item>
+        <item>@color/lightblue</item>
     </array>
 
 </resources>

@@ -12,19 +12,13 @@ public class Room {
 
     String identifier;
 
-     String building;
+    String building;
 
-     int buildingColor;
+    int floor;
 
-     int floor;
+    int size;
 
-     double geoPositionLat;
-
-     double geoPositionLng;
-
-     int size;
-
-     List<String> roomProperties;
+    List<String> roomProperties;
 
     public String getIdentifier() {
         return identifier;
@@ -42,36 +36,12 @@ public class Room {
         this.building = building;
     }
 
-    public int getBuildingColor() {
-        return buildingColor;
-    }
-
-    public void setBuildingColor(int buildingColor) {
-        this.buildingColor = buildingColor;
-    }
-
     public int getFloor() {
         return floor;
     }
 
     public void setFloor(int floor) {
         this.floor = floor;
-    }
-
-    public double getGeoPositionLat() {
-        return geoPositionLat;
-    }
-
-    public void setGeoPositionLat(double geoPositionLat) {
-        this.geoPositionLat = geoPositionLat;
-    }
-
-    public double getGeoPositionLng() {
-        return geoPositionLng;
-    }
-
-    public void setGeoPositionLng(double geoPositionLng) {
-        this.geoPositionLng = geoPositionLng;
     }
 
     public int getSize() {

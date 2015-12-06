@@ -20,7 +20,8 @@
         <activity android:name=".LoginActivity" />
         <activity android:name=".SignUpActivity" />
         <activity android:name=".SearchActivity" />
-        <activity android:name=".ResultActivity" />
+        <activity android:name=".ResultActivity"
+            android:label="@string/title_activity_result"/>
         <activity
             android:name=".GroupActivity"
             android:label="@string/title_activity_group"

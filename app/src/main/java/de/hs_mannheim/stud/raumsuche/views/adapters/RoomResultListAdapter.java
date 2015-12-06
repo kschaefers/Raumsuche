@@ -19,6 +19,8 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import de.hs_mannheim.stud.raumsuche.R;
+import de.hs_mannheim.stud.raumsuche.managers.BuildingFactory;
+import de.hs_mannheim.stud.raumsuche.models.Building;
 import de.hs_mannheim.stud.raumsuche.models.Room;
 import de.hs_mannheim.stud.raumsuche.models.RoomQuery;
 import de.hs_mannheim.stud.raumsuche.models.RoomResult;
@@ -30,6 +32,7 @@ public class RoomResultListAdapter extends BaseAdapter {
     Context context;
     List<RoomResult> results;
     RoomQuery query;
+    BuildingFactory buildingFactory;
 
     LayoutInflater inflater;
 
@@ -48,6 +51,8 @@ public class RoomResultListAdapter extends BaseAdapter {
 
         availabilitySingleBlock = res.getString(R.string.availability_single_block);
         availabilityMultipleBlocks = res.getString(R.string.availability_multiple_blocks);
+
+        buildingFactory = BuildingFactory.getInstance(context);
     }
 
     @Override
@@ -71,6 +76,8 @@ public class RoomResultListAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         RoomResult roomResult = results.get(position);
         Room room = roomResult.getRoom();
+        Building building = buildingFactory.getBuildingByIdentifier(room.getBuilding());
+
         ViewHolder holder;
         View view = convertView;
 
@@ -82,7 +89,7 @@ public class RoomResultListAdapter extends BaseAdapter {
             view.setTag(holder);
         }
 
-        int color = room.getBuildingColor();
+        int color = building.getBuildingColor();
 
         holder.identifier.setText(room.getIdentifier());
         holder.building.setText(room.getBuilding());
