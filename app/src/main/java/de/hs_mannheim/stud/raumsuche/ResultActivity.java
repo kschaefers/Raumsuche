@@ -15,6 +15,12 @@ package de.hs_mannheim.stud.raumsuche;
         import java.util.ArrayList;
         import java.util.List;
 
+        import de.hs_mannheim.stud.raumsuche.fragments.ResultFragment;
+        import de.hs_mannheim.stud.raumsuche.models.Room;
+        import de.hs_mannheim.stud.raumsuche.models.RoomQuery;
+        import de.hs_mannheim.stud.raumsuche.models.RoomResult;
+        import de.hs_mannheim.stud.raumsuche.models.DummyData;
+
 public class ResultActivity extends FragmentActivity implements OnMapReadyCallback, ResultFragment.OnResultSelectedListener {
 
     private GoogleMap mMap;
@@ -76,7 +82,7 @@ public class ResultActivity extends FragmentActivity implements OnMapReadyCallba
         int buildingRGB = room.getBuildingColor();
         float[] buildingHsv = new float[3];
         Color.RGBToHSV(Color.red(buildingRGB), Color.green(buildingRGB), Color.blue(buildingRGB), buildingHsv);
-        LatLng buildingPosition = new LatLng(room.geoPositionLat, room.geoPositionLng);
+        LatLng buildingPosition = new LatLng(room.getGeoPositionLat(), room.getGeoPositionLng());
 
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(buildingPosition, 18.f));
 

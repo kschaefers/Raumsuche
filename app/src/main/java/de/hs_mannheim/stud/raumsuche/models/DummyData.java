@@ -1,9 +1,14 @@
-package de.hs_mannheim.stud.raumsuche;
+package de.hs_mannheim.stud.raumsuche.models;
 
 import android.content.Context;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import de.hs_mannheim.stud.raumsuche.R;
+import de.hs_mannheim.stud.raumsuche.models.Room;
+import de.hs_mannheim.stud.raumsuche.models.RoomQuery;
+import de.hs_mannheim.stud.raumsuche.models.RoomResult;
 
 /**
  * Created by Martin on 12/4/15.

@@ -1,15 +1,13 @@
-package de.hs_mannheim.stud.raumsuche;
+package de.hs_mannheim.stud.raumsuche.views.adapters;
 
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Color;
-import android.graphics.Typeface;
 import android.graphics.drawable.GradientDrawable;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
 import android.text.style.BackgroundColorSpan;
-import android.text.style.StyleSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,10 +15,13 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import java.util.List;
-import java.util.Random;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import de.hs_mannheim.stud.raumsuche.R;
+import de.hs_mannheim.stud.raumsuche.models.Room;
+import de.hs_mannheim.stud.raumsuche.models.RoomQuery;
+import de.hs_mannheim.stud.raumsuche.models.RoomResult;
 
 /**
  * Created by m.christmann on 03.12.2015.
@@ -35,7 +36,7 @@ public class RoomResultListAdapter extends BaseAdapter {
     String availabilitySingleBlock;
     String availabilityMultipleBlocks;
 
-    RoomResultListAdapter(Context context, List<RoomResult> roomResult, RoomQuery query) {
+    public RoomResultListAdapter(Context context, List<RoomResult> roomResult, RoomQuery query) {
         super();
 
         this.context = context;

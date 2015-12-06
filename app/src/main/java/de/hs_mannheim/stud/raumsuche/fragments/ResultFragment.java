@@ -1,4 +1,4 @@
-package de.hs_mannheim.stud.raumsuche;
+package de.hs_mannheim.stud.raumsuche.fragments;
 
 import android.app.Activity;
 import android.support.annotation.Nullable;
@@ -10,13 +10,15 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import org.parceler.Parcels;
-
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import de.hs_mannheim.stud.raumsuche.R;
+import de.hs_mannheim.stud.raumsuche.models.RoomQuery;
+import de.hs_mannheim.stud.raumsuche.models.RoomResult;
+import de.hs_mannheim.stud.raumsuche.views.adapters.RoomResultListAdapter;
 
 public class ResultFragment extends Fragment {
 

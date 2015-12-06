@@ -1,4 +1,4 @@
-package de.hs_mannheim.stud.raumsuche;
+package de.hs_mannheim.stud.raumsuche.models;
 
 /**
  * Created by m.christmann on 03.12.2015.

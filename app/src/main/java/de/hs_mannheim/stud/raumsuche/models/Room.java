@@ -1,4 +1,4 @@
-package de.hs_mannheim.stud.raumsuche;
+package de.hs_mannheim.stud.raumsuche.models;
 
 import org.parceler.Parcel;
 
