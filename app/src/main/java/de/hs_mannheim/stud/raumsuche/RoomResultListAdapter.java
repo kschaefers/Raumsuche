@@ -7,6 +7,7 @@ import android.graphics.Typeface;
 import android.graphics.drawable.GradientDrawable;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
+import android.text.TextUtils;
 import android.text.style.BackgroundColorSpan;
 import android.text.style.StyleSpan;
 import android.view.LayoutInflater;
@@ -107,7 +108,7 @@ public class RoomResultListAdapter extends BaseAdapter {
 
     private SpannableStringBuilder buildPropertiesSpannable(List<String> properties, int color) {
 
-        String propertiesAsString = StringUtils.join(properties, ", ");
+        String propertiesAsString = TextUtils.join(", ", properties);
         SpannableStringBuilder builder = new SpannableStringBuilder(propertiesAsString);
 
         int alphaColor = Color.argb(48, Color.red(color), Color.green(color), Color.blue(color));
