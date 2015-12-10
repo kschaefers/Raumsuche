@@ -2,7 +2,7 @@
     <string name="app_name">Raumsuche</string>
     <string name="title_activity_group">GroupActivity</string>
     <string name="welcome">Willkommen</string>
-    <string name="nextAvailableRoom">nächster Freier Raum:</string>
+    <string name="nextAvailableRoom">Nächster freier Raum</string>
     <string name="searchForOtherRoom">anderen Raum suchen</string>
     <string name="organizeGroups">Gruppen organisieren</string>
     <string name="login">Login</string>

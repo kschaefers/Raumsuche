@@ -8,50 +8,36 @@ import android.widget.Button;
 
 import java.security.acl.Group;
 
-public class MainActivity extends AppCompatActivity {
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 
-    private Button nextAvailabeRoom;
-    private Button otherRoom;
-    private Button organizeGroups;
+public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        nextAvailabeRoom = (Button) findViewById(R.id.buttonNextAvailableRoom);
-        otherRoom = (Button) findViewById(R.id.buttonSearchForRoom);
-        organizeGroups = (Button) findViewById(R.id.buttonOrganizeGroups);
-
-        initializeButtons();
+        ButterKnife.bind(this);
     }
 
-    private void initializeButtons() {
-        nextAvailabeRoom.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent result = new Intent();
-                result.setClass(getApplicationContext(), ResultActivity.class);
-                startActivity(result);
-            }
-        });
+    @OnClick(R.id.main_searchroom_button)
+    public void openSearch() {
+        Intent search = new Intent();
+        search.setClass(getApplicationContext(), SearchActivity.class);
+        startActivity(search);
+    }
 
-        otherRoom.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent search = new Intent();
-                search.setClass(getApplicationContext(), SearchActivity.class);
-                startActivity(search);
-            }
-        });
+    @OnClick(R.id.main_showroom_button)
+    public void openResult() {
+        Intent result = new Intent();
+        result.setClass(getApplicationContext(), ResultActivity.class);
+        startActivity(result);
+    }
 
-        organizeGroups.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent login = new Intent();
-                login.setClass(getApplicationContext(), LoginActivity.class);
-                startActivity(login);
-            }
-        });
+    @OnClick(R.id.main_group_button)
+    public void openGroup() {
+        Intent login = new Intent();
+        login.setClass(getApplicationContext(), LoginActivity.class);
+        startActivity(login);
     }
 }
