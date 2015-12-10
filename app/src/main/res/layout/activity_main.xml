@@ -12,12 +12,6 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="de.hs_mannheim.stud.raumsuche.MainActivity">
 
-    <!--
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/hs_logo" /> -->
-
     <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="240dp"
@@ -54,7 +48,7 @@
                 android:layout_below="@id/main_room_image"
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
-                android:layout_marginTop="24dp">
+                android:layout_marginTop="20dp">
 
                 <TextView
                     android:id="@+id/room_availability"
@@ -91,7 +85,7 @@
                 android:layout_alignParentLeft="true"
                 android:layout_below="@id/main_room_nextroom"
                 android:layout_marginLeft="10dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="6dp"
                 android:fontFamily="sans-serif"
                 android:padding="6dp"
                 android:text="Raum anzeigen"
@@ -146,8 +140,11 @@
                     android:layout_below="@id/main_group_image"
                     android:fontFamily="sans-serif"
                     android:padding="6dp"
-                    android:text="Gruppen"
-                    android:textColor="@color/colorPrimary" />
+                    android:layout_marginLeft="10dp"
+                    android:text="Meine Gruppen"
+                    android:textColor="@color/colorPrimary"
+                    android:paddingLeft="0dp"
+                    android:paddingRight="0dp" />
 
             </RelativeLayout>
         </android.support.v7.widget.CardView>
@@ -180,6 +177,7 @@
                     android:layout_below="@id/main_profile_image"
                     android:fontFamily="sans-serif"
                     android:padding="6dp"
+                    android:layout_marginLeft="10dp"
                     android:text="Mein Profil"
                     android:textColor="@color/colorPrimary" />
 
@@ -189,8 +187,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/main_profile_button"
+                    android:layout_alignLeft="@id/main_profile_button"
                     android:fontFamily="sans-serif"
-                    android:padding="0dp"
+                    android:padding="6dp"
                     android:text="Abmelden"
                     android:textColor="@color/colorPrimary" />
 
