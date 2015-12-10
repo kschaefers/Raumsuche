@@ -14,7 +14,7 @@
 
     <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
-        android:layout_height="240dp"
+        android:layout_height="wrap_content"
         card_view:cardCornerRadius="2dp"
         card_view:cardUseCompatPadding="true">
 
@@ -108,9 +108,11 @@
     </android.support.v7.widget.CardView>
 
     <LinearLayout
+        android:id="@+id/main_registered_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp">
+        android:layout_marginTop="8dp"
+        android:visibility="gone">
 
         <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
             android:layout_width="wrap_content"
@@ -138,13 +140,13 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/main_group_image"
+                    android:layout_marginLeft="10dp"
                     android:fontFamily="sans-serif"
                     android:padding="6dp"
-                    android:layout_marginLeft="10dp"
-                    android:text="Meine Gruppen"
-                    android:textColor="@color/colorPrimary"
                     android:paddingLeft="0dp"
-                    android:paddingRight="0dp" />
+                    android:paddingRight="0dp"
+                    android:text="Meine Gruppen"
+                    android:textColor="@color/colorPrimary" />
 
             </RelativeLayout>
         </android.support.v7.widget.CardView>
@@ -175,9 +177,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/main_profile_image"
+                    android:layout_marginLeft="10dp"
                     android:fontFamily="sans-serif"
                     android:padding="6dp"
-                    android:layout_marginLeft="10dp"
                     android:text="Mein Profil"
                     android:textColor="@color/colorPrimary" />
 
@@ -186,8 +188,8 @@
                     style="?android:attr/borderlessButtonStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/main_profile_button"
                     android:layout_alignLeft="@id/main_profile_button"
+                    android:layout_below="@id/main_profile_button"
                     android:fontFamily="sans-serif"
                     android:padding="6dp"
                     android:text="Abmelden"
@@ -196,5 +198,81 @@
             </RelativeLayout>
         </android.support.v7.widget.CardView>
     </LinearLayout>
+
+    <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/main_unregistered_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        card_view:cardCornerRadius="2dp"
+        card_view:cardUseCompatPadding="true">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/main_login_topic"
+                style="@style/TextNormal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_marginTop="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:text="Benutzeraccount" />
+
+            <TextView
+                android:id="@+id/main_login_headline"
+                style="@style/TextHeadline"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:layout_below="@+id/main_login_topic"
+                android:layout_alignLeft="@id/main_login_topic"
+                android:layout_alignRight="@id/main_login_topic"
+                android:text="Lerne in Gruppen"
+                />
+
+            <TextView
+                android:id="@+id/main_login_description"
+                style="@style/TextNormal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/main_login_headline"
+                android:layout_alignLeft="@id/main_login_topic"
+                android:layout_alignRight="@id/main_login_topic"
+                android:layout_marginTop="16dp"
+                android:text="Bla bla bla Marketing Gelabere, das mindestens 4-5 Zeilen lang sein sollte um die Registrierung schmackhaft zu machen. Mir faellt gerade nichts ein aber :) das kommt sicher noch."
+                />
+
+            <Button
+                android:id="@+id/main_login_loginbutton"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/main_login_description"
+                android:layout_marginLeft="8dp"
+                android:fontFamily="sans-serif"
+                android:padding="6dp"
+                android:text="Anmelden"
+                android:textColor="@color/colorPrimary"
+                />
+
+            <Button
+                android:id="@+id/main_login_registerbutton"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@id/main_login_loginbutton"
+                android:layout_toRightOf="@id/main_login_loginbutton"
+                android:fontFamily="sans-serif"
+                android:padding="6dp"
+                android:text="Registrieren"
+                android:textColor="@color/colorPrimary" />
+
+        </RelativeLayout>
+
+    </android.support.v7.widget.CardView>
 
 </LinearLayout>

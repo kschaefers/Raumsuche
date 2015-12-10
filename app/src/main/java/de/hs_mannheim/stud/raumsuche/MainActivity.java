@@ -5,19 +5,29 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 
 import java.security.acl.Group;
 
+import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class MainActivity extends AppCompatActivity {
+
+    @Bind(R.id.main_registered_view)
+    View registeredUserView;
+
+    @Bind(R.id.main_unregistered_view)
+    View unregisteredUserView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+
+
     }
 
     @OnClick(R.id.main_searchroom_button)
@@ -36,8 +46,14 @@ public class MainActivity extends AppCompatActivity {
 
     @OnClick(R.id.main_group_button)
     public void openGroup() {
-        Intent login = new Intent();
-        login.setClass(getApplicationContext(), LoginActivity.class);
-        startActivity(login);
+        Intent group = new Intent();
+        group.setClass(getApplicationContext(), GroupActivity.class);
+        startActivity(group);
     }
+
+    private void enableScreenForRegisteredUser() {
+        unregisteredUserView.setVisibility(View.GONE);
+        registeredUserView.setVisibility(View.VISIBLE);
+    }
+
 }
