@@ -4,14 +4,11 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
-import android.widget.LinearLayout;
-
-import java.security.acl.Group;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import de.hs_mannheim.stud.raumsuche.managers.UserManager;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -27,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
-
+        initComponents();
     }
 
     @OnClick(R.id.main_searchroom_button)
@@ -51,9 +48,41 @@ public class MainActivity extends AppCompatActivity {
         startActivity(group);
     }
 
+    @OnClick(R.id.main_logout_button)
+    public void logout() {
+        enableScreenForUnregisteredUser();
+    }
+
+    @OnClick(R.id.main_login_loginbutton)
+    public void openLogin() {
+        Intent login = new Intent();
+        login.setClass(getApplicationContext(), LoginActivity.class);
+        startActivity(login);
+    }
+
+    @OnClick(R.id.main_login_signupbutton)
+    public void openSignUp() {
+        Intent signup = new Intent();
+        signup.setClass(getApplicationContext(), SignUpActivity.class);
+        startActivity(signup);
+    }
+
+    private void initComponents() {
+        UserManager userManager = UserManager.getInstance(this);
+
+        if(userManager.isUserLoggedIn()) {
+            enableScreenForRegisteredUser();
+        }
+    }
+
     private void enableScreenForRegisteredUser() {
         unregisteredUserView.setVisibility(View.GONE);
         registeredUserView.setVisibility(View.VISIBLE);
+    }
+
+    private void enableScreenForUnregisteredUser() {
+        unregisteredUserView.setVisibility(View.VISIBLE);
+        registeredUserView.setVisibility(View.GONE);
     }
 
 }

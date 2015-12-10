@@ -44,14 +44,11 @@ public class SignUpActivity extends AppCompatActivity {
         // add OK button
         builder.setPositiveButton(R.string.OK, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
-                Intent login = new Intent();
-                login.setClass(getApplicationContext(), LoginActivity.class);
-                startActivity(login);
+                SignUpActivity.this.finish();
             }
         });
 
         AlertDialog dialog = builder.create();
-
         dialog.show();
     }
 }
