@@ -5,12 +5,16 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 
+import java.net.Authenticator;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import de.hs_mannheim.stud.raumsuche.managers.UserManager;
 
 public class MainActivity extends AppCompatActivity {
+
+    public static final int REQUEST_LOGIN = 100;
 
     @Bind(R.id.main_registered_view)
     View registeredUserView;
@@ -50,6 +54,8 @@ public class MainActivity extends AppCompatActivity {
 
     @OnClick(R.id.main_logout_button)
     public void logout() {
+        UserManager manager = UserManager.getInstance(this);
+        manager.removeUser();
         enableScreenForUnregisteredUser();
     }
 
@@ -57,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
     public void openLogin() {
         Intent login = new Intent();
         login.setClass(getApplicationContext(), LoginActivity.class);
-        startActivity(login);
+        startActivityForResult(login, REQUEST_LOGIN);
     }
 
     @OnClick(R.id.main_login_signupbutton)
@@ -65,6 +71,19 @@ public class MainActivity extends AppCompatActivity {
         Intent signup = new Intent();
         signup.setClass(getApplicationContext(), SignUpActivity.class);
         startActivity(signup);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(requestCode == REQUEST_LOGIN) {
+            UserManager manager = UserManager.getInstance(this);
+
+            if(manager.isUserLoggedIn()) {
+                enableScreenForRegisteredUser();
+            } else {
+                enableScreenForUnregisteredUser();
+            }
+        }
     }
 
     private void initComponents() {

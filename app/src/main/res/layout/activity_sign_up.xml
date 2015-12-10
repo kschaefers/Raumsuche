@@ -11,30 +11,63 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="de.hs_mannheim.stud.raumsuche.SignUpActivity">
 
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/hs_logo"
+        />
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
         android:text="@string/signUp"
         android:textSize="30sp" />
 
     <android.support.design.widget.TextInputLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        >
 
         <EditText
-            android:id="@+id/inputSignUpStudentID"
+            android:id="@+id/signup_studentid_input"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:hint="@string/studentID"
+            android:hint="@string/studentId"
             android:inputType="number" />
     </android.support.design.widget.TextInputLayout>
 
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp">
+
+        <EditText
+            android:id="@+id/signup_name_input"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="@string/name"
+            android:inputType="number" />
+    </android.support.design.widget.TextInputLayout>
+
+    <Spinner
+        android:id="@+id/signup_faculty_spinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/faculty"
+        android:layout_marginTop="8dp"
+        android:color="@color/colorPrimary"
+         />
+
     <Button
-        android:id="@+id/buttonSignUp"
+        android:id="@+id/signup_submit_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="right"
+        android:layout_marginTop="16dp"
         android:text="@string/OK" />
 
 </LinearLayout>

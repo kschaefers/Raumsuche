@@ -6,7 +6,9 @@
     <string name="searchForOtherRoom">anderen Raum suchen</string>
     <string name="organizeGroups">Gruppen organisieren</string>
     <string name="login">Login</string>
-    <string name="studentID">Matrikelnummer</string>
+    <string name="studentId">Matrikelnummer</string>
+    <string name="name">Name</string>
+    <string name="faculty">Fakultät</string>
     <string name="password">Passwort</string>
     <string name="signUp">Registrieren</string>
     <string name="OK">OK</string>
