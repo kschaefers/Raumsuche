@@ -101,7 +101,7 @@ public class SignUpActivity extends AppCompatActivity implements Validator.Valid
             @Override
             public void onFailure(Throwable t) {
                 showError();
-                showForm(); 
+                showForm();
             }
         });
     }
