@@ -23,11 +23,11 @@ public class UserManager {
     }
 
     public static UserManager getInstance(Context context) {
-        if(instance == null){
+        if (instance == null) {
             instance = new UserManager(context.getApplicationContext());
         }
 
-        return  instance;
+        return instance;
     }
 
     public boolean isUserLoggedIn() {
@@ -40,7 +40,7 @@ public class UserManager {
     public void setUser(User user) {
         SecurePreferences.Editor editor = prefs.edit();
 
-        if (user == null){
+        if (user == null) {
             editor.remove(SP_STUDENTID);
             editor.remove(SP_PASSWORD);
             editor.remove(SP_NAME);

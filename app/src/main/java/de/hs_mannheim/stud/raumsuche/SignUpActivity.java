@@ -29,7 +29,7 @@ import retrofit.Callback;
 import retrofit.Response;
 import retrofit.Retrofit;
 
-public class SignUpActivity extends AppCompatActivity implements Validator.ValidationListener{
+public class SignUpActivity extends AppCompatActivity implements Validator.ValidationListener {
 
     @Bind(R.id.signup_studentid_input)
     @NotEmpty

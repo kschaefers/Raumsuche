@@ -81,10 +81,10 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if(requestCode == REQUEST_LOGIN) {
+        if (requestCode == REQUEST_LOGIN) {
             UserManager manager = UserManager.getInstance(this);
 
-            if(manager.isUserLoggedIn()) {
+            if (manager.isUserLoggedIn()) {
                 enableScreenForRegisteredUser();
             } else {
                 enableScreenForUnregisteredUser();
@@ -95,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
     private void initComponents() {
         UserManager userManager = UserManager.getInstance(this);
 
-        if(userManager.isUserLoggedIn()) {
+        if (userManager.isUserLoggedIn()) {
             enableScreenForRegisteredUser();
         }
     }

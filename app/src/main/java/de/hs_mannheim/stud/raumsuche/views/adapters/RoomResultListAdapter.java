@@ -81,7 +81,7 @@ public class RoomResultListAdapter extends BaseAdapter {
         ViewHolder holder;
         View view = convertView;
 
-        if(view != null) {
+        if (view != null) {
             holder = (ViewHolder) view.getTag();
         } else {
             view = inflater.inflate(R.layout.list_item_rooms, null);
@@ -107,7 +107,7 @@ public class RoomResultListAdapter extends BaseAdapter {
     }
 
     private String buildAvailabilityString(int from, int to) {
-        if(from == to) {
+        if (from == to) {
             return String.format(availabilitySingleBlock, from);
         } else {
             return String.format(availabilityMultipleBlocks, from, to);
@@ -122,10 +122,10 @@ public class RoomResultListAdapter extends BaseAdapter {
         int alphaColor = Color.argb(48, Color.red(color), Color.green(color), Color.blue(color));
         BackgroundColorSpan colorSpan = new BackgroundColorSpan(alphaColor);
 
-        for(String searchedProperty : query.getProperties()) {
+        for (String searchedProperty : query.getProperties()) {
             int propertyIndex = propertiesAsString.indexOf(searchedProperty);
 
-            if(propertyIndex != -1) {
+            if (propertyIndex != -1) {
                 builder.setSpan(colorSpan, propertyIndex, propertyIndex + searchedProperty.length(), Spannable.SPAN_INCLUSIVE_INCLUSIVE);
             }
         }

@@ -25,7 +25,7 @@ import retrofit.Callback;
 import retrofit.Response;
 import retrofit.Retrofit;
 
-public class LoginActivity extends AppCompatActivity implements Validator.ValidationListener{
+public class LoginActivity extends AppCompatActivity implements Validator.ValidationListener {
 
     @NotEmpty
     @Bind(R.id.login_studentid_input)

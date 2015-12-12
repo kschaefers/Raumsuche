@@ -60,7 +60,7 @@ public class ProfileActivity extends AppCompatActivity implements Validator.Vali
     }
 
     @OnClick(R.id.profile_submit_button)
-    public void changeProfile(){
+    public void changeProfile() {
         validator.validate();
     }
 

@@ -28,7 +28,7 @@ import de.hs_mannheim.stud.raumsuche.models.User;
 /**
  * Created by Martin on 12/12/15.
  */
-public class GroupListAdapter extends BaseAdapter{
+public class GroupListAdapter extends BaseAdapter {
 
     private Resources res;
 
@@ -37,7 +37,7 @@ public class GroupListAdapter extends BaseAdapter{
 
     private LayoutInflater inflater;
 
-    public GroupListAdapter(Context context, List<Group> groups){
+    public GroupListAdapter(Context context, List<Group> groups) {
         super();
 
         this.res = context.getResources();
@@ -72,7 +72,7 @@ public class GroupListAdapter extends BaseAdapter{
         ViewHolder holder;
         View view = convertView;
 
-        if(view != null) {
+        if (view != null) {
             holder = (ViewHolder) view.getTag();
         } else {
             view = inflater.inflate(R.layout.list_item_groups, null);
@@ -84,7 +84,7 @@ public class GroupListAdapter extends BaseAdapter{
 
         User owner = group.getOwner();
 
-        if(user.getMtklNr().equals(owner.getMtklNr())) {
+        if (user.getMtklNr().equals(owner.getMtklNr())) {
             holder.owner.setVisibility(View.VISIBLE);
         } else {
             holder.owner.setVisibility(View.GONE);
@@ -99,13 +99,13 @@ public class GroupListAdapter extends BaseAdapter{
     private String buildUsersString(List<User> users) {
         StringBuilder userStringBuilder = new StringBuilder();
 
-        if(users.size() > 3) {
+        if (users.size() > 3) {
             int displayedUserCount = 0, index = 0;
 
             do {
                 User participant = users.get(index);
 
-                if(!user.getMtklNr().equals(participant.getMtklNr())) {
+                if (!user.getMtklNr().equals(participant.getMtklNr())) {
                     userStringBuilder.append(participant.getDisplayName());
                     userStringBuilder.append(", ");
                 }
@@ -116,8 +116,8 @@ public class GroupListAdapter extends BaseAdapter{
             userStringBuilder.append(users.size() - 2);
         } else {
 
-            for(User participant : users) {
-                if(!user.getMtklNr().equals(participant.getMtklNr())) {
+            for (User participant : users) {
+                if (!user.getMtklNr().equals(participant.getMtklNr())) {
                     userStringBuilder.append(participant.getDisplayName());
                     userStringBuilder.append(", ");
                 }

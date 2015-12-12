@@ -51,6 +51,6 @@ public class GroupActivity extends AppCompatActivity {
     }
 
     private void loadGroups() {
-        
+
     }
 }

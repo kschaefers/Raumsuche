@@ -48,7 +48,7 @@ public class User {
     }
 
     public String getDisplayName() {
-        if(name == null && name.isEmpty()) {
+        if (name == null && name.isEmpty()) {
             return mtklNr;
         }
 

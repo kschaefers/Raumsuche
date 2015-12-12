@@ -30,7 +30,7 @@ public class BuildingFactory {
 
         buildings = new HashMap<>();
 
-        for(int i=0; i < identifiers.length(); i++) {
+        for (int i = 0; i < identifiers.length(); i++) {
             Building building = new Building();
             building.setIdentifier(identifiers.getString(i));
             String[] latLng = TextUtils.split(locations.getString(i), ",");
@@ -46,11 +46,11 @@ public class BuildingFactory {
     }
 
     public static BuildingFactory getInstance(Context context) {
-        if(instance == null){
+        if (instance == null) {
             instance = new BuildingFactory(context.getApplicationContext());
         }
 
-        return  instance;
+        return instance;
     }
 
     public Building getBuildingByIdentifier(String identifier) {

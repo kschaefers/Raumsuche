@@ -4,27 +4,27 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
-        import com.google.android.gms.maps.CameraUpdateFactory;
-        import com.google.android.gms.maps.GoogleMap;
-        import com.google.android.gms.maps.OnMapReadyCallback;
-        import com.google.android.gms.maps.SupportMapFragment;
-        import com.google.android.gms.maps.model.BitmapDescriptorFactory;
-        import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-        import java.util.ArrayList;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import de.hs_mannheim.stud.raumsuche.fragments.ResultFragment;
-        import de.hs_mannheim.stud.raumsuche.managers.BuildingFactory;
-        import de.hs_mannheim.stud.raumsuche.models.Building;
-        import de.hs_mannheim.stud.raumsuche.models.Room;
-        import de.hs_mannheim.stud.raumsuche.models.RoomQuery;
-        import de.hs_mannheim.stud.raumsuche.models.RoomResult;
-        import de.hs_mannheim.stud.raumsuche.models.DummyData;
+import de.hs_mannheim.stud.raumsuche.managers.BuildingFactory;
+import de.hs_mannheim.stud.raumsuche.models.Building;
+import de.hs_mannheim.stud.raumsuche.models.Room;
+import de.hs_mannheim.stud.raumsuche.models.RoomQuery;
+import de.hs_mannheim.stud.raumsuche.models.RoomResult;
+import de.hs_mannheim.stud.raumsuche.models.DummyData;
 
 public class ResultActivity extends AppCompatActivity implements OnMapReadyCallback, ResultFragment.OnResultSelectedListener {
 
@@ -69,7 +69,7 @@ public class ResultActivity extends AppCompatActivity implements OnMapReadyCallb
         RoomQuery testQuery = DummyData.buildTestQuery(this);
         query = testQuery;
 
-        listFragment.updateResultList(results,query);
+        listFragment.updateResultList(results, query);
     }
 
     /**
@@ -86,11 +86,11 @@ public class ResultActivity extends AppCompatActivity implements OnMapReadyCallb
         this.googleMap = googleMap;
         this.googleMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
 
-        if(results != null) {
-            for(RoomResult result : results) {
+        if (results != null) {
+            for (RoomResult result : results) {
                 Room room = result.getRoom();
 
-                if(!mapMarkers.containsKey(room.getBuilding())) {
+                if (!mapMarkers.containsKey(room.getBuilding())) {
                     BuildingFactory buildingFactory = BuildingFactory.getInstance(this);
                     Building building = buildingFactory.getBuildingByIdentifier(room.getBuilding());
 
