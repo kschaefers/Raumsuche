@@ -25,7 +25,7 @@ public interface UserService {
     Call<User> getUser(@Path("studentId") String studentId);
 
     @Headers( "Content-Type: application/json" )
-    @PUT("/users")
+    @PUT("/register")
     Call<User> createUser(@Body User user);
 
     @POST("/users/{studentId}")
