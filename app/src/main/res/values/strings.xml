@@ -5,7 +5,7 @@
     <string name="nextAvailableRoom">Nächster freier Raum</string>
     <string name="searchForOtherRoom">anderen Raum suchen</string>
     <string name="organizeGroups">Gruppen organisieren</string>
-    <string name="login">Login</string>
+    <string name="login">Anmelden</string>
     <string name="studentId">Matrikelnummer</string>
     <string name="name">Name</string>
     <string name="faculty">Fakultät</string>
@@ -55,6 +55,24 @@
         <item>5. Block</item>
         <item>6. Block</item>
     </string-array>
-    <string name="title_activity_maps">Map</string>
+    <string-array name="facultys">
+        <item>Biotechnologie</item>
+        <item>Elektrotechnik</item>
+        <item>Informationstechnik</item>
+        <item>Gestaltung</item>
+        <item>Informatik</item>
+        <item>Maschinenbau</item>
+        <item>Sozialwesen</item>
+        <item>Verfahrens- und Chemietechnik</item>
+        <item>Wirtschaftsingenieurwesen</item>
+        <item>Fakultätsübergreifend</item>
+    </string-array>
+
+    <string name="title_activity_login">Anmelden</string>
+    <string name="title_activity_signup">Registrieren</string>
+    <string name="title_activity_search">Freie Räume suchen</string>
+    <string name="unknown_error">Ups, da ist wohl etwas schief gelaufen. Unser Fehler! Versuch es doch später noch einmal</string>
+    <string name="signup_validation_error">Bitte geb deine Matrikelnummer, Namen und deine Fakultät an</string>
+    <string name="login_validation_error">Bitte geb deine Matrikelnummer und Passwort an. Dein Passwort wurde an die Hochschul E-Mail Adresse gesendet.</string>
 
 </resources>

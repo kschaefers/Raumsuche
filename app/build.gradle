@@ -36,4 +36,5 @@ dependencies {
     compile 'com.scottyab:secure-preferences-lib:0.1.4'
     compile 'com.squareup.retrofit:retrofit:2.0.0-beta2'
     compile 'com.squareup.retrofit:converter-gson:2.0.0-beta2'
+    compile 'com.mobsandgeeks:android-saripaar:2.0.3'
 }

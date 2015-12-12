@@ -9,6 +9,7 @@ import retrofit.Call;
 import retrofit.http.Body;
 import retrofit.http.DELETE;
 import retrofit.http.GET;
+import retrofit.http.Headers;
 import retrofit.http.POST;
 import retrofit.http.PUT;
 import retrofit.http.Path;
@@ -23,6 +24,7 @@ public interface UserService {
     @GET("/users/{studentId}")
     Call<User> getUser(@Path("studentId") String studentId);
 
+    @Headers( "Content-Type: application/json" )
     @PUT("/users")
     Call<User> createUser(@Body User user);
 
