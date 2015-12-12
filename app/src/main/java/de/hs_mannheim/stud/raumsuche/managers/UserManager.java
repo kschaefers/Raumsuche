@@ -12,6 +12,8 @@ import de.hs_mannheim.stud.raumsuche.models.User;
 public class UserManager {
     private static String SP_STUDENTID = "sp_studentid";
     private static String SP_PASSWORD = "sp_password";
+    private static String SP_NAME = "sp_name";
+    private static String SP_FACULTY = "sp_faculty";
 
     private static UserManager instance;
     private SecurePreferences prefs;
@@ -41,9 +43,13 @@ public class UserManager {
         if (user == null){
             editor.remove(SP_STUDENTID);
             editor.remove(SP_PASSWORD);
+            editor.remove(SP_NAME);
+            editor.remove(SP_FACULTY);
         } else {
             editor.putString(SP_STUDENTID, user.getMtklNr());
             editor.putString(SP_PASSWORD, user.getPassword());
+            editor.putString(SP_NAME, user.getName());
+            editor.putString(SP_FACULTY, user.getFaculty());
         }
 
         editor.commit();
@@ -51,5 +57,20 @@ public class UserManager {
 
     public void removeUser() {
         setUser(null);
+    }
+
+    public User getUser() {
+        String studentId = prefs.getString(SP_STUDENTID, null);
+        String password = prefs.getString(SP_PASSWORD, null);
+        String name = prefs.getString(SP_NAME, "");
+        String faculty = prefs.getString(SP_FACULTY, "");
+
+        User user = new User();
+        user.setMtklNr(studentId);
+        user.setPassword(password);
+        user.setName(name);
+        user.setFaculty(faculty);
+
+        return user;
     }
 }

@@ -73,6 +73,12 @@ public class MainActivity extends AppCompatActivity {
         startActivity(signup);
     }
 
+    @OnClick(R.id.main_profile_button)
+    public void openProfile() {
+        Intent profile = new Intent(getApplicationContext(), ProfileActivity.class);
+        startActivity(profile);
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if(requestCode == REQUEST_LOGIN) {

@@ -74,5 +74,9 @@
     <string name="unknown_error">Ups, da ist wohl etwas schief gelaufen. Unser Fehler! Versuch es doch später noch einmal</string>
     <string name="signup_validation_error">Bitte geb deine Matrikelnummer, Namen und deine Fakultät an</string>
     <string name="login_validation_error">Bitte geb deine Matrikelnummer und Passwort an. Dein Passwort wurde an die Hochschul E-Mail Adresse gesendet.</string>
+    <string name="change">Ändern</string>
+    <string name="title_activity_profile">Mein Profil</string>
+    <string name="profile_changed">Profil geändert</string>
+    <string name="profile_validation_error">Bitte gebe deinen Namen und Fakultät an.</string>
 
 </resources>

@@ -1,9 +1,8 @@
 package de.hs_mannheim.stud.raumsuche;
 
-import android.content.DialogInterface;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
+import android.app.Activity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -14,7 +13,9 @@ import android.widget.Toast;
 import com.mobsandgeeks.saripaar.ValidationError;
 import com.mobsandgeeks.saripaar.Validator;
 import com.mobsandgeeks.saripaar.annotation.NotEmpty;
+import com.squareup.okhttp.ResponseBody;
 
+import java.util.Arrays;
 import java.util.List;
 
 import butterknife.Bind;
@@ -28,39 +29,38 @@ import retrofit.Call;
 import retrofit.Callback;
 import retrofit.Response;
 import retrofit.Retrofit;
+import retrofit.http.HTTP;
 
-public class SignUpActivity extends AppCompatActivity implements Validator.ValidationListener{
+public class ProfileActivity extends AppCompatActivity implements Validator.ValidationListener {
 
-    @Bind(R.id.signup_studentid_input)
-    @NotEmpty
-    EditText studentIdInput;
-
-    @Bind(R.id.signup_name_input)
+    @Bind(R.id.profile_name_input)
     @NotEmpty
     EditText nameInput;
 
-    @Bind(R.id.signup_faculty_spinner)
+    @Bind(R.id.profile_faculty_spinner)
     Spinner facultySpinner;
 
-    @Bind(R.id.signup_form_layout)
+    @Bind(R.id.profile_form_layout)
     View formLayout;
 
-    @Bind(R.id.signup_submit_progress)
+    @Bind(R.id.profile_submit_progress)
     ProgressBar submitProgress;
 
     Validator validator;
 
+    private User user;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_signup);
+        setContentView(R.layout.activity_profile);
         ButterKnife.bind(this);
 
         initComponents();
     }
 
-    @OnClick(R.id.signup_submit_button)
-    public void signup() {
+    @OnClick(R.id.profile_submit_button)
+    public void changeProfile(){
         validator.validate();
     }
 
@@ -68,34 +68,33 @@ public class SignUpActivity extends AppCompatActivity implements Validator.Valid
     public void onValidationSucceeded() {
         hideForm();
 
-        ApiServiceFactory services = ApiServiceFactory.getInstance(SignUpActivity.this);
+        ApiServiceFactory services = ApiServiceFactory.getInstance(ProfileActivity.this);
         UserService userService = services.getUserService();
 
-        String studentId = studentIdInput.getText().toString();
         String name = nameInput.getText().toString();
         String faculty = facultySpinner.getSelectedItem().toString();
 
-        User newUser = new User();
-        newUser.setMtklNr(studentId);
-        newUser.setName(name);
-        newUser.setFaculty(faculty);
+        final User updatedUser = new User();
+        updatedUser.setMtklNr(user.getMtklNr());
+        updatedUser.setPassword(user.getPassword());
+        updatedUser.setName(name);
+        updatedUser.setFaculty(faculty);
 
-        Call<User> call = userService.createUser(newUser);
-        call.enqueue(new Callback<User>() {
+
+        Call<ResponseBody> call = userService.updateUser(updatedUser.getMtklNr(), updatedUser);
+        call.enqueue(new Callback<ResponseBody>() {
             @Override
-            public void onResponse(Response<User> response, Retrofit retrofit) {
-                User user = response.body();
+            public void onResponse(Response<ResponseBody> response, Retrofit retrofit) {
+                if (response.code() == 200) {
+                    UserManager manager = UserManager.getInstance(ProfileActivity.this);
+                    manager.setUser(updatedUser);
 
-                if (user != null) {
-                    UserManager manager = UserManager.getInstance(SignUpActivity.this);
-                    manager.setUser(user);
-
-                    showConfirmation();
-
+                    Toast.makeText(ProfileActivity.this, R.string.profile_changed, Toast.LENGTH_SHORT).show();
                 } else {
                     showError();
-                    showForm();
                 }
+
+                showForm();
             }
 
             @Override
@@ -108,10 +107,14 @@ public class SignUpActivity extends AppCompatActivity implements Validator.Valid
 
     @Override
     public void onValidationFailed(List<ValidationError> errors) {
-        Toast.makeText(this, R.string.signup_validation_error, Toast.LENGTH_LONG).show();
+        Toast.makeText(this, R.string.profile_validation_error, Toast.LENGTH_LONG).show();
     }
 
     private void initComponents() {
+        // Get logged-in user
+        UserManager manager = UserManager.getInstance(this);
+        user = manager.getUser();
+
         // Init EditText Validation
         validator = new Validator(this);
         validator.setValidationListener(this);
@@ -121,24 +124,12 @@ public class SignUpActivity extends AppCompatActivity implements Validator.Valid
                 R.array.facultys, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         facultySpinner.setAdapter(adapter);
-    }
 
-    private void showConfirmation() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        // Fill up form fields
+        nameInput.setText(user.getName());
+        int spinnerSelection = adapter.getPosition(user.getFaculty());
+        facultySpinner.setSelection(spinnerSelection);
 
-        // Create confirmation message
-        builder.setMessage(getString(R.string.signUpConfirmationMessage))
-                .setTitle(getString(R.string.signUpConfirmationMessageTitle));
-
-        // Add OK button
-        builder.setPositiveButton(R.string.OK, new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
-                SignUpActivity.this.finish();
-            }
-        });
-
-        AlertDialog dialog = builder.create();
-        dialog.show();
     }
 
     private void showError() {
