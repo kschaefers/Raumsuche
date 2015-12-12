@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">Raumsuche</string>
-    <string name="title_activity_group">GroupActivity</string>
+    <string name="title_activity_group">Meine Gruppen</string>
     <string name="welcome">Willkommen</string>
     <string name="nextAvailableRoom">Nächster freier Raum</string>
     <string name="searchForOtherRoom">anderen Raum suchen</string>
@@ -78,5 +78,7 @@
     <string name="title_activity_profile">Mein Profil</string>
     <string name="profile_changed">Profil geändert</string>
     <string name="profile_validation_error">Bitte gebe deinen Namen und Fakultät an.</string>
+    <string name="group_list_empty">Erstelle eine Gruppe</string>
+    <string name="you">Du</string>
 
 </resources>

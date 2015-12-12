@@ -1,8 +1,11 @@
 package de.hs_mannheim.stud.raumsuche.models;
 
+import org.parceler.Parcel;
+
 /**
  * Created by Martin on 12/10/15.
  */
+@Parcel
 public class User {
     String mtklNr;
 
@@ -42,5 +45,13 @@ public class User {
 
     public void setFaculty(String faculty) {
         this.faculty = faculty;
+    }
+
+    public String getDisplayName() {
+        if(name == null && name.isEmpty()) {
+            return mtklNr;
+        }
+
+        return name;
     }
 }
