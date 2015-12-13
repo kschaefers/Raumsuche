@@ -87,11 +87,7 @@ public class SignUpActivity extends AppCompatActivity implements Validator.Valid
                 User user = response.body();
 
                 if (user != null) {
-                    UserManager manager = UserManager.getInstance(SignUpActivity.this);
-                    manager.setUser(user);
-
                     showConfirmation();
-
                 } else {
                     showError();
                     showForm();

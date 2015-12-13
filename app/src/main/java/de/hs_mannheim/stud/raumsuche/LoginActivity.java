@@ -61,8 +61,8 @@ public class LoginActivity extends AppCompatActivity implements Validator.Valida
     public void onValidationSucceeded() {
         hideForm();
 
-        String studentId = studentIdInput.getText().toString();
-        String password = passwordInput.getText().toString();
+        final String studentId = studentIdInput.getText().toString();
+        final String password = passwordInput.getText().toString();
 
         ApiServiceFactory services = ApiServiceFactory.getInstance();
         UserService userService = services.getUserService(studentId, password);
@@ -74,6 +74,9 @@ public class LoginActivity extends AppCompatActivity implements Validator.Valida
                 User user = response.body();
 
                 if (user != null) {
+                    // Set plain text password instead of hash for local storage
+                    user.setPassword(password);
+
                     UserManager manager = UserManager.getInstance(LoginActivity.this);
                     manager.setUser(user);
                     LoginActivity.this.finish();
