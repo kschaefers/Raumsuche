@@ -64,7 +64,7 @@ public class LoginActivity extends AppCompatActivity implements Validator.Valida
         String studentId = studentIdInput.getText().toString();
         String password = passwordInput.getText().toString();
 
-        ApiServiceFactory services = ApiServiceFactory.getInstance(LoginActivity.this);
+        ApiServiceFactory services = ApiServiceFactory.getInstance();
         UserService userService = services.getUserService(studentId, password);
 
         Call<User> call = userService.getUser(studentId);

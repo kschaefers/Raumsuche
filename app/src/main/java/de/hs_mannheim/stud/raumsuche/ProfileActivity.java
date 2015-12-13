@@ -68,7 +68,7 @@ public class ProfileActivity extends AppCompatActivity implements Validator.Vali
     public void onValidationSucceeded() {
         hideForm();
 
-        ApiServiceFactory services = ApiServiceFactory.getInstance(ProfileActivity.this);
+        ApiServiceFactory services = ApiServiceFactory.getInstance();
         UserService userService = services.getUserService(user.getMtklNr(), user.getPassword());
 
         String name = nameInput.getText().toString();

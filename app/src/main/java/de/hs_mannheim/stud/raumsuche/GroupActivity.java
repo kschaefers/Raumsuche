@@ -9,14 +9,24 @@ import android.view.View;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import de.hs_mannheim.stud.raumsuche.managers.UserManager;
 import de.hs_mannheim.stud.raumsuche.models.Group;
+import de.hs_mannheim.stud.raumsuche.models.User;
+import de.hs_mannheim.stud.raumsuche.network.ApiServiceFactory;
+import de.hs_mannheim.stud.raumsuche.network.services.GroupService;
 import de.hs_mannheim.stud.raumsuche.views.adapters.GroupListAdapter;
+import retrofit.Call;
+import retrofit.Callback;
+import retrofit.Response;
+import retrofit.Retrofit;
 
 public class GroupActivity extends AppCompatActivity {
 
@@ -28,6 +38,8 @@ public class GroupActivity extends AppCompatActivity {
 
     @Bind(R.id.group_loading_progress)
     ProgressBar loadingProgress;
+
+    private GroupListAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,11 +58,40 @@ public class GroupActivity extends AppCompatActivity {
 
     private void initComponents() {
         // Initialize group list
-        GroupListAdapter adapter = new GroupListAdapter(this, new ArrayList<Group>());
+        adapter = new GroupListAdapter(this, new ArrayList<Group>());
         list.setAdapter(adapter);
     }
 
     private void loadGroups() {
+        UserManager manager = UserManager.getInstance(this);
+        User user = manager.getUser();
 
+        ApiServiceFactory serviceFactory = ApiServiceFactory.getInstance();
+        GroupService groupService = serviceFactory.getGroupService(user.getMtklNr(), user.getPassword());
+
+        Call<List<Group>> call = groupService.listUserGroups(user.getMtklNr());
+        call.enqueue(new Callback<List<Group>>() {
+            @Override
+            public void onResponse(Response<List<Group>> response, Retrofit retrofit) {
+                loadingProgress.setVisibility(View.GONE);
+                List<Group> groups = response.body();
+
+                if (groups != null) {
+                    adapter.setGroups(groups);
+                } else {
+                    showError();
+                }
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                loadingProgress.setVisibility(View.GONE);
+                showError();
+            }
+        });
+    }
+
+    private void showError() {
+        Toast.makeText(GroupActivity.this, R.string.unknown_error, Toast.LENGTH_LONG).show();
     }
 }

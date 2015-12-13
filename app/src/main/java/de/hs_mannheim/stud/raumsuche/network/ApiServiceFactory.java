@@ -9,6 +9,7 @@ import com.squareup.okhttp.Request;
 
 import java.io.IOException;
 
+import de.hs_mannheim.stud.raumsuche.network.services.GroupService;
 import de.hs_mannheim.stud.raumsuche.network.services.UserService;
 import de.hs_mannheim.stud.raumsuche.utils.Config;
 import retrofit.GsonConverterFactory;
@@ -23,7 +24,7 @@ public class ApiServiceFactory {
     private Retrofit.Builder retrofitBuilder;
     private OkHttpClient httpClient;
 
-    private ApiServiceFactory(Context context) {
+    private ApiServiceFactory() {
         retrofitBuilder = new Retrofit.Builder()
                 .baseUrl(Config.baseUrl)
                 .addConverterFactory(GsonConverterFactory.create());
@@ -31,9 +32,9 @@ public class ApiServiceFactory {
         httpClient = new OkHttpClient();
     }
 
-    public static ApiServiceFactory getInstance(Context context) {
+    public static ApiServiceFactory getInstance() {
         if (instance == null) {
-            instance = new ApiServiceFactory(context.getApplicationContext());
+            instance = new ApiServiceFactory();
         }
 
         return instance;
@@ -45,6 +46,10 @@ public class ApiServiceFactory {
 
     public UserService getUserService(String studentId, String password) {
         return createService(UserService.class, studentId, password);
+    }
+
+    public GroupService getGroupService(String studentId, String password) {
+        return createService(GroupService.class, studentId, password);
     }
 
     public <S> S createService(Class<S> serviceClass, String username, String password) {

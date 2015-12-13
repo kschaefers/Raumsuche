@@ -68,7 +68,7 @@ public class SignUpActivity extends AppCompatActivity implements Validator.Valid
     public void onValidationSucceeded() {
         hideForm();
 
-        ApiServiceFactory services = ApiServiceFactory.getInstance(SignUpActivity.this);
+        ApiServiceFactory services = ApiServiceFactory.getInstance();
         UserService userService = services.getUserService();
 
         String studentId = studentIdInput.getText().toString();
