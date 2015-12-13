@@ -61,11 +61,11 @@ public class LoginActivity extends AppCompatActivity implements Validator.Valida
     public void onValidationSucceeded() {
         hideForm();
 
-        ApiServiceFactory services = ApiServiceFactory.getInstance(LoginActivity.this);
-        UserService userService = services.getUserService();
-
         String studentId = studentIdInput.getText().toString();
         String password = passwordInput.getText().toString();
+
+        ApiServiceFactory services = ApiServiceFactory.getInstance(LoginActivity.this);
+        UserService userService = services.getUserService(studentId, password);
 
         Call<User> call = userService.getUser(studentId);
         call.enqueue(new Callback<User>() {

@@ -69,7 +69,7 @@ public class ProfileActivity extends AppCompatActivity implements Validator.Vali
         hideForm();
 
         ApiServiceFactory services = ApiServiceFactory.getInstance(ProfileActivity.this);
-        UserService userService = services.getUserService();
+        UserService userService = services.getUserService(user.getMtklNr(), user.getPassword());
 
         String name = nameInput.getText().toString();
         String faculty = facultySpinner.getSelectedItem().toString();
