@@ -3,6 +3,8 @@ package de.hs_mannheim.stud.raumsuche;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -23,6 +25,7 @@ import de.hs_mannheim.stud.raumsuche.models.User;
 import de.hs_mannheim.stud.raumsuche.network.ApiServiceFactory;
 import de.hs_mannheim.stud.raumsuche.network.services.GroupService;
 import de.hs_mannheim.stud.raumsuche.views.adapters.GroupListAdapter;
+import de.hs_mannheim.stud.raumsuche.views.widgets.AddGroupDialogFragment;
 import retrofit.Call;
 import retrofit.Callback;
 import retrofit.Response;
@@ -53,7 +56,18 @@ public class GroupActivity extends AppCompatActivity {
 
     @OnClick(R.id.group_add_button)
     public void addGroup() {
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeAsUpIndicator(android.R.drawable.ic_menu_close_clear_cancel);
 
+
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        AddGroupDialogFragment addGroupDialog = new AddGroupDialogFragment();
+
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+
+        transaction.add(android.R.id.content, addGroupDialog)
+                .addToBackStack(null).commit();
     }
 
     private void initComponents() {
@@ -77,7 +91,13 @@ public class GroupActivity extends AppCompatActivity {
                 List<Group> groups = response.body();
 
                 if (groups != null) {
-                    adapter.setGroups(groups);
+
+                    if(groups.size() > 0) {
+                        emptyText.setVisibility(View.GONE);
+                        adapter.setGroups(groups);
+                    } else {
+                        emptyText.setVisibility(View.VISIBLE);
+                    }
                 } else {
                     showError();
                 }

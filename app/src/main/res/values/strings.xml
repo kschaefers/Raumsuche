@@ -78,7 +78,7 @@
     <string name="title_activity_profile">Mein Profil</string>
     <string name="profile_changed">Profil geändert</string>
     <string name="profile_validation_error">Bitte gebe deinen Namen und Fakultät an.</string>
-    <string name="group_list_empty">Erstelle eine Gruppe</string>
+    <string name="group_list_empty">Erstelle deine erste Gruppe</string>
     <string name="you">Du</string>
 
 </resources>

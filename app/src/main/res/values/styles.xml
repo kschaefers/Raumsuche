@@ -28,4 +28,8 @@
         <item name="android:textColor">@color/textNormal</item>
     </style>
 
+    <style name="TextEmptyList" parent="TextAppearance.AppCompat.Title">
+        <item name="android:fontFamily">sans-serif-light</item>
+        <item name="android:textColor">@color/textNormal</item>
+    </style>
 </resources>

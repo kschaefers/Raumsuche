@@ -2,27 +2,19 @@ package de.hs_mannheim.stud.raumsuche.views.adapters;
 
 import android.content.Context;
 import android.content.res.Resources;
-import android.graphics.drawable.GradientDrawable;
-import android.text.SpannableStringBuilder;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
-
 import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import de.hs_mannheim.stud.raumsuche.R;
-import de.hs_mannheim.stud.raumsuche.managers.BuildingFactory;
 import de.hs_mannheim.stud.raumsuche.managers.UserManager;
-import de.hs_mannheim.stud.raumsuche.models.Building;
 import de.hs_mannheim.stud.raumsuche.models.Group;
-import de.hs_mannheim.stud.raumsuche.models.Room;
-import de.hs_mannheim.stud.raumsuche.models.RoomResult;
 import de.hs_mannheim.stud.raumsuche.models.User;
 
 /**
@@ -82,9 +74,9 @@ public class GroupListAdapter extends BaseAdapter {
 
         holder.name.setText(group.getName());
 
-        User owner = group.getOwner();
+        String owner = group.getOwner();
 
-        if (user.getMtklNr().equals(owner.getMtklNr())) {
+        if (user.getMtklNr().equals(owner)) {
             holder.owner.setVisibility(View.VISIBLE);
         } else {
             holder.owner.setVisibility(View.GONE);
