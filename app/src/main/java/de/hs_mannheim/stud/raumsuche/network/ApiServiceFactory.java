@@ -10,6 +10,7 @@ import com.squareup.okhttp.Request;
 import java.io.IOException;
 
 import de.hs_mannheim.stud.raumsuche.network.services.GroupService;
+import de.hs_mannheim.stud.raumsuche.network.services.RoomService;
 import de.hs_mannheim.stud.raumsuche.network.services.UserService;
 import de.hs_mannheim.stud.raumsuche.utils.Config;
 import retrofit.GsonConverterFactory;
@@ -50,6 +51,10 @@ public class ApiServiceFactory {
 
     public GroupService getGroupService(String studentId, String password) {
         return createService(GroupService.class, studentId, password);
+    }
+
+    public RoomService getRoomService(String studentId, String password) {
+        return createService(RoomService.class, studentId, password);
     }
 
     public <S> S createService(Class<S> serviceClass, String username, String password) {

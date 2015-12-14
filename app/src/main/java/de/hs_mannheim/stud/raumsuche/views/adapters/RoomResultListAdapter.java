@@ -91,11 +91,10 @@ public class RoomResultListAdapter extends BaseAdapter {
 
         int color = building.getBuildingColor();
 
-        holder.identifier.setText(room.getIdentifier());
+        holder.identifier.setText(room.getName());
         holder.building.setText(room.getBuilding());
 
-        String availabilityString = buildAvailabilityString(roomResult.getAvailableFrom(), roomResult.getAvailableTo());
-        holder.availability.setText(availabilityString);
+        holder.availability.setText(roomResult.getAvailable());
 
         SpannableStringBuilder propertiesSpannable = buildPropertiesSpannable(room.getRoomProperties(), color);
         holder.properties.setText(propertiesSpannable, TextView.BufferType.SPANNABLE);

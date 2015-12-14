@@ -7,6 +7,7 @@
         <item>H</item>
         <item>L</item>
         <item>S</item>
+        <item>X</item>
     </array>
 
     <array name="buildingLocations">
@@ -16,15 +17,17 @@
         <item>49.469542,8.482387</item>
         <item>49.471039,8.482019</item>
         <item>49.472128,8.479493</item>
+        <item>49.472128,8.479493</item><!-- Not really where is fac X -->
     </array>
 
     <array name="buildingColors">
         <item>@color/blue</item>
         <item>@color/green</item>
         <item>@color/magenta</item>
-        <item>@color/grey</item>
+        <item>@color/yellow</item>
         <item>@color/orange</item>
         <item>@color/lightblue</item>
+        <item>@color/grey</item>
     </array>
 
 </resources>

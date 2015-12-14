@@ -2,6 +2,7 @@ package de.hs_mannheim.stud.raumsuche.models;
 
 import org.parceler.Parcel;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -10,38 +11,42 @@ import java.util.List;
 @Parcel
 public class Room {
 
-    String identifier;
+    String name;
 
-    String building;
+    int day;
 
-    int floor;
+    String hour;
 
     int size;
 
-    List<String> roomProperties;
+    boolean computer;
+    boolean beamer;
+    boolean pool;
+    boolean looseSeating;
+    boolean video;
 
-    public String getIdentifier() {
-        return identifier;
+    public String getName() {
+        return name;
     }
 
-    public void setIdentifier(String identifier) {
-        this.identifier = identifier;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getBuilding() {
-        return building;
+    public int getDay() {
+        return day;
     }
 
-    public void setBuilding(String building) {
-        this.building = building;
+    public void setDay(int day) {
+        this.day = day;
     }
 
-    public int getFloor() {
-        return floor;
+    public String getHour() {
+        return hour;
     }
 
-    public void setFloor(int floor) {
-        this.floor = floor;
+    public void setHour(String hour) {
+        this.hour = hour;
     }
 
     public int getSize() {
@@ -52,11 +57,67 @@ public class Room {
         this.size = size;
     }
 
-    public List<String> getRoomProperties() {
-        return roomProperties;
+    public boolean hasComputer() {
+        return computer;
     }
 
-    public void setRoomProperties(List<String> roomProperties) {
-        this.roomProperties = roomProperties;
+    public void setComputer(boolean computer) {
+        this.computer = computer;
+    }
+
+    public boolean hasBeamer() {
+        return beamer;
+    }
+
+    public void setBeamer(boolean beamer) {
+        this.beamer = beamer;
+    }
+
+    public boolean hasPool() {
+        return pool;
+    }
+
+    public void setPool(boolean pool) {
+        this.pool = pool;
+    }
+
+    public boolean hasLooseSeating() {
+        return looseSeating;
+    }
+
+    public void setLooseSeating(boolean looseSeating) {
+        this.looseSeating = looseSeating;
+    }
+
+    public boolean hasVideo() {
+        return video;
+    }
+
+    public void setVideo(boolean video) {
+        this.video = video;
+    }
+
+    public List<String> getRoomProperties(){
+        List<String> list = new ArrayList<>();
+        if(hasBeamer()){
+            list.add("Beamer");
+        }
+        if(hasComputer()){
+            list.add("Computer");
+        }
+        if(hasLooseSeating()){
+            list.add("Lose Bestuhlung");
+        }
+        if(hasPool()){
+            list.add("Poolraum");
+        }
+        if(hasVideo()){
+            list.add("Video");
+        }
+        return list;
+    }
+
+    public String getBuilding(){
+        return getName().substring(0,1);
     }
 }

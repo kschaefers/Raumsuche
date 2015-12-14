@@ -3,16 +3,35 @@ package de.hs_mannheim.stud.raumsuche;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CalendarView;
 import android.widget.TextView;
 
+import org.parceler.Parcels;
+
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.HashMap;
+import java.util.List;
+
+import de.hs_mannheim.stud.raumsuche.managers.UserManager;
+import de.hs_mannheim.stud.raumsuche.models.Room;
+import de.hs_mannheim.stud.raumsuche.models.User;
+import de.hs_mannheim.stud.raumsuche.network.ApiServiceFactory;
+import de.hs_mannheim.stud.raumsuche.network.services.RoomService;
+import retrofit.Call;
+import retrofit.Callback;
+import retrofit.Response;
+import retrofit.Retrofit;
 
 public class SearchActivity extends AppCompatActivity {
 
@@ -216,5 +235,59 @@ public class SearchActivity extends AppCompatActivity {
             selectedTimes += " Block";
         }
         textSearchTime.setText(selectedTimes);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.search_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()){
+            case R.id.search_menu_search:
+                searchForRooms();
+                break;
+            default:
+                return true;
+        }
+
+
+        return super.onOptionsItemSelected(item);
+
+    }
+
+    private void searchForRooms() {
+        UserManager manager = UserManager.getInstance(this);
+        User user = manager.getUser();
+        ApiServiceFactory services = ApiServiceFactory.getInstance();
+        RoomService roomService = services.getRoomService(user.getMtklNr(),user.getPassword());
+        HashMap<String,String> query = new HashMap<>();
+        if(!textSearchRoomSize.getText().toString().equals(getString(R.string.anyRoomSize))){
+            query.put("size",textSearchRoomSize.getText().toString());
+        }
+        Call<List<Room>> call = roomService.findRooms(query);
+        call.enqueue(new Callback<List<Room>>() {
+            @Override
+            public void onResponse(Response<List<Room>> response, Retrofit retrofit) {
+                List<Room> rooms = response.body();
+                Log.e("SearchActivity","yay");
+                Parcelable wrapped = Parcels.wrap(rooms);
+
+                Intent resultIntent = new Intent();
+                resultIntent.setClass(getApplicationContext(), ResultActivity.class);
+                resultIntent.putExtra("searchResult", wrapped);
+                startActivity(resultIntent);
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                Log.e("SearchActivity", "boo");
+            }
+        });
     }
 }

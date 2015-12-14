@@ -3,6 +3,7 @@ package de.hs_mannheim.stud.raumsuche;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -12,6 +13,8 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+
+import org.parceler.Parcels;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -49,21 +52,34 @@ public class ResultActivity extends AppCompatActivity implements OnMapReadyCallb
         mapFragment.getMapAsync(this);
 
         listFragment = (ResultFragment) getSupportFragmentManager().findFragmentById(R.id.list);
+        if (getIntent().getParcelableExtra("searchResult") != null) {
+            Log.e("SearchActivity", "yay");
+            List<Room> rooms = Parcels.unwrap(getIntent().getParcelableExtra("searchResult"));
+            results = new ArrayList<RoomResult>();
+            for (Room room : rooms) {
+                RoomResult result = new RoomResult();
+                result.setRoom(room);
+                result.setId(room.getName().hashCode());
 
-        // TODO: Remove Test-Data
-        RoomResult testA = DummyData.buildTestResult(this, "A");
-        RoomResult testB = DummyData.buildTestResult(this, "B");
-        RoomResult testG = DummyData.buildTestResult(this, "G");
-        RoomResult testH = DummyData.buildTestResult(this, "H");
-        RoomResult testL = DummyData.buildTestResult(this, "L");
-        RoomResult testS = DummyData.buildTestResult(this, "S");
-        results = new ArrayList<RoomResult>();
-        results.add(testA);
-        results.add(testB);
-        results.add(testG);
-        results.add(testH);
-        results.add(testL);
-        results.add(testS);
+                results.add(result);
+            }
+        } else {
+            Log.e("SearchActivity", "boo");
+            // TODO: Remove Test-Data
+            RoomResult testA = DummyData.buildTestResult(this, "A");
+            RoomResult testB = DummyData.buildTestResult(this, "B");
+            RoomResult testG = DummyData.buildTestResult(this, "G");
+            RoomResult testH = DummyData.buildTestResult(this, "H");
+            RoomResult testL = DummyData.buildTestResult(this, "L");
+            RoomResult testS = DummyData.buildTestResult(this, "S");
+            results = new ArrayList<RoomResult>();
+            results.add(testA);
+            results.add(testB);
+            results.add(testG);
+            results.add(testH);
+            results.add(testL);
+            results.add(testS);
+        }
 
         // TODO: Remove Test-Query
         RoomQuery testQuery = DummyData.buildTestQuery(this);
