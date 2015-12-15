@@ -81,9 +81,16 @@ public class ResultActivity extends AppCompatActivity implements OnMapReadyCallb
             results.add(testS);
         }
 
-        // TODO: Remove Test-Query
-        RoomQuery testQuery = DummyData.buildTestQuery(this);
-        query = testQuery;
+        if (getIntent().getStringArrayListExtra("searchQuery") != null) {
+            ArrayList<String> queryParams = getIntent().getStringArrayListExtra("searchQuery");
+            RoomQuery searchQuery = new RoomQuery();
+            searchQuery.setProperties(queryParams);
+            query = searchQuery;
+        }else{
+            // TODO: Remove Test-Query
+            RoomQuery testQuery = DummyData.buildTestQuery(this);
+            query = testQuery;
+        }
 
         listFragment.updateResultList(results, query);
     }

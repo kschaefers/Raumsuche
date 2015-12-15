@@ -105,13 +105,6 @@ public class RoomResultListAdapter extends BaseAdapter {
         return view;
     }
 
-    private String buildAvailabilityString(int from, int to) {
-        if (from == to) {
-            return String.format(availabilitySingleBlock, from);
-        } else {
-            return String.format(availabilityMultipleBlocks, from, to);
-        }
-    }
 
     private SpannableStringBuilder buildPropertiesSpannable(List<String> properties, int color) {
 
@@ -119,13 +112,12 @@ public class RoomResultListAdapter extends BaseAdapter {
         SpannableStringBuilder builder = new SpannableStringBuilder(propertiesAsString);
 
         int alphaColor = Color.argb(48, Color.red(color), Color.green(color), Color.blue(color));
-        BackgroundColorSpan colorSpan = new BackgroundColorSpan(alphaColor);
 
         for (String searchedProperty : query.getProperties()) {
             int propertyIndex = propertiesAsString.indexOf(searchedProperty);
 
             if (propertyIndex != -1) {
-                builder.setSpan(colorSpan, propertyIndex, propertyIndex + searchedProperty.length(), Spannable.SPAN_INCLUSIVE_INCLUSIVE);
+                builder.setSpan(new BackgroundColorSpan(alphaColor), propertyIndex, propertyIndex + searchedProperty.length(), Spannable.SPAN_INCLUSIVE_INCLUSIVE);
             }
         }
 

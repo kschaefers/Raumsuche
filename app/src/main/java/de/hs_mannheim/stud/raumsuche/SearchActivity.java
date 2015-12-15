@@ -14,10 +14,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CalendarView;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import org.parceler.Parcels;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
@@ -40,6 +42,12 @@ public class SearchActivity extends AppCompatActivity {
     private TextView textSearchTime;
     private TextView textSearchBuilding;
     private TextView textSearchRoomSize;
+    private Switch switchPool;
+    private Switch switchComputer;
+    private Switch switchBeamer;
+    private Switch switchVideo;
+    private Switch switchLooseSeating;
+
     private boolean[] mSelectedBuilding;
     private boolean[] mSelectedRoomSize;
     private boolean[] mSelectedTimes;
@@ -56,6 +64,11 @@ public class SearchActivity extends AppCompatActivity {
         textSearchTime = (TextView) findViewById(R.id.textSearchTime);
         textSearchBuilding = (TextView) findViewById(R.id.textSearchBuilding);
         textSearchRoomSize = (TextView) findViewById(R.id.textSearchRoomSize);
+        switchPool = (Switch) findViewById(R.id.switchSearchPool);
+        switchComputer = (Switch) findViewById(R.id.switchSearchComputer);
+        switchBeamer = (Switch) findViewById(R.id.switchSearchBeamer);
+        switchVideo = (Switch) findViewById(R.id.switchSearchVideo);
+        switchLooseSeating = (Switch) findViewById(R.id.switchSearchLooseSeating);
 
         mSelectedBuilding = new boolean[getResources().getStringArray(R.array.buildings).length];
         mSelectedRoomSize = new boolean[getResources().getStringArray(R.array.roomSizes).length];
@@ -270,6 +283,32 @@ public class SearchActivity extends AppCompatActivity {
         if(!textSearchRoomSize.getText().toString().equals(getString(R.string.anyRoomSize))){
             query.put("size",textSearchRoomSize.getText().toString());
         }
+        if(!textSearchDate.getText().toString().equals("Heute")){
+            query.put("day",selectedDate.get(Calendar.DAY_OF_WEEK)+"");
+        }
+        final ArrayList<String> queryParams = new ArrayList<>();
+        if(switchPool.isChecked()){
+            query.put("pool","1");
+            queryParams.add("Poolraum");
+        }
+        if(switchComputer.isChecked()){
+            query.put("computer","1");
+            queryParams.add("Computer");
+        }
+        if(switchBeamer.isChecked()){
+            query.put("beamer","1");
+            queryParams.add("Beamer");
+        }
+        if(switchVideo.isChecked()){
+            query.put("video","1");
+            queryParams.add("Video");
+        }
+        if(switchLooseSeating.isChecked()){
+            query.put("looseSeating","1");
+            queryParams.add("Lose Bestuhlung");
+        }
+
+
         Call<List<Room>> call = roomService.findRooms(query);
         call.enqueue(new Callback<List<Room>>() {
             @Override
@@ -281,6 +320,7 @@ public class SearchActivity extends AppCompatActivity {
                 Intent resultIntent = new Intent();
                 resultIntent.setClass(getApplicationContext(), ResultActivity.class);
                 resultIntent.putExtra("searchResult", wrapped);
+                resultIntent.putStringArrayListExtra("searchQuery", queryParams);
                 startActivity(resultIntent);
             }
 
