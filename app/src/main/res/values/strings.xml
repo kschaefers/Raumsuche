@@ -80,5 +80,8 @@
     <string name="profile_validation_error">Bitte gebe deinen Namen und Fakultät an.</string>
     <string name="group_list_empty">Erstelle deine erste Gruppe</string>
     <string name="you">Du</string>
+    <string name="group_name">Gruppenname</string>
+    <string name="group_add_user">Matrikelnummer</string>
+    <string name="add">Hinzufügen</string>
 
 </resources>
