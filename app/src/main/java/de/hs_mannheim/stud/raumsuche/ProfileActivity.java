@@ -100,7 +100,6 @@ public class ProfileActivity extends AppCompatActivity implements Validator.Vali
 
             @Override
             public void onFailure(Throwable t) {
-                Log.e("ProfileActivity","Error",t);
                 showError();
                 showForm();
             }

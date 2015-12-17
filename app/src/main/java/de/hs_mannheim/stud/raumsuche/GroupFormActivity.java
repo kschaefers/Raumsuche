@@ -169,6 +169,7 @@ public class GroupFormActivity extends AppCompatActivity implements Validator.Va
         group.setUsers(adapter.getUsers());
 
         ApiServiceFactory apiService = ApiServiceFactory.getInstance();
+        UserManager manager = UserManager.getInstance(this);
         GroupService groupService = apiService.getGroupService(user.getMtklNr(), manager.getUserPassword());
 
         hideForm();
