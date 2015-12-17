@@ -16,6 +16,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CalendarView;
+import android.widget.LinearLayout;
 import android.widget.Switch;
 import android.widget.TextView;
 
@@ -27,9 +28,10 @@ import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
 
-import de.hs_mannheim.stud.raumsuche.managers.UserManager;
+import butterknife.Bind;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import de.hs_mannheim.stud.raumsuche.models.Room;
-import de.hs_mannheim.stud.raumsuche.models.User;
 import de.hs_mannheim.stud.raumsuche.network.ApiServiceFactory;
 import de.hs_mannheim.stud.raumsuche.network.services.RoomService;
 import retrofit.Call;
@@ -39,16 +41,29 @@ import retrofit.Retrofit;
 
 public class SearchActivity extends AppCompatActivity {
 
-    private Button buttonAddGroupToRoomSearch;
-    private TextView textSearchDate;
-    private TextView textSearchTime;
-    private TextView textSearchBuilding;
-    private TextView textSearchRoomSize;
-    private Switch switchPool;
-    private Switch switchComputer;
-    private Switch switchBeamer;
-    private Switch switchVideo;
-    private Switch switchLooseSeating;
+    @Bind(R.id.buttonAddGroupToRoomSearch)
+    protected Button buttonAddGroupToRoomSearch;
+    @Bind(R.id.textSearchDate)
+    protected TextView textSearchDate;
+    @Bind(R.id.textSearchTime)
+    protected TextView textSearchTime;
+    @Bind(R.id.textSearchBuilding)
+    protected TextView textSearchBuilding;
+    @Bind(R.id.textSearchRoomSize)
+    protected TextView textSearchRoomSize;
+    @Bind(R.id.switchSearchPool)
+    protected Switch switchPool;
+    @Bind(R.id.switchSearchComputer)
+    protected Switch switchComputer;
+    @Bind(R.id.switchSearchBeamer)
+    protected Switch switchBeamer;
+    @Bind(R.id.switchSearchVideo)
+    protected Switch switchVideo;
+    @Bind(R.id.switchSearchLooseSeating)
+    protected Switch switchLooseSeating;
+
+    @Bind(R.id.search_layout)
+    protected LinearLayout searchLayout;
 
     private boolean[] mSelectedBuilding;
     private boolean[] mSelectedRoomSize;
@@ -61,34 +76,22 @@ public class SearchActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
 
-        buttonAddGroupToRoomSearch = (Button) findViewById(R.id.buttonAddGroupToRoomSearch);
-        textSearchDate = (TextView) findViewById(R.id.textSearchDate);
-        textSearchTime = (TextView) findViewById(R.id.textSearchTime);
-        textSearchBuilding = (TextView) findViewById(R.id.textSearchBuilding);
-        textSearchRoomSize = (TextView) findViewById(R.id.textSearchRoomSize);
-        switchPool = (Switch) findViewById(R.id.switchSearchPool);
-        switchComputer = (Switch) findViewById(R.id.switchSearchComputer);
-        switchBeamer = (Switch) findViewById(R.id.switchSearchBeamer);
-        switchVideo = (Switch) findViewById(R.id.switchSearchVideo);
-        switchLooseSeating = (Switch) findViewById(R.id.switchSearchLooseSeating);
+
+        ButterKnife.bind(this);
 
         mSelectedBuilding = new boolean[getResources().getStringArray(R.array.buildings).length];
         mSelectedRoomSize = new boolean[getResources().getStringArray(R.array.roomSizes).length];
         mSelectedTimes = new boolean[getResources().getStringArray(R.array.times).length];
 
-        initializeButton();
         initializeTextViews();
     }
 
-    private void initializeButton() {
-        buttonAddGroupToRoomSearch.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent groups = new Intent();
-                groups.setClass(getApplicationContext(), GroupActivity.class);
-                startActivity(groups);
-            }
-        });
+
+    @OnClick(R.id.buttonAddGroupToRoomSearch)
+    public void addGroup() {
+        Intent groups = new Intent();
+        groups.setClass(getApplicationContext(), GroupActivity.class);
+        startActivity(groups);
     }
 
     private void initializeTextViews() {
@@ -279,6 +282,7 @@ public class SearchActivity extends AppCompatActivity {
     }
 
     private void searchForRooms() {
+        final ProgressDialog dialog = ProgressDialog.show(this,"Suchen","Suche Räume",true,false);
         ApiServiceFactory services = ApiServiceFactory.getInstance();
         RoomService roomService = services.getRoomService();
         HashMap<String,String> query = new HashMap<>();
@@ -314,12 +318,10 @@ public class SearchActivity extends AppCompatActivity {
             queryParams.add("Lose Bestuhlung");
         }
 
-        final ProgressDialog dialog = ProgressDialog.show(this,"Suchen","Suche Räume",true,false);
         Call<List<Room>> call = roomService.findRooms(query);
         call.enqueue(new Callback<List<Room>>() {
             @Override
             public void onResponse(Response<List<Room>> response, Retrofit retrofit) {
-                dialog.dismiss();
                 List<Room> rooms = response.body();
                 Log.e("SearchActivity","yay");
                 Parcelable wrapped = Parcels.wrap(rooms);
@@ -328,6 +330,7 @@ public class SearchActivity extends AppCompatActivity {
                 resultIntent.setClass(getApplicationContext(), ResultActivity.class);
                 resultIntent.putExtra("searchResult", wrapped);
                 resultIntent.putStringArrayListExtra("searchQuery", queryParams);
+                dialog.dismiss();
                 startActivity(resultIntent);
             }
 
@@ -335,7 +338,7 @@ public class SearchActivity extends AppCompatActivity {
             public void onFailure(Throwable t) {
                 dialog.dismiss();
                 Snackbar
-                        .make(getCurrentFocus(), "Suche fehlgeschlagen", Snackbar.LENGTH_LONG)
+                        .make(searchLayout, "Suche fehlgeschlagen", Snackbar.LENGTH_LONG)
                         .setAction("Nochmal", new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
