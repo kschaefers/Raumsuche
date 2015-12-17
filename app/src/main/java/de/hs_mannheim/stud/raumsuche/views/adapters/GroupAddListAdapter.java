@@ -63,7 +63,7 @@ public class GroupAddListAdapter extends BaseAdapter {
         if (view != null) {
             holder = (ViewHolder) view.getTag();
         } else {
-            view = inflater.inflate(R.layout.list_item_group_add, null);
+            view = inflater.inflate(R.layout.list_item_group_form, null);
             holder = new ViewHolder(view);
             view.setTag(holder);
         }
@@ -75,7 +75,10 @@ public class GroupAddListAdapter extends BaseAdapter {
         }
 
         if(user.getName() != null && !user.getName().isEmpty()) {
+            holder.studentid.setVisibility(View.VISIBLE);
             holder.studentid.setText(user.getMtklNr());
+        } else {
+            holder.studentid.setVisibility(View.GONE);
         }
 
         return view;
@@ -86,9 +89,9 @@ public class GroupAddListAdapter extends BaseAdapter {
     }
 
     static class ViewHolder {
-        @Bind(R.id.group_add_user_name)
+        @Bind(R.id.group_form_user_name)
         TextView name;
-        @Bind(R.id.group_add_user_studentid)
+        @Bind(R.id.group_form_user_studentid)
         TextView studentid;
 
         public ViewHolder(View view) {

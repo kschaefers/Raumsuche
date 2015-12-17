@@ -55,6 +55,19 @@ public class User {
         return name;
     }
 
+    @Override
+    public boolean equals(Object other) {
+        if (other == null) {
+            return false;
+        }
+
+        if (!(other instanceof User)) {
+            return false;
+        }
+
+        return mtklNr.equals(((User) other).getMtklNr());
+    }
+
     public String getBuilding(){
         switch (getFaculty()){
             case "Informatik":
