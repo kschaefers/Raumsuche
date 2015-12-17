@@ -1,9 +1,11 @@
 package de.hs_mannheim.stud.raumsuche;
 
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -277,11 +279,10 @@ public class SearchActivity extends AppCompatActivity {
     }
 
     private void searchForRooms() {
-        UserManager manager = UserManager.getInstance(this);
-        User user = manager.getUser();
         ApiServiceFactory services = ApiServiceFactory.getInstance();
-        RoomService roomService = services.getRoomService(user.getMtklNr(),user.getPassword());
+        RoomService roomService = services.getRoomService();
         HashMap<String,String> query = new HashMap<>();
+
         if(!textSearchRoomSize.getText().toString().equals(getString(R.string.anyRoomSize))){
             query.put("size",textSearchRoomSize.getText().toString());
         }
@@ -314,10 +315,12 @@ public class SearchActivity extends AppCompatActivity {
         }
 
 
+        final ProgressDialog dialog = ProgressDialog.show(this,"Suchen","Suche nach freien Räumen",true,false);
         Call<List<Room>> call = roomService.findRooms(query);
         call.enqueue(new Callback<List<Room>>() {
             @Override
-            public void onResponse(Response<List<Room>> response, Retrofit retrofit) {
+            public void onResponse(Response<List<Room>> response, Retrofit retrofit) {        dialog.dismiss();
+
                 List<Room> rooms = response.body();
                 Log.e("SearchActivity","yay");
                 Parcelable wrapped = Parcels.wrap(rooms);
@@ -331,7 +334,16 @@ public class SearchActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Throwable t) {
-                Log.e("SearchActivity", "boo");
+                dialog.dismiss();
+                Snackbar
+                        .make(getCurrentFocus(), "Suche fehlgeschlagen", Snackbar.LENGTH_LONG)
+                        .setAction("Nochmal", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                searchForRooms();
+                            }
+                        })
+                        .show();
             }
         });
     }

@@ -54,4 +54,25 @@ public class User {
 
         return name;
     }
+
+    public String getBuilding(){
+        switch (getFaculty()){
+            case "Informatik":
+                return "A";
+            case "Biotechnologie":
+                return "G";
+            case "Elektrotechnik":
+                return "B";
+            case "Informationstechnik":
+                return "S";
+            case "Maschinenbau":
+                return "B";
+            case "Verfahrens- und Chemietechnik":
+                return "G";
+            case "Wirtschaftsingenieurwesen":
+                return "L";
+            default:
+                return "H";
+        }
+    }
 }

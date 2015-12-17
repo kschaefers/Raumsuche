@@ -53,8 +53,8 @@ public class ApiServiceFactory {
         return createService(GroupService.class, studentId, password);
     }
 
-    public RoomService getRoomService(String studentId, String password) {
-        return createService(RoomService.class, studentId, password);
+    public RoomService getRoomService() {
+        return createService(RoomService.class, null, null);
     }
 
     public <S> S createService(Class<S> serviceClass, String username, String password) {
