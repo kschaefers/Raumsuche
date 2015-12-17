@@ -1,11 +1,14 @@
 package de.hs_mannheim.stud.raumsuche;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.ProgressBar;
@@ -52,12 +55,15 @@ public class GroupFormActivity extends AppCompatActivity implements Validator.Va
     @Bind(R.id.group_form_layout)
     View formLayout;
 
+    @Bind(R.id.group_form_exit)
+    Button exitGroupButton;
+
     @Bind(R.id.group_form_progress)
     ProgressBar progressView;
 
     private GroupAddListAdapter adapter;
     private Group group;
-    private User user;
+    private User myUser;
     private Validator validator;
     private UserManager manager;
 
@@ -68,7 +74,7 @@ public class GroupFormActivity extends AppCompatActivity implements Validator.Va
         ButterKnife.bind(this);
 
         UserManager manager = UserManager.getInstance(this);
-        user = manager.getUser();
+        myUser = manager.getUser();
 
         initGroup();
         initActionBar();
@@ -110,10 +116,10 @@ public class GroupFormActivity extends AppCompatActivity implements Validator.Va
         } else {
             group = new Group();
             group.setName("");
-            group.setOwner(user.getMtklNr());
+            group.setOwner(myUser.getMtklNr());
 
             List<User> users = new ArrayList<User>();
-            users.add(user);
+            users.add(myUser);
             group.setUsers(users);
         }
     }
@@ -138,6 +144,10 @@ public class GroupFormActivity extends AppCompatActivity implements Validator.Va
 
         adapter = new GroupAddListAdapter(this, group.getUsers());
         userList.setAdapter(adapter);
+
+        if(group.getId() > 0) {
+            exitGroupButton.setVisibility(View.VISIBLE);
+        }
     }
 
     @OnClick(R.id.group_form_user_addbutton)
@@ -159,31 +169,56 @@ public class GroupFormActivity extends AppCompatActivity implements Validator.Va
     }
 
     @OnClick(R.id.group_form_exit)
-    public void exitGroup() {
+    public void onExitGroup() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
+        String exitGroupFormatString = getResources().getString(R.string.group_form_exit);
+        String exitGroupString = String.format(exitGroupFormatString, group.getName());
+        builder.setMessage(exitGroupString);
+        builder.setPositiveButton(R.string.group_exit, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                exitGroup();
+            }
+        });
+
+        builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.dismiss();
+            }
+        });
+        builder.show();
     }
 
     @Override
     public void onValidationSucceeded() {
         group.setName(nameInput.getText().toString());
         group.setUsers(adapter.getUsers());
+        group.setGroupImage("");
 
-        ApiServiceFactory apiService = ApiServiceFactory.getInstance();
-        UserManager manager = UserManager.getInstance(this);
-        GroupService groupService = apiService.getGroupService(user.getMtklNr(), manager.getUserPassword());
-
-        hideForm();
+        GroupService service = prepareForGroupServiceCall();
 
         if (group.getId() > 0) {
-            editGroup(groupService);
+            editGroup(service);
         } else {
-            addGroup(groupService);
+            addGroup(service);
         }
     }
 
     @Override
     public void onValidationFailed(List<ValidationError> errors) {
         Toast.makeText(this, R.string.group_add_validation_error, Toast.LENGTH_LONG).show();
+    }
+
+    private GroupService prepareForGroupServiceCall() {
+        ApiServiceFactory apiService = ApiServiceFactory.getInstance();
+        UserManager manager = UserManager.getInstance(this);
+        GroupService groupService = apiService.getGroupService(myUser.getMtklNr(), manager.getUserPassword());
+
+        hideForm();
+
+        return groupService;
     }
 
     private void editGroup(GroupService groupService) {
@@ -228,6 +263,18 @@ public class GroupFormActivity extends AppCompatActivity implements Validator.Va
                 showForm();
             }
         });
+    }
+
+    private void exitGroup() {
+        if(myUser.getMtklNr().equals(group.getOwner())) {
+            group.setOwner(null);
+        }
+
+        List<User> users = group.getUsers();
+        users.remove(myUser);
+
+        GroupService service = prepareForGroupServiceCall();
+        editGroup(service);
     }
 
     private void showForm() {
