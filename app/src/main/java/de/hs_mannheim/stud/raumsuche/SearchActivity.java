@@ -1,9 +1,11 @@
 package de.hs_mannheim.stud.raumsuche;
 
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -312,11 +314,12 @@ public class SearchActivity extends AppCompatActivity {
             queryParams.add("Lose Bestuhlung");
         }
 
-
+        final ProgressDialog dialog = ProgressDialog.show(this,"Suchen","Suche Räume",true,false);
         Call<List<Room>> call = roomService.findRooms(query);
         call.enqueue(new Callback<List<Room>>() {
             @Override
-            public void onResponse(Response<List<Room>> response, Retrofit retrofit) {        dialog.dismiss();
+            public void onResponse(Response<List<Room>> response, Retrofit retrofit) {
+                dialog.dismiss();
                 List<Room> rooms = response.body();
                 Log.e("SearchActivity","yay");
                 Parcelable wrapped = Parcels.wrap(rooms);
