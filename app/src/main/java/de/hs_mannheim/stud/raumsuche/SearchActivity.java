@@ -265,6 +265,8 @@ public class SearchActivity extends AppCompatActivity {
             case R.id.search_menu_search:
                 searchForRooms();
                 break;
+            case android.R.id.home:
+                onBackPressed();
             default:
                 return true;
         }
@@ -285,6 +287,9 @@ public class SearchActivity extends AppCompatActivity {
         }
         if(!textSearchDate.getText().toString().equals("Heute")){
             query.put("day",selectedDate.get(Calendar.DAY_OF_WEEK)+"");
+        }
+        if(!textSearchDate.getText().toString().equals("Jede Zeitstunde")){
+            //query.put("hour",se);
         }
         final ArrayList<String> queryParams = new ArrayList<>();
         if(switchPool.isChecked()){
