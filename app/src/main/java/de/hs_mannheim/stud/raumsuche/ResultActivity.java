@@ -27,7 +27,6 @@ import de.hs_mannheim.stud.raumsuche.models.Building;
 import de.hs_mannheim.stud.raumsuche.models.Room;
 import de.hs_mannheim.stud.raumsuche.models.RoomQuery;
 import de.hs_mannheim.stud.raumsuche.models.RoomResult;
-import de.hs_mannheim.stud.raumsuche.models.DummyData;
 
 public class ResultActivity extends AppCompatActivity implements OnMapReadyCallback, ResultFragment.OnResultSelectedListener {
 
@@ -63,22 +62,6 @@ public class ResultActivity extends AppCompatActivity implements OnMapReadyCallb
 
                 results.add(result);
             }
-        } else {
-            Log.e("SearchActivity", "boo");
-            // TODO: Remove Test-Data
-            RoomResult testA = DummyData.buildTestResult(this, "A");
-            RoomResult testB = DummyData.buildTestResult(this, "B");
-            RoomResult testG = DummyData.buildTestResult(this, "G");
-            RoomResult testH = DummyData.buildTestResult(this, "H");
-            RoomResult testL = DummyData.buildTestResult(this, "L");
-            RoomResult testS = DummyData.buildTestResult(this, "S");
-            results = new ArrayList<RoomResult>();
-            results.add(testA);
-            results.add(testB);
-            results.add(testG);
-            results.add(testH);
-            results.add(testL);
-            results.add(testS);
         }
 
         if (getIntent().getStringArrayListExtra("searchQuery") != null) {
@@ -86,10 +69,6 @@ public class ResultActivity extends AppCompatActivity implements OnMapReadyCallb
             RoomQuery searchQuery = new RoomQuery();
             searchQuery.setProperties(queryParams);
             query = searchQuery;
-        }else{
-            // TODO: Remove Test-Query
-            RoomQuery testQuery = DummyData.buildTestQuery(this);
-            query = testQuery;
         }
 
         listFragment.updateResultList(results, query);
