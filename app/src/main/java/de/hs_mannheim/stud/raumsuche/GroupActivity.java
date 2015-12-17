@@ -2,6 +2,7 @@ package de.hs_mannheim.stud.raumsuche;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ListView;
@@ -30,7 +31,7 @@ import retrofit.Callback;
 import retrofit.Response;
 import retrofit.Retrofit;
 
-public class GroupActivity extends AppCompatActivity {
+public class GroupActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener {
 
     @Bind(R.id.group_list)
     ListView list;
@@ -41,6 +42,9 @@ public class GroupActivity extends AppCompatActivity {
     @Bind(R.id.group_loading_progress)
     ProgressBar loadingProgress;
 
+    @Bind(R.id.group_swipe)
+    SwipeRefreshLayout swipeRefreshLayout;
+
     private GroupListAdapter adapter;
 
     @Override
@@ -48,7 +52,8 @@ public class GroupActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_group);
         ButterKnife.bind(this);
-
+        swipeRefreshLayout.setOnRefreshListener(this);
+        swipeRefreshLayout.setColorSchemeColors(R.color.colorPrimary,R.color.colorPrimaryDark);
         initComponents();
         loadGroups();
     }
@@ -74,6 +79,12 @@ public class GroupActivity extends AppCompatActivity {
         list.setAdapter(adapter);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        loadGroups();
+    }
+
     private void loadGroups() {
         UserManager manager = UserManager.getInstance(this);
         User user = manager.getUser();
@@ -86,6 +97,7 @@ public class GroupActivity extends AppCompatActivity {
             @Override
             public void onResponse(Response<List<Group>> response, Retrofit retrofit) {
                 loadingProgress.setVisibility(View.GONE);
+                swipeRefreshLayout.setRefreshing(false);
                 List<Group> groups = response.body();
 
                 if (groups != null) {
@@ -104,6 +116,7 @@ public class GroupActivity extends AppCompatActivity {
             @Override
             public void onFailure(Throwable t) {
                 loadingProgress.setVisibility(View.GONE);
+                swipeRefreshLayout.setRefreshing(false);
                 showError();
             }
         });
@@ -111,5 +124,10 @@ public class GroupActivity extends AppCompatActivity {
 
     private void showError() {
         Toast.makeText(GroupActivity.this, R.string.unknown_error, Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onRefresh() {
+        loadGroups();
     }
 }
