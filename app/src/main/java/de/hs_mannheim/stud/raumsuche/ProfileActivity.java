@@ -70,7 +70,8 @@ public class ProfileActivity extends AppCompatActivity implements Validator.Vali
         hideForm();
 
         ApiServiceFactory services = ApiServiceFactory.getInstance();
-        UserService userService = services.getUserService(user.getMtklNr(), manager.getUserPassword());
+        UserManager manager = UserManager.getInstance(this);
+        UserService userService = services.getUserService(manager.getUser().getMtklNr(), manager.getUserPassword());
 
         String name = nameInput.getText().toString();
         String faculty = facultySpinner.getSelectedItem().toString();
@@ -99,6 +100,7 @@ public class ProfileActivity extends AppCompatActivity implements Validator.Vali
 
             @Override
             public void onFailure(Throwable t) {
+                Log.e("ProfileActivity","Error",t);
                 showError();
                 showForm();
             }
