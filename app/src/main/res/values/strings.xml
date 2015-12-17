@@ -83,5 +83,12 @@
     <string name="group_name">Gruppenname</string>
     <string name="group_add_user">Matrikelnummer</string>
     <string name="add">Hinzufügen</string>
+    <string name="group_add_user_already_added">Matrikelnummer ist bereits in der Gruppe</string>
+    <string name="save">Speichern</string>
+    <string name="search">Suchen</string>
+    <string name="group_add_validation_error">Bitte gebe einen Gruppennamen ein</string>
+    <string name="group_exit">Gruppe verlassen</string>
+    <string name="group_form_edit_title">%1$s bearbeiten</string>
+    <string name="group_form_add_title">Gruppe erstellen</string>
 
 </resources>

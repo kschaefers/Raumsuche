@@ -61,16 +61,20 @@ public class UserManager {
 
     public User getUser() {
         String studentId = prefs.getString(SP_STUDENTID, null);
-        String password = prefs.getString(SP_PASSWORD, null);
         String name = prefs.getString(SP_NAME, "");
         String faculty = prefs.getString(SP_FACULTY, "");
 
         User user = new User();
         user.setMtklNr(studentId);
-        user.setPassword(password);
         user.setName(name);
         user.setFaculty(faculty);
 
         return user;
+    }
+
+    public String getUserPassword() {
+        String password = prefs.getString(SP_PASSWORD, null);
+
+        return password;
     }
 }

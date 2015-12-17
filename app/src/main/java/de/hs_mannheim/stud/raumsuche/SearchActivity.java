@@ -278,7 +278,7 @@ public class SearchActivity extends AppCompatActivity {
         UserManager manager = UserManager.getInstance(this);
         User user = manager.getUser();
         ApiServiceFactory services = ApiServiceFactory.getInstance();
-        RoomService roomService = services.getRoomService(user.getMtklNr(),user.getPassword());
+        RoomService roomService = services.getRoomService(user.getMtklNr(),manager.getUserPassword());
         HashMap<String,String> query = new HashMap<>();
         if(!textSearchRoomSize.getText().toString().equals(getString(R.string.anyRoomSize))){
             query.put("size",textSearchRoomSize.getText().toString());
@@ -307,7 +307,6 @@ public class SearchActivity extends AppCompatActivity {
             query.put("looseSeating","1");
             queryParams.add("Lose Bestuhlung");
         }
-
 
         Call<List<Room>> call = roomService.findRooms(query);
         call.enqueue(new Callback<List<Room>>() {

@@ -48,6 +48,7 @@ public class ProfileActivity extends AppCompatActivity implements Validator.Vali
 
     Validator validator;
 
+    private UserManager manager;
     private User user;
 
     @Override
@@ -69,14 +70,13 @@ public class ProfileActivity extends AppCompatActivity implements Validator.Vali
         hideForm();
 
         ApiServiceFactory services = ApiServiceFactory.getInstance();
-        UserService userService = services.getUserService(user.getMtklNr(), user.getPassword());
+        UserService userService = services.getUserService(user.getMtklNr(), manager.getUserPassword());
 
         String name = nameInput.getText().toString();
         String faculty = facultySpinner.getSelectedItem().toString();
 
         final User updatedUser = new User();
         updatedUser.setMtklNr(user.getMtklNr());
-        updatedUser.setPassword(user.getPassword());
         updatedUser.setName(name);
         updatedUser.setFaculty(faculty);
 

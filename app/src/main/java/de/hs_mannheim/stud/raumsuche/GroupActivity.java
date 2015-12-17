@@ -9,12 +9,16 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.parceler.Parcels;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.OnItemClick;
+import butterknife.OnItemSelected;
 import de.hs_mannheim.stud.raumsuche.managers.UserManager;
 import de.hs_mannheim.stud.raumsuche.models.Group;
 import de.hs_mannheim.stud.raumsuche.models.User;
@@ -51,8 +55,17 @@ public class GroupActivity extends AppCompatActivity {
 
     @OnClick(R.id.group_add_button)
     public void addGroup() {
-        Intent addGroup = new Intent(this, GroupAddActivity.class);
-        startActivityForResult(addGroup, 0);
+        Intent addGroupIntent = new Intent(this, GroupFormActivity.class);
+        startActivityForResult(addGroupIntent, 0);
+    }
+
+    @OnItemClick(R.id.group_list)
+    public void editGroup(int position) {
+        Group group = (Group) adapter.getItem(position);
+
+        Intent editGroupIntent = new Intent(this, GroupFormActivity.class);
+        editGroupIntent.putExtra(GroupFormActivity.BK_EDIT_GROUP, Parcels.wrap(group));
+        startActivityForResult(editGroupIntent, 0);
     }
 
     private void initComponents() {
@@ -66,7 +79,7 @@ public class GroupActivity extends AppCompatActivity {
         User user = manager.getUser();
 
         ApiServiceFactory serviceFactory = ApiServiceFactory.getInstance();
-        GroupService groupService = serviceFactory.getGroupService(user.getMtklNr(), user.getPassword());
+        GroupService groupService = serviceFactory.getGroupService(user.getMtklNr(), manager.getUserPassword());
 
         Call<List<Group>> call = groupService.listUserGroups(user.getMtklNr());
         call.enqueue(new Callback<List<Group>>() {
