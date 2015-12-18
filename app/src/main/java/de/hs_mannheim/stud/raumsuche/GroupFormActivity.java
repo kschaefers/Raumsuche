@@ -42,6 +42,9 @@ public class GroupFormActivity extends AppCompatActivity implements Validator.Va
 
     public static final String BK_EDIT_GROUP = "edit_group";
 
+    @Bind(R.id.group_form_user_inputlayout)
+    View userInputLayout;
+
     @NotEmpty
     @Bind(R.id.group_form_name_input)
     EditText nameInput;
@@ -51,6 +54,9 @@ public class GroupFormActivity extends AppCompatActivity implements Validator.Va
 
     @Bind(R.id.group_form_user_list)
     ListView userList;
+
+    @Bind(R.id.group_form_user_addbutton)
+    Button addUserButton;
 
     @Bind(R.id.group_form_layout)
     View formLayout;
@@ -144,6 +150,11 @@ public class GroupFormActivity extends AppCompatActivity implements Validator.Va
 
         adapter = new GroupAddListAdapter(this, group);
         userList.setAdapter(adapter);
+
+        if(!myUser.getMtklNr().equals(group.getOwner())) {
+            userInputLayout.setVisibility(View.GONE);
+            addUserButton.setVisibility(View.GONE);
+        }
 
         if (group.getId() > 0) {
             exitGroupButton.setVisibility(View.VISIBLE);
