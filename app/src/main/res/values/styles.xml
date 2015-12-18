@@ -32,4 +32,15 @@
         <item name="android:fontFamily">sans-serif-light</item>
         <item name="android:textColor">@color/textNormal</item>
     </style>
+
+    <style name="TextBadge" parent="TextNormal">
+        <item name="android:textColor">@color/colorPrimary</item>
+        <item name="android:textSize">11sp</item>
+        <item name="android:background">@drawable/textview_border</item>
+    </style>
+
+    <style name="TextSmallLabel" parent="TextAppearance.AppCompat.Body1">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/textNormal</item>
+    </style>
 </resources>

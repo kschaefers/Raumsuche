@@ -1,27 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="60dp"
-    android:padding="16dp"
-    >
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="8dp">
 
     <TextView
-        android:id="@+id/group_form_user_name"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:text=""
-        android:gravity="center_vertical"
-        style="@style/TextHeadline"
-        />
+        android:id="@+id/group_form_user_item_owner"
+        style="@style/TextBadge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:text="@string/group_admin" />
 
-    <TextView
-        android:id="@+id/group_form_user_studentid"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:text=""
-        style="@style/TextNormal"
-        />
+        android:layout_height="60dp"
+        android:layout_alignParentTop="true"
+        android:layout_toLeftOf="@id/group_form_user_item_owner"
+        android:orientation="vertical">
 
-</LinearLayout>
+        <TextView
+            android:id="@+id/group_form_user_item_name"
+            style="@style/TextHeadline"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:gravity="center_vertical" />
+
+        <TextView
+            android:id="@+id/group_form_user_item_studentid"
+            style="@style/TextNormal"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:visibility="gone" />
+
+    </LinearLayout>
+
+</RelativeLayout>

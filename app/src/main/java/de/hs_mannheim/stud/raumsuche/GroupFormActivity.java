@@ -142,7 +142,7 @@ public class GroupFormActivity extends AppCompatActivity implements Validator.Va
 
         nameInput.setText(group.getName());
 
-        adapter = new GroupAddListAdapter(this, group.getUsers());
+        adapter = new GroupAddListAdapter(this, group);
         userList.setAdapter(adapter);
 
         if(group.getId() > 0) {

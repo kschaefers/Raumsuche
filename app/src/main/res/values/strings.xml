@@ -92,5 +92,7 @@
     <string name="group_form_add_title">Gruppe erstellen</string>
     <string name="group_form_exit">Möchtest du %1$s wirklich verlassen?</string>
     <string name="cancel">Abbrechen</string>
+    <string name="group_admin">Gruppen-Admin</string>
+    <string name="group_form_participants">Teilnehmer</string>
 
 </resources>

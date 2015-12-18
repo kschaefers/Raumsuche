@@ -6,6 +6,7 @@ import android.util.Base64;
 import com.squareup.okhttp.Interceptor;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
+import com.squareup.okhttp.logging.HttpLoggingInterceptor;
 
 import java.io.IOException;
 
@@ -24,11 +25,15 @@ public class ApiServiceFactory {
     private static ApiServiceFactory instance;
     private Retrofit.Builder retrofitBuilder;
     private OkHttpClient httpClient;
+    private HttpLoggingInterceptor logging;
 
     private ApiServiceFactory() {
         retrofitBuilder = new Retrofit.Builder()
                 .baseUrl(Config.baseUrl)
                 .addConverterFactory(GsonConverterFactory.create());
+
+        logging = new HttpLoggingInterceptor();
+        logging.setLevel(HttpLoggingInterceptor.Level.BODY);
 
         httpClient = new OkHttpClient();
     }
@@ -58,12 +63,13 @@ public class ApiServiceFactory {
     }
 
     public <S> S createService(Class<S> serviceClass, String username, String password) {
+        httpClient.interceptors().clear();
+
         if (username != null && password != null) {
             String credentials = username + ":" + password;
             final String basic =
                     "Basic " + Base64.encodeToString(credentials.getBytes(), Base64.NO_WRAP);
 
-            httpClient.interceptors().clear();
             httpClient.interceptors().add(new Interceptor() {
                 @Override
                 public com.squareup.okhttp.Response intercept(Chain chain) throws IOException {
@@ -79,6 +85,8 @@ public class ApiServiceFactory {
                 }
             });
         }
+
+        httpClient.interceptors().add(logging);
 
         Retrofit retrofit = retrofitBuilder.client(httpClient).build();
         return retrofit.create(serviceClass);

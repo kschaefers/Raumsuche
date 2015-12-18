@@ -8,12 +8,15 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import org.w3c.dom.Text;
+
 import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import de.hs_mannheim.stud.raumsuche.R;
 import de.hs_mannheim.stud.raumsuche.managers.UserManager;
+import de.hs_mannheim.stud.raumsuche.models.Group;
 import de.hs_mannheim.stud.raumsuche.models.User;
 
 /**
@@ -24,13 +27,15 @@ public class GroupAddListAdapter extends BaseAdapter {
     Resources res;
     LayoutInflater inflater;
 
+    Group group;
     List<User> users;
     User myUser;
 
 
-    public GroupAddListAdapter(Context context, List<User> users) {
+    public GroupAddListAdapter(Context context, Group group) {
         this.res = context.getResources();
-        this.users = users;
+        this.group = group;
+        this.users = group.getUsers();
 
         this.inflater = LayoutInflater.from(context);
 
@@ -81,6 +86,12 @@ public class GroupAddListAdapter extends BaseAdapter {
             holder.studentid.setVisibility(View.GONE);
         }
 
+        if(user.getMtklNr().equals(group.getOwner())) {
+            holder.owner.setVisibility(View.VISIBLE);
+        } else {
+            holder.owner.setVisibility(View.INVISIBLE);
+        }
+
         return view;
     }
 
@@ -89,10 +100,12 @@ public class GroupAddListAdapter extends BaseAdapter {
     }
 
     static class ViewHolder {
-        @Bind(R.id.group_form_user_name)
+        @Bind(R.id.group_form_user_item_name)
         TextView name;
-        @Bind(R.id.group_form_user_studentid)
+        @Bind(R.id.group_form_user_item_studentid)
         TextView studentid;
+        @Bind(R.id.group_form_user_item_owner)
+        TextView owner;
 
         public ViewHolder(View view) {
             ButterKnife.bind(this, view);

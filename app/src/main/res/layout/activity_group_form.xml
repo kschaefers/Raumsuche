@@ -55,6 +55,17 @@
                 android:inputType="number" />
         </android.support.design.widget.TextInputLayout>
 
+        <TextView
+            android:id="@+id/group_form_participant_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/group_form_user_inputlayout"
+            android:layout_marginTop="16dp"
+            android:layout_marginLeft="4dp"
+            android:text="@string/group_form_participants"
+            style="@style/TextSmallLabel"
+            />
+
         <Button
             android:id="@+id/group_form_exit"
             android:layout_width="match_parent"
@@ -68,7 +79,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_above="@id/group_form_exit"
-            android:layout_below="@id/group_form_user_inputlayout"
+            android:layout_below="@id/group_form_participant_label"
             android:layout_marginBottom="8dp" />
 
     </RelativeLayout>
