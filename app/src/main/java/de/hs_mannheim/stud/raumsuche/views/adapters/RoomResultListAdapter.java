@@ -95,9 +95,9 @@ public class RoomResultListAdapter extends BaseAdapter {
         holder.building.setText(room.getBuilding());
 
         holder.availability.setText(roomResult.getAvailable());
-
         SpannableStringBuilder propertiesSpannable = buildPropertiesSpannable(room.getRoomProperties(), color);
         holder.properties.setText(propertiesSpannable, TextView.BufferType.SPANNABLE);
+
 
         GradientDrawable shape = (GradientDrawable) holder.building.getBackground();
         shape.setColor(color);
@@ -111,16 +111,17 @@ public class RoomResultListAdapter extends BaseAdapter {
         String propertiesAsString = TextUtils.join(", ", properties);
         SpannableStringBuilder builder = new SpannableStringBuilder(propertiesAsString);
 
-        int alphaColor = Color.argb(48, Color.red(color), Color.green(color), Color.blue(color));
+        if (query != null) {
+            int alphaColor = Color.argb(48, Color.red(color), Color.green(color), Color.blue(color));
 
-        for (String searchedProperty : query.getProperties()) {
-            int propertyIndex = propertiesAsString.indexOf(searchedProperty);
+            for (String searchedProperty : query.getProperties()) {
+                int propertyIndex = propertiesAsString.indexOf(searchedProperty);
 
-            if (propertyIndex != -1) {
-                builder.setSpan(new BackgroundColorSpan(alphaColor), propertyIndex, propertyIndex + searchedProperty.length(), Spannable.SPAN_INCLUSIVE_INCLUSIVE);
+                if (propertyIndex != -1) {
+                    builder.setSpan(new BackgroundColorSpan(alphaColor), propertyIndex, propertyIndex + searchedProperty.length(), Spannable.SPAN_INCLUSIVE_INCLUSIVE);
+                }
             }
         }
-
         return builder;
     }
 
