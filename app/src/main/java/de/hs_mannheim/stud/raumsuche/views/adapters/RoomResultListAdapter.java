@@ -97,6 +97,7 @@ public class RoomResultListAdapter extends BaseAdapter {
         holder.availability.setText(roomResult.getAvailable());
         SpannableStringBuilder propertiesSpannable = buildPropertiesSpannable(room.getRoomProperties(), color);
         holder.properties.setText(propertiesSpannable, TextView.BufferType.SPANNABLE);
+        holder.size.setText(room.getSize() + " Plätze");
 
 
         GradientDrawable shape = (GradientDrawable) holder.building.getBackground();
@@ -142,6 +143,8 @@ public class RoomResultListAdapter extends BaseAdapter {
         TextView availability;
         @Bind(R.id.room_properties)
         TextView properties;
+        @Bind(R.id.room_size)
+        TextView size;
 
         public ViewHolder(View view) {
             ButterKnife.bind(this, view);
