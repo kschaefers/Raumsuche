@@ -8,8 +8,6 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
-
 import java.util.List;
 
 import butterknife.Bind;
@@ -79,14 +77,14 @@ public class GroupAddListAdapter extends BaseAdapter {
             holder.name.setText(user.getDisplayName());
         }
 
-        if(user.getName() != null && !user.getName().isEmpty()) {
+        if (user.getName() != null && !user.getName().isEmpty()) {
             holder.studentid.setVisibility(View.VISIBLE);
             holder.studentid.setText(user.getMtklNr());
         } else {
             holder.studentid.setVisibility(View.GONE);
         }
 
-        if(user.getMtklNr().equals(group.getOwner())) {
+        if (user.getMtklNr().equals(group.getOwner())) {
             holder.owner.setVisibility(View.VISIBLE);
         } else {
             holder.owner.setVisibility(View.INVISIBLE);

@@ -145,7 +145,7 @@ public class GroupFormActivity extends AppCompatActivity implements Validator.Va
         adapter = new GroupAddListAdapter(this, group);
         userList.setAdapter(adapter);
 
-        if(group.getId() > 0) {
+        if (group.getId() > 0) {
             exitGroupButton.setVisibility(View.VISIBLE);
         }
     }
@@ -266,7 +266,7 @@ public class GroupFormActivity extends AppCompatActivity implements Validator.Va
     }
 
     private void exitGroup() {
-        if(myUser.getMtklNr().equals(group.getOwner())) {
+        if (myUser.getMtklNr().equals(group.getOwner())) {
             group.setOwner(null);
         }
 
