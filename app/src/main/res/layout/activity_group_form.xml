@@ -73,6 +73,7 @@
             android:text="@string/group_form_participants" />
 
         <Button
+            style="@style/DangerButton"
             android:id="@+id/group_form_exit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -86,7 +87,8 @@
             android:layout_height="wrap_content"
             android:layout_above="@id/group_form_exit"
             android:layout_below="@id/group_form_participant_label"
-            android:layout_marginBottom="8dp" />
+            android:layout_marginBottom="8dp"
+            />
 
     </RelativeLayout>
 

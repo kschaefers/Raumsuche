@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import java.util.List;
@@ -58,7 +59,7 @@ public class GroupAddListAdapter extends BaseAdapter {
 
     @Override
     public View getView(int i, View convertView, ViewGroup viewGroup) {
-        User user = users.get(i);
+        final User user = users.get(i);
 
         ViewHolder holder;
         View view = convertView;
@@ -84,8 +85,23 @@ public class GroupAddListAdapter extends BaseAdapter {
             holder.studentid.setVisibility(View.GONE);
         }
 
+        holder.deleteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                users.remove(user);
+                notifyDataSetChanged();
+            }
+        });
+
+        if(myUser.getMtklNr().equals(group.getOwner())) {
+            holder.deleteButton.setVisibility(View.VISIBLE);
+        } else {
+            holder.deleteButton.setVisibility(View.GONE);
+        }
+
         if (user.getMtklNr().equals(group.getOwner())) {
             holder.owner.setVisibility(View.VISIBLE);
+            holder.deleteButton.setVisibility(View.GONE);
         } else {
             holder.owner.setVisibility(View.INVISIBLE);
         }
@@ -98,6 +114,8 @@ public class GroupAddListAdapter extends BaseAdapter {
     }
 
     static class ViewHolder {
+        @Bind(R.id.group_form_user_item_deletebutton)
+        ImageButton deleteButton;
         @Bind(R.id.group_form_user_item_name)
         TextView name;
         @Bind(R.id.group_form_user_item_studentid)

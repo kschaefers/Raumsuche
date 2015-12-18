@@ -11,8 +11,11 @@
     <color name="blue">#007AFF</color>
     <color name="green">#4CD964</color>
     <color name="red">#FF3B30</color>
+    <color name="darkred">#BF2C24</color>
     <color name="grey">#8E8E93</color>
 
     <color name="textHeadline">#333</color>
     <color name="textNormal">#666</color>
+
+    <color name="separator">#CCC</color>
 </resources>

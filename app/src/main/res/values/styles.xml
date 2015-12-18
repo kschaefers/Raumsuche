@@ -21,6 +21,8 @@
     <style name="TextHeadline" parent="TextAppearance.AppCompat.Headline">
         <item name="android:fontFamily">sans-serif-light</item>
         <item name="android:text">@color/textHeadline</item>
+        <item name="android:textSize">18sp</item>
+
     </style>
 
     <style name="TextNormal" parent="TextAppearance.AppCompat.Body1">
@@ -42,5 +44,10 @@
     <style name="TextSmallLabel" parent="TextAppearance.AppCompat.Body1">
         <item name="android:textSize">12sp</item>
         <item name="android:textColor">@color/textNormal</item>
+    </style>
+    
+    <style name="DangerButton" parent="Base.TextAppearance.AppCompat.Button">
+        <item name="android:background">@drawable/danger_button_background</item>
+        <item name="android:textColor">@android:color/white</item>
     </style>
 </resources>
