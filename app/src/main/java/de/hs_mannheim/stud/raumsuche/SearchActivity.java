@@ -66,7 +66,7 @@ public class SearchActivity extends AppCompatActivity {
     protected LinearLayout searchLayout;
 
     private boolean[] mSelectedBuilding;
-    private boolean[] mSelectedRoomSize;
+    private int mSelectedRoomSize;
     private boolean[] mSelectedTimes;
 
     private GregorianCalendar selectedDate = new GregorianCalendar();
@@ -80,7 +80,7 @@ public class SearchActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         mSelectedBuilding = new boolean[getResources().getStringArray(R.array.buildings).length];
-        mSelectedRoomSize = new boolean[getResources().getStringArray(R.array.roomSizes).length];
+        mSelectedRoomSize = -1;
         mSelectedTimes = new boolean[getResources().getStringArray(R.array.times).length];
 
         initializeTextViews();
@@ -119,7 +119,7 @@ public class SearchActivity extends AppCompatActivity {
         textSearchRoomSize.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showSelectDialog("Raumgröße", getResources().getStringArray(R.array.roomSizes), mSelectedRoomSize);
+                showSingleSelectDialog("Raumgröße", getResources().getStringArray(R.array.roomSizes), mSelectedRoomSize);
             }
         });
     }
@@ -158,6 +158,35 @@ public class SearchActivity extends AppCompatActivity {
         builder.show();
     }
 
+    private void showSingleSelectDialog(final String title, final String[] choices, int mSelectedItem) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        final int[] newSelectedItem = new int[1];
+
+        builder.setTitle(title).setSingleChoiceItems(choices, mSelectedItem, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                newSelectedItem[0] = which;
+            }
+        });
+
+        builder.setPositiveButton(R.string.OK, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int id) {
+                acceptSelectedItemsRoomSize(newSelectedItem[0]);
+                dialog.dismiss();
+            }
+        }).setNegativeButton(getString(R.string.Cancel), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+
+        AlertDialog dialog = builder.create();
+
+        dialog.show();
+    }
+
     private void showSelectDialog(final String title, final String[] choices, boolean[] mSelectedItems) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         final boolean[] newSelectedItems = mSelectedItems.clone();
@@ -175,9 +204,6 @@ public class SearchActivity extends AppCompatActivity {
                 switch (title) {
                     case "Gebäude":
                         acceptSelectedItemsBuilding(newSelectedItems);
-                        break;
-                    case "Raumgröße":
-                        acceptSelectedItemsRoomSize(newSelectedItems);
                         break;
                     case "Zeitstunde":
                         acceptSelectedItemsTimes(newSelectedItems);
@@ -199,22 +225,9 @@ public class SearchActivity extends AppCompatActivity {
         dialog.show();
     }
 
-    private void acceptSelectedItemsRoomSize(boolean[] newList) {
-        mSelectedRoomSize = newList;
-
-        String selectedRoomSizes = "";
-        for (int i = 0; i < mSelectedRoomSize.length; i++) {
-            if (mSelectedRoomSize[i]) {
-                if (!selectedRoomSizes.equals("")) {
-                    selectedRoomSizes += ", ";
-                }
-                selectedRoomSizes += getResources().getStringArray(R.array.roomSizes)[i];
-            }
-        }
-        if (selectedRoomSizes.equals("")) {
-            selectedRoomSizes = getString(R.string.anyRoomSize);
-        }
-        textSearchRoomSize.setText(selectedRoomSizes);
+    private void acceptSelectedItemsRoomSize(int selected) {
+        mSelectedRoomSize = selected;
+        textSearchRoomSize.setText(getResources().getStringArray(R.array.roomSizes)[mSelectedRoomSize]);
     }
 
     private void acceptSelectedItemsBuilding(boolean[] newList) {
@@ -266,7 +279,7 @@ public class SearchActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case R.id.search_menu_search:
                 searchForRooms();
                 break;
@@ -282,39 +295,50 @@ public class SearchActivity extends AppCompatActivity {
     }
 
     private void searchForRooms() {
-        final ProgressDialog dialog = ProgressDialog.show(this,"Suchen","Suche Räume",true,false);
+        final ProgressDialog dialog = ProgressDialog.show(this, "Suchen", "Suche Räume", true, false);
         ApiServiceFactory services = ApiServiceFactory.getInstance();
         RoomService roomService = services.getRoomService();
-        HashMap<String,String> query = new HashMap<>();
+        HashMap<String, String> query = new HashMap<>();
 
-        if(!textSearchRoomSize.getText().toString().equals(getString(R.string.anyRoomSize))){
-            query.put("size",textSearchRoomSize.getText().toString());
+        if (!textSearchRoomSize.getText().toString().equals(getString(R.string.anyRoomSize))) {
+            query.put("size", getResources().getStringArray(R.array.roomSizesNumbers)[mSelectedRoomSize]);
         }
-        if(!textSearchDate.getText().toString().equals("Heute")){
-            query.put("day",selectedDate.get(Calendar.DAY_OF_WEEK)+"");
+        if (!(textSearchBuilding.getText().toString().equals(getString(R.string.anyBuilding)))) {
+            String selectedBuildings = "";
+            for (int i = 0; i < mSelectedBuilding.length; i++) {
+                selectedBuildings += mSelectedBuilding[i] ? "," + getResources().getStringArray(R.array.buildingNames)[i] : "";
+            }
+            query.put("building", selectedBuildings.substring(1));
         }
-        if(!textSearchDate.getText().toString().equals("Jede Zeitstunde")){
-            //query.put("hour",se);
+        if (!textSearchDate.getText().toString().equals("Heute")) {
+            query.put("day", selectedDate.get(Calendar.DAY_OF_WEEK) + "");
+        }
+        if (!textSearchTime.getText().toString().equals("Jede Zeitstunde")) {
+            String selectedTimes = "";
+            for (int i = 0; i < mSelectedTimes.length; i++) {
+                selectedTimes += mSelectedTimes[i] ? "," + (i + 1) : "";
+            }
+            query.put("hour", selectedTimes.substring(1));
         }
         final ArrayList<String> queryParams = new ArrayList<>();
-        if(switchPool.isChecked()){
-            query.put("pool","1");
+        if (switchPool.isChecked()) {
+            query.put("pool", "1");
             queryParams.add("Poolraum");
         }
-        if(switchComputer.isChecked()){
-            query.put("computer","1");
+        if (switchComputer.isChecked()) {
+            query.put("computer", "1");
             queryParams.add("Computer");
         }
-        if(switchBeamer.isChecked()){
-            query.put("beamer","1");
+        if (switchBeamer.isChecked()) {
+            query.put("beamer", "1");
             queryParams.add("Beamer");
         }
-        if(switchVideo.isChecked()){
-            query.put("video","1");
+        if (switchVideo.isChecked()) {
+            query.put("video", "1");
             queryParams.add("Video");
         }
-        if(switchLooseSeating.isChecked()){
-            query.put("looseSeating","1");
+        if (switchLooseSeating.isChecked()) {
+            query.put("looseSeating", "1");
             queryParams.add("Lose Bestuhlung");
         }
 
@@ -323,7 +347,7 @@ public class SearchActivity extends AppCompatActivity {
             @Override
             public void onResponse(Response<List<Room>> response, Retrofit retrofit) {
                 List<Room> rooms = response.body();
-                Log.e("SearchActivity","yay");
+                Log.e("SearchActivity", "yay");
                 Parcelable wrapped = Parcels.wrap(rooms);
 
                 Intent resultIntent = new Intent();

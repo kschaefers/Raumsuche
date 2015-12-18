@@ -11,7 +11,6 @@
         android:layout_centerVertical="true"
         android:layout_marginRight="10dp"
         android:gravity="center"
-        android:text="M"
         android:textSize="28sp"
         android:textColor="@android:color/white"
         android:fontFamily="sans-serif-light"
@@ -23,7 +22,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
-        android:text="4. Block"
         style="@style/TextNormal"
         />
 
@@ -33,7 +31,6 @@
         android:layout_height="wrap_content"
         android:layout_toRightOf="@id/room_building"
         android:layout_toLeftOf="@id/room_availability"
-        android:text="H0407"
         style="@style/TextHeadline"
         />
 
@@ -43,7 +40,16 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/room_identifier"
         android:layout_alignLeft="@id/room_identifier"
-        android:text="Lose Bestuhlung, Beamer"
+        style="@style/TextNormal"
+        />
+
+    <TextView
+        android:id="@+id/room_size"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/room_availability"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
         style="@style/TextNormal"
         />
 </RelativeLayout>

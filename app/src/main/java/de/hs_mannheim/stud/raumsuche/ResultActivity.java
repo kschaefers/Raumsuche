@@ -4,6 +4,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.MenuItem;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -122,5 +123,18 @@ public class ResultActivity extends AppCompatActivity implements OnMapReadyCallb
 
         Marker marker = mapMarkers.get(room.getBuilding());
         googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(marker.getPosition(), 18.f));
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }
