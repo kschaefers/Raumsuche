@@ -6,11 +6,11 @@
 
     <TextView
         android:id="@+id/group_item_owner"
-        style="@style/TextNormal"
+        style="@style/TextBadge"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
-        android:text="Gruppen-Admin" />
+        android:text="@string/group_admin" />
 
     <TextView
         android:id="@+id/group_item_name"

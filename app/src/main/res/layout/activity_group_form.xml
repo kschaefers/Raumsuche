@@ -7,68 +7,88 @@
         android:id="@+id/group_form_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_alignParentTop="true"
         android:layout_alignParentBottom="true"
+        android:layout_alignParentTop="true"
         android:padding="16dp">
 
-        <android.support.design.widget.TextInputLayout
-            android:id="@+id/group_form_name_inputlayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_marginTop="8dp">
-
-            <EditText
-                android:id="@+id/group_form_name_input"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:hint="@string/group_name"
-                android:inputType="text" />
-        </android.support.design.widget.TextInputLayout>
-
-        <Button
-            android:id="@+id/group_form_user_addbutton"
+        <RelativeLayout
+            android:id="@+id/group_form_inputfields_layout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_below="@id/group_form_name_inputlayout"
-            android:layout_marginLeft="4dp"
-            android:layout_marginTop="16dp"
-            android:text="@string/add"
+            android:layout_alignParentTop="true"
+            >
 
-            />
-
-        <android.support.design.widget.TextInputLayout
-            android:id="@+id/group_form_user_inputlayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignTop="@id/group_form_user_addbutton"
-            android:layout_toLeftOf="@id/group_form_user_addbutton">
-
-            <EditText
-                android:id="@+id/group_form_user_input"
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/group_form_name_inputlayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:ems="10"
-                android:hint="@string/group_add_user"
-                android:inputType="number" />
-        </android.support.design.widget.TextInputLayout>
+                android:layout_alignParentTop="true"
+                android:layout_marginTop="8dp">
+
+                <EditText
+                    android:id="@+id/group_form_name_input"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:hint="@string/group_name"
+                    android:inputType="text" />
+            </android.support.design.widget.TextInputLayout>
+
+            <Button
+                android:id="@+id/group_form_user_addbutton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_below="@id/group_form_name_inputlayout"
+                android:layout_marginLeft="4dp"
+                android:layout_marginTop="16dp"
+                android:text="@string/add"
+                />
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/group_form_user_inputlayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@id/group_form_user_addbutton"
+                android:layout_toLeftOf="@id/group_form_user_addbutton">
+
+                <EditText
+                    android:id="@+id/group_form_user_input"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:hint="@string/group_add_user"
+                    android:inputType="number" />
+            </android.support.design.widget.TextInputLayout>
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/group_form_participant_label"
+            style="@style/TextSmallLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/group_form_inputfields_layout"
+            android:layout_marginLeft="4dp"
+            android:layout_marginTop="16dp"
+            android:text="@string/group_form_participants" />
 
         <Button
+            style="@style/DangerButton"
             android:id="@+id/group_form_exit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:text="@string/group_exit" />
+            android:text="@string/group_exit"
+            android:visibility="gone" />
 
         <ListView
             android:id="@+id/group_form_user_list"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_above="@id/group_form_exit"
-            android:layout_below="@id/group_form_user_inputlayout"
-            android:layout_marginBottom="8dp" />
+            android:layout_below="@id/group_form_participant_label"
+            android:layout_marginBottom="8dp"
+            />
 
     </RelativeLayout>
 

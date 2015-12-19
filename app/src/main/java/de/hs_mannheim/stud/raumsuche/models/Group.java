@@ -17,6 +17,8 @@ public class Group {
 
     List<User> users;
 
+    String groupImage;
+
     public long getId() {
         return id;
     }
@@ -47,5 +49,13 @@ public class Group {
 
     public void setUsers(List<User> users) {
         this.users = users;
+    }
+
+    public String getGroupImage() {
+        return groupImage;
+    }
+
+    public void setGroupImage(String groupImage) {
+        this.groupImage = groupImage;
     }
 }

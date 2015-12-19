@@ -53,7 +53,7 @@ public class GroupActivity extends AppCompatActivity implements SwipeRefreshLayo
         setContentView(R.layout.activity_group);
         ButterKnife.bind(this);
         swipeRefreshLayout.setOnRefreshListener(this);
-        swipeRefreshLayout.setColorSchemeColors(R.color.colorPrimary,R.color.colorPrimaryDark);
+        swipeRefreshLayout.setColorSchemeColors(R.color.colorPrimary, R.color.colorPrimaryDark);
         initComponents();
         loadGroups();
     }
@@ -102,7 +102,7 @@ public class GroupActivity extends AppCompatActivity implements SwipeRefreshLayo
 
                 if (groups != null) {
 
-                    if(groups.size() > 0) {
+                    if (groups.size() > 0) {
                         emptyText.setVisibility(View.GONE);
                         adapter.setGroups(groups);
                     } else {
