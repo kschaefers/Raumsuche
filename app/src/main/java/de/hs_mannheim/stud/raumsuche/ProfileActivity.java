@@ -88,6 +88,7 @@ public class ProfileActivity extends AppCompatActivity implements Validator.Vali
             public void onResponse(Response<ResponseBody> response, Retrofit retrofit) {
                 if (response.code() == 200) {
                     UserManager manager = UserManager.getInstance(ProfileActivity.this);
+                    updatedUser.setPassword(manager.getUserPassword());
                     manager.setUser(updatedUser);
 
                     Toast.makeText(ProfileActivity.this, R.string.profile_changed, Toast.LENGTH_SHORT).show();
