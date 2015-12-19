@@ -36,14 +36,13 @@
 
                 <TextView
                     android:id="@+id/info_text"
+                    style="@style/TextCardHeadline"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_alignBottom="@id/main_room_image"
                     android:layout_marginBottom="10dp"
                     android:layout_marginLeft="16dp"
-                    android:text="@string/nextAvailableRoom"
-                    android:textColor="@android:color/white"
-                    android:textSize="20sp" />
+                    android:text="@string/nextAvailableRoom" />
 
                 <RelativeLayout
                     android:id="@+id/main_room_nextroom"
@@ -91,10 +90,10 @@
                     android:layout_below="@id/main_room_nextroom"
                     android:layout_marginLeft="10dp"
                     android:layout_marginTop="6dp"
+                    android:enabled="false"
                     android:fontFamily="sans-serif"
                     android:padding="6dp"
                     android:text="Raum anzeigen"
-                    android:enabled="false"
                     android:textColor="@color/colorPrimary"
                     android:textStyle="bold" />
 
@@ -224,16 +223,17 @@
                     android:layout_alignParentTop="true"
                     android:scaleType="centerCrop"
                     android:src="@drawable/gruppe" />
+
                 <TextView
                     android:id="@+id/main_login_headline"
+                    style="@style/TextCardHeadline"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Lerne in Gruppen"
+                    android:layout_alignBottom="@+id/imageViewGroups"
                     android:layout_marginBottom="10dp"
                     android:layout_marginLeft="16dp"
-                    android:textColor="@android:color/white"
-                    android:textSize="20sp"
-                    android:layout_alignBottom="@+id/imageViewGroups" />
+                    android:text="Lerne in Gruppen" />
+
                 <TextView
                     android:id="@+id/main_login_topic"
                     style="@style/TextNormal"
@@ -246,18 +246,17 @@
                     android:text="Benutzeraccount" />
 
 
-
                 <Button
                     android:id="@+id/main_login_loginbutton"
                     style="?android:attr/borderlessButtonStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_below="@+id/main_login_topic"
                     android:layout_marginLeft="8dp"
                     android:fontFamily="sans-serif"
                     android:padding="6dp"
                     android:text="Anmelden"
-                    android:textColor="@color/colorPrimary"
-                    android:layout_below="@+id/main_login_topic" />
+                    android:textColor="@color/colorPrimary" />
 
                 <Button
                     android:id="@+id/main_login_signupbutton"
