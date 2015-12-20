@@ -139,7 +139,7 @@ public class SearchActivity extends AppCompatActivity {
                 selectedDate.set(Calendar.MILLISECOND, 0);
             }
         });
-        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
                 GregorianCalendar today = new GregorianCalendar();
                 today.set(Calendar.HOUR_OF_DAY, 0);
@@ -147,7 +147,7 @@ public class SearchActivity extends AppCompatActivity {
                 today.set(Calendar.SECOND, 0);
                 today.set(Calendar.MILLISECOND, 0);
                 if (selectedDate.compareTo(today) == 0) {
-                    textSearchDate.setText("Heute");
+                    textSearchDate.setText(getResources().getString(R.string.today));
                 } else {
                     textSearchDate.setText(selectedDate.get(Calendar.DAY_OF_MONTH) + "." + (selectedDate.get(Calendar.MONTH) + 1) + "." + selectedDate.get(Calendar.YEAR));
                 }
@@ -289,9 +289,7 @@ public class SearchActivity extends AppCompatActivity {
                 return true;
         }
 
-
         return super.onOptionsItemSelected(item);
-
     }
 
     private void searchForRooms() {
@@ -364,7 +362,6 @@ public class SearchActivity extends AppCompatActivity {
                             .make(searchLayout, R.string.no_search_results, Snackbar.LENGTH_LONG)
                             .show();
                 }
-
             }
 
             @Override
