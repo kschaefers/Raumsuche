@@ -1,15 +1,17 @@
 package de.hs_mannheim.stud.raumsuche;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.MenuItem;
-import android.view.TextureView;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -19,6 +21,7 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.squareup.okhttp.ResponseBody;
 
 import org.parceler.Parcels;
 
@@ -31,12 +34,20 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import de.hs_mannheim.stud.raumsuche.fragments.ResultFragment;
 import de.hs_mannheim.stud.raumsuche.managers.BuildingFactory;
+import de.hs_mannheim.stud.raumsuche.managers.UserManager;
 import de.hs_mannheim.stud.raumsuche.models.Building;
+import de.hs_mannheim.stud.raumsuche.models.Group;
 import de.hs_mannheim.stud.raumsuche.models.Room;
 import de.hs_mannheim.stud.raumsuche.models.RoomQuery;
 import de.hs_mannheim.stud.raumsuche.models.RoomResult;
+import de.hs_mannheim.stud.raumsuche.models.User;
+import de.hs_mannheim.stud.raumsuche.network.ApiServiceFactory;
+import de.hs_mannheim.stud.raumsuche.network.services.GroupService;
+import retrofit.Callback;
+import retrofit.Response;
+import retrofit.Retrofit;
 
-public class ResultActivity extends AppCompatActivity implements OnMapReadyCallback, ResultFragment.OnResultSelectedListener {
+public class ResultActivity extends AppCompatActivity implements OnMapReadyCallback, ResultFragment.OnListItemAcionListener {
 
     private GoogleMap googleMap;
     private Map<String, Marker> mapMarkers;
@@ -45,6 +56,8 @@ public class ResultActivity extends AppCompatActivity implements OnMapReadyCallb
     private RoomQuery query;
     private SupportMapFragment mapFragment;
     private ResultFragment listFragment;
+
+    private List<Group> groups;
 
     @Bind(R.id.result_progress)
     ProgressBar resultProgress;
@@ -112,6 +125,28 @@ public class ResultActivity extends AppCompatActivity implements OnMapReadyCallb
         googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(marker.getPosition(), 18.f));
     }
 
+    @Override
+    public void onGroupNotify(Room room) {
+        if(groups != null && groups.size() > 0) {
+            CharSequence[] groupNames = new CharSequence[groups.size()];
+
+            for (int i = 0; i < groups.size(); i++) {
+                groupNames[i] = groups.get(i).getName();
+            }
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setItems(groupNames, new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) {
+                    // The 'which' argument contains the index position
+                    // of the selected item
+                }
+            });
+            Dialog dlg = builder.create();
+            dlg.show();
+        } else {
+            Toast.makeText(this, "Du hast keine Gruppen :(", Toast.LENGTH_SHORT).show();
+        }
+    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -146,6 +181,28 @@ public class ResultActivity extends AppCompatActivity implements OnMapReadyCallb
             searchQuery.setProperties(queryParams);
             query = searchQuery;
         }
+
+        UserManager manager = UserManager.getInstance(this);
+        User myUser = manager.getUser();
+
+        ApiServiceFactory serviceFactory = ApiServiceFactory.getInstance();
+        GroupService groupService = serviceFactory.getGroupService(myUser.getMtklNr(), manager.getUserPassword());
+
+        groupService.listUserGroups(myUser.getMtklNr()).enqueue(new Callback<List<Group>>() {
+            @Override
+            public void onResponse(Response<List<Group>> response, Retrofit retrofit) {
+                List<Group> groups = response.body();
+
+                if(groups != null) {
+                    ResultActivity.this.groups = groups;
+                }
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+
+            }
+        });
     }
 
     private void initComponents() {
@@ -153,7 +210,13 @@ public class ResultActivity extends AppCompatActivity implements OnMapReadyCallb
 
         if(results.size() > 0) {
             mapFragment = SupportMapFragment.newInstance();
+
+            Bundle arguments = new Bundle();
+            arguments.putParcelable(ResultFragment.BK_RESULTS, Parcels.wrap(results));
+            arguments.putParcelable(ResultFragment.BK_QUERY, Parcels.wrap(query));
+
             listFragment = new ResultFragment();
+            listFragment.setArguments(arguments);
 
             FragmentTransaction fragmentTransaction =
                     getSupportFragmentManager().beginTransaction();
@@ -162,7 +225,6 @@ public class ResultActivity extends AppCompatActivity implements OnMapReadyCallb
             fragmentTransaction.commit();
 
             mapFragment.getMapAsync(this);
-            listFragment.updateResultList(results, query);
         } else {
             emptySearchResultLabel.setVisibility(View.VISIBLE);
         }

@@ -1,10 +1,13 @@
 package de.hs_mannheim.stud.raumsuche.models;
 
+import org.parceler.Parcel;
+
 import java.util.List;
 
 /**
  * Created by Martin on 12/4/15.
  */
+@Parcel
 public class RoomQuery {
     private List<String> properties;
 

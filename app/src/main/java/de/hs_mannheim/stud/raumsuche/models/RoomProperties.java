@@ -1,8 +1,11 @@
 package de.hs_mannheim.stud.raumsuche.models;
 
+import org.parceler.Parcel;
+
 /**
  * Created by m.christmann on 03.12.2015.
  */
+@Parcel
 public class RoomProperties {
 
     private String name;

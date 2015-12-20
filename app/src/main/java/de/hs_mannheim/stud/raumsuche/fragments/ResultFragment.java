@@ -10,21 +10,26 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import java.util.ArrayList;
+import org.parceler.Parcels;
+
 import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import de.hs_mannheim.stud.raumsuche.R;
+import de.hs_mannheim.stud.raumsuche.managers.UserManager;
+import de.hs_mannheim.stud.raumsuche.models.Room;
 import de.hs_mannheim.stud.raumsuche.models.RoomQuery;
 import de.hs_mannheim.stud.raumsuche.models.RoomResult;
+import de.hs_mannheim.stud.raumsuche.models.User;
 import de.hs_mannheim.stud.raumsuche.views.adapters.RoomResultListAdapter;
 
-public class ResultFragment extends Fragment {
+public class ResultFragment extends Fragment implements RoomResultListAdapter.OnGroupActionListener {
 
-    public static final String BK_DATA = "bk_data";
+    public static final String BK_RESULTS = "bk_results";
+    public static final String BK_QUERY = "bk_query";
 
-    OnResultSelectedListener callback;
+    OnListItemAcionListener callback;
 
     @Bind(R.id.room_result_list)
     ListView list;
@@ -43,7 +48,7 @@ public class ResultFragment extends Fragment {
         // This makes sure that the container activity has implemented
         // the callback interface. If not, it throws an exception
         try {
-            callback = (OnResultSelectedListener) activity;
+            callback = (OnListItemAcionListener) activity;
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString()
                     + " must implement OnHeadlineSelectedListener");
@@ -56,31 +61,37 @@ public class ResultFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_room_result, container, false);
         ButterKnife.bind(this, view);
 
-        List<RoomResult> results = new ArrayList<RoomResult>();
-        RoomQuery query = new RoomQuery();
-        List<String> searchProperties = new ArrayList<String>();
-        query.setProperties(searchProperties);
+        UserManager manager = UserManager.getInstance(getContext());
+
+        Bundle arguments = getArguments();
+        List<RoomResult> results = Parcels.unwrap(arguments.getParcelable(BK_RESULTS));
+        RoomQuery query = Parcels.unwrap(arguments.getParcelable(BK_QUERY));
 
         adapter = new RoomResultListAdapter(getContext(), results, query);
+        adapter.setEnableGroupActions(manager.isUserLoggedIn());
+        adapter.setOnGroupAction(this);
 
         list.setAdapter(adapter);
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
                 RoomResult result = (RoomResult) adapter.getItem(position);
+                adapter.setSelectedRoom(position);
                 callback.onResultSelected(result);
             }
         });
         return view;
     }
 
-    public void updateResultList(List<RoomResult> results, RoomQuery query) {
-        adapter.setResults(results);
-        adapter.setQuery(query);
-        adapter.notifyDataSetChanged();
+    public interface OnListItemAcionListener {
+        void onResultSelected(RoomResult selectedResult);
+        void onGroupNotify(Room room);
     }
 
-    public interface OnResultSelectedListener {
-        public void onResultSelected(RoomResult selectedResult);
+    @Override
+    public void onGroupNotify(Room room) {
+        if(callback != null) {
+            callback.onGroupNotify(room);
+        }
     }
 }

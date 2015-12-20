@@ -1,7 +1,6 @@
 package de.hs_mannheim.stud.raumsuche.views.adapters;
 
 import android.content.Context;
-import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.text.Spannable;
@@ -12,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.TextView;
 
 import java.util.List;
@@ -29,15 +29,17 @@ import de.hs_mannheim.stud.raumsuche.models.RoomResult;
  * Created by m.christmann on 03.12.2015.
  */
 public class RoomResultListAdapter extends BaseAdapter {
-    Context context;
-    List<RoomResult> results;
-    RoomQuery query;
-    BuildingFactory buildingFactory;
+    private Context context;
+    private List<RoomResult> results;
+    private RoomQuery query;
+    private BuildingFactory buildingFactory;
 
-    LayoutInflater inflater;
+    private LayoutInflater inflater;
 
-    String availabilitySingleBlock;
-    String availabilityMultipleBlocks;
+    private OnGroupActionListener onGroupAction;
+
+    private int selectedRoomResult = 0;
+    private boolean enableGroupActions = false;
 
     public RoomResultListAdapter(Context context, List<RoomResult> roomResult, RoomQuery query) {
         super();
@@ -47,10 +49,6 @@ public class RoomResultListAdapter extends BaseAdapter {
         this.query = query;
 
         inflater = LayoutInflater.from(context);
-        Resources res = context.getResources();
-
-        availabilitySingleBlock = res.getString(R.string.availability_single_block);
-        availabilityMultipleBlocks = res.getString(R.string.availability_multiple_blocks);
 
         buildingFactory = BuildingFactory.getInstance(context);
     }
@@ -74,8 +72,8 @@ public class RoomResultListAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        RoomResult roomResult = results.get(position);
-        Room room = roomResult.getRoom();
+        final RoomResult roomResult = results.get(position);
+        final Room room = roomResult.getRoom();
         Building building = buildingFactory.getBuildingByIdentifier(room.getBuilding());
 
         ViewHolder holder;
@@ -99,6 +97,19 @@ public class RoomResultListAdapter extends BaseAdapter {
         holder.properties.setText(propertiesSpannable, TextView.BufferType.SPANNABLE);
         holder.size.setText(room.getSize() + " Plätze");
 
+        if(enableGroupActions && position == selectedRoomResult) {
+            holder.notifyGroup.setVisibility(View.VISIBLE);
+            holder.notifyGroup.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if(onGroupAction != null) {
+                        onGroupAction.onGroupNotify(room);
+                    }
+                }
+            });
+        } else {
+            holder.notifyGroup.setVisibility(View.GONE);
+        }
 
         GradientDrawable shape = (GradientDrawable) holder.building.getBackground();
         shape.setColor(color);
@@ -126,12 +137,13 @@ public class RoomResultListAdapter extends BaseAdapter {
         return builder;
     }
 
-    public void setResults(List<RoomResult> results) {
-        this.results = results;
+    public void setSelectedRoom(int position) {
+        selectedRoomResult = position;
+        notifyDataSetChanged();
     }
 
-    public void setQuery(RoomQuery query) {
-        this.query = query;
+    public void setEnableGroupActions(boolean enableGroupActions) {
+        this.enableGroupActions = enableGroupActions;
     }
 
     static class ViewHolder {
@@ -145,9 +157,19 @@ public class RoomResultListAdapter extends BaseAdapter {
         TextView properties;
         @Bind(R.id.room_size)
         TextView size;
+        @Bind(R.id.room_notify_group)
+        Button notifyGroup;
 
         public ViewHolder(View view) {
             ButterKnife.bind(this, view);
         }
+    }
+
+    public void setOnGroupAction(OnGroupActionListener onGroupAction) {
+        this.onGroupAction = onGroupAction;
+    }
+
+    public interface OnGroupActionListener {
+        public void onGroupNotify(Room room);
     }
 }

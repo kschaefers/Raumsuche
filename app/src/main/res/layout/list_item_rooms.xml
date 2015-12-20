@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
     android:padding="16dp">
 
     <TextView
@@ -8,48 +9,58 @@
         android:layout_width="45dp"
         android:layout_height="45dp"
         android:layout_alignParentLeft="true"
-        android:layout_centerVertical="true"
+        android:layout_alignParentTop="true"
         android:layout_marginRight="10dp"
-        android:gravity="center"
-        android:textSize="28sp"
-        android:textColor="@android:color/white"
-        android:fontFamily="sans-serif-light"
         android:background="@drawable/circle_background"
-        />
+        android:fontFamily="sans-serif-light"
+        android:gravity="center"
+        android:text="A"
+        android:textColor="@android:color/white"
+        android:textSize="28sp" />
 
     <TextView
         android:id="@+id/room_availability"
+        style="@style/TextNormal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
-        style="@style/TextNormal"
-        />
+        android:text="1. Block, 5 - 6. Block" />
 
     <TextView
         android:id="@+id/room_identifier"
+        style="@style/TextHeadline"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@id/room_building"
         android:layout_toLeftOf="@id/room_availability"
-        style="@style/TextHeadline"
-        />
+        android:layout_toRightOf="@id/room_building"
+        android:text="A206" />
 
     <TextView
         android:id="@+id/room_properties"
+        style="@style/TextNormal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/room_identifier"
         android:layout_alignLeft="@id/room_identifier"
-        style="@style/TextNormal"
-        />
+        android:layout_below="@id/room_identifier"
+        android:text="Beamer, Lose Bestuhlung, Poolraum" />
 
     <TextView
         android:id="@+id/room_size"
+        style="@style/TextNormal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/room_availability"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        style="@style/TextNormal"
-        />
+        android:layout_alignLeft="@id/room_identifier"
+        android:layout_below="@id/room_properties"
+        android:layout_marginTop="1dp"
+        android:text="90 Platze" />
+
+    <Button
+        android:id="@+id/room_notify_group"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:layout_width="wrap_content"
+        android:layout_height="45dp"
+        android:layout_below="@id/room_size"
+        android:layout_centerHorizontal="true"
+        android:text="@string/room_notify_group" />
+
 </RelativeLayout>

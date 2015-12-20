@@ -106,5 +106,6 @@
     <string name="no_search_results">Keine freien Räume gefunden :(</string>
     <string name="ok">Ok</string>
     <string name="today">Heute</string>
+    <string name="room_notify_group">Gruppe benachrichtigen</string>
 
 </resources>
