@@ -51,8 +51,7 @@
                     android:layout_below="@id/main_room_image"
                     android:layout_marginLeft="16dp"
                     android:layout_marginRight="16dp"
-                    android:layout_marginTop="20dp"
-                    android:visibility="invisible">
+                    android:layout_marginTop="20dp">
 
                     <TextView
                         android:id="@+id/room_availability"
@@ -67,6 +66,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentLeft="true"
+                        android:text=""
                         android:layout_toLeftOf="@id/room_availability" />
 
                     <TextView
@@ -92,15 +92,18 @@
                     android:padding="6dp"
                     android:text="Raum anzeigen"
                     android:textColor="@color/colorPrimary"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:visibility="invisible" />
 
                 <Button
                     android:id="@+id/main_searchroom_button"
                     style="?android:attr/borderlessButtonStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignTop="@id/main_showroom_button"
-                    android:layout_toRightOf="@id/main_showroom_button"
+                    android:layout_alignParentRight="true"
+                    android:layout_below="@id/main_room_nextroom"
+                    android:layout_marginTop="6dp"
+                    android:layout_marginRight="10dp"
                     android:fontFamily="sans-serif"
                     android:padding="6dp"
                     android:text="Erweiterte Suche"
