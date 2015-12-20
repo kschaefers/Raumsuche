@@ -171,9 +171,11 @@ public class MainActivity extends AppCompatActivity {
                     availableRoomProps.setText(TextUtils.join(",", first.getRoomProperties()));
                     nextRoom.setVisibility(View.VISIBLE);
                     showRoomButton.setEnabled(true);
-                    Log.e("MainActivity", "yay");
+                    wrapped = Parcels.wrap(rooms);
+                }else{
+                    availableRoomName.setText("Derzeit leider keine freien Räume");
+                    nextRoom.setVisibility(View.VISIBLE);
                 }
-                wrapped = Parcels.wrap(rooms);
             }
 
             @Override

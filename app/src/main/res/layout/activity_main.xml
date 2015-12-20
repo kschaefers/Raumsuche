@@ -59,8 +59,7 @@
                         style="@style/TextNormal"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:text="Zeitblock" />
+                        android:layout_alignParentRight="true" />
 
                     <TextView
                         android:id="@+id/room_identifier"
@@ -68,8 +67,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentLeft="true"
-                        android:layout_toLeftOf="@id/room_availability"
-                        android:text="Raum" />
+                        android:layout_toLeftOf="@id/room_availability" />
 
                     <TextView
                         android:id="@+id/room_properties"
@@ -77,8 +75,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignLeft="@id/room_identifier"
-                        android:layout_below="@id/room_identifier"
-                        android:text="Lose Bestuhlung, Beamer" />
+                        android:layout_below="@id/room_identifier" />
                 </RelativeLayout>
 
                 <Button
