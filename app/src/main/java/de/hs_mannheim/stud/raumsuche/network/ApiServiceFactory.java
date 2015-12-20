@@ -11,6 +11,7 @@ import com.squareup.okhttp.logging.HttpLoggingInterceptor;
 import java.io.IOException;
 
 import de.hs_mannheim.stud.raumsuche.network.services.GroupService;
+import de.hs_mannheim.stud.raumsuche.network.services.MeetingService;
 import de.hs_mannheim.stud.raumsuche.network.services.RoomService;
 import de.hs_mannheim.stud.raumsuche.network.services.UserService;
 import de.hs_mannheim.stud.raumsuche.utils.Config;
@@ -56,6 +57,9 @@ public class ApiServiceFactory {
 
     public GroupService getGroupService(String studentId, String password) {
         return createService(GroupService.class, studentId, password);
+    }
+    public MeetingService getMeetingService(String studentId, String password) {
+        return createService(MeetingService.class, studentId, password);
     }
 
     public RoomService getRoomService() {
