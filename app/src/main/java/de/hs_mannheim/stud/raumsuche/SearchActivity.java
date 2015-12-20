@@ -319,9 +319,6 @@ public class SearchActivity extends AppCompatActivity {
             }
             query.put("building", selectedBuildings.substring(1));
         }
-        // TODO: Remove this
-        query.put("day", 3 + "");
-
         if (!textSearchDate.getText().toString().equals("Heute")) {
             query.put("day", selectedDate.get(Calendar.DAY_OF_WEEK) + "");
         }
