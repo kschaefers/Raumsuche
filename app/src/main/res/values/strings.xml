@@ -103,5 +103,6 @@
     <string name="cancel">Abbrechen</string>
     <string name="group_admin">Gruppen-Admin</string>
     <string name="group_form_participants">Teilnehmer</string>
+    <string name="no_search_results">Keine freien Räume gefunden :(</string>
 
 </resources>

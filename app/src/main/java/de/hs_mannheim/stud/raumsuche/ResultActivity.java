@@ -2,9 +2,14 @@ package de.hs_mannheim.stud.raumsuche;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.TextureView;
+import android.view.View;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -22,6 +27,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
 import de.hs_mannheim.stud.raumsuche.fragments.ResultFragment;
 import de.hs_mannheim.stud.raumsuche.managers.BuildingFactory;
 import de.hs_mannheim.stud.raumsuche.models.Building;
@@ -39,40 +46,20 @@ public class ResultActivity extends AppCompatActivity implements OnMapReadyCallb
     private SupportMapFragment mapFragment;
     private ResultFragment listFragment;
 
+    @Bind(R.id.result_progress)
+    ProgressBar resultProgress;
+
+    @Bind(R.id.result_searchresult_empty_label)
+    TextView emptySearchResultLabel;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_result);
+        ButterKnife.bind(this);
 
-        mapMarkers = new HashMap<>();
-
-        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
-        mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.map);
-        mapFragment.getMapAsync(this);
-
-        listFragment = (ResultFragment) getSupportFragmentManager().findFragmentById(R.id.list);
-        if (getIntent().getParcelableExtra("searchResult") != null) {
-            Log.e("SearchActivity", "yay");
-            List<Room> rooms = Parcels.unwrap(getIntent().getParcelableExtra("searchResult"));
-            results = new ArrayList<RoomResult>();
-            for (Room room : rooms) {
-                RoomResult result = new RoomResult();
-                result.setRoom(room);
-                result.setId(room.getName().hashCode());
-
-                results.add(result);
-            }
-        }
-
-        if (getIntent().getStringArrayListExtra("searchQuery") != null) {
-            ArrayList<String> queryParams = getIntent().getStringArrayListExtra("searchQuery");
-            RoomQuery searchQuery = new RoomQuery();
-            searchQuery.setProperties(queryParams);
-            query = searchQuery;
-        }
-
-        listFragment.updateResultList(results, query);
+        initData();
+        initComponents();
     }
 
     /**
@@ -135,6 +122,49 @@ public class ResultActivity extends AppCompatActivity implements OnMapReadyCallb
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
+        }
+    }
+
+    private void initData() {
+        mapMarkers = new HashMap<>();
+
+        if (getIntent().getParcelableExtra("searchResult") != null) {
+            List<Room> rooms = Parcels.unwrap(getIntent().getParcelableExtra("searchResult"));
+            results = new ArrayList<RoomResult>();
+            for (Room room : rooms) {
+                RoomResult result = new RoomResult();
+                result.setRoom(room);
+                result.setId(room.getName().hashCode());
+
+                results.add(result);
+            }
+        }
+
+        if (getIntent().getStringArrayListExtra("searchQuery") != null) {
+            ArrayList<String> queryParams = getIntent().getStringArrayListExtra("searchQuery");
+            RoomQuery searchQuery = new RoomQuery();
+            searchQuery.setProperties(queryParams);
+            query = searchQuery;
+        }
+    }
+
+    private void initComponents() {
+        resultProgress.setVisibility(View.GONE);
+
+        if(results.size() > 0) {
+            mapFragment = SupportMapFragment.newInstance();
+            listFragment = new ResultFragment();
+
+            FragmentTransaction fragmentTransaction =
+                    getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.add(R.id.result_map_container, mapFragment);
+            fragmentTransaction.add(R.id.result_list_container, listFragment);
+            fragmentTransaction.commit();
+
+            mapFragment.getMapAsync(this);
+            listFragment.updateResultList(results, query);
+        } else {
+            emptySearchResultLabel.setVisibility(View.VISIBLE);
         }
     }
 }

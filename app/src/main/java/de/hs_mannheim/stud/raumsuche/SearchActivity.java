@@ -347,15 +347,24 @@ public class SearchActivity extends AppCompatActivity {
             @Override
             public void onResponse(Response<List<Room>> response, Retrofit retrofit) {
                 List<Room> rooms = response.body();
-                Log.e("SearchActivity", "yay");
-                Parcelable wrapped = Parcels.wrap(rooms);
 
-                Intent resultIntent = new Intent();
-                resultIntent.setClass(getApplicationContext(), ResultActivity.class);
-                resultIntent.putExtra("searchResult", wrapped);
-                resultIntent.putStringArrayListExtra("searchQuery", queryParams);
-                dialog.dismiss();
-                startActivity(resultIntent);
+                if(rooms.size() > 0) {
+                    Parcelable wrapped = Parcels.wrap(rooms);
+
+                    Intent resultIntent = new Intent();
+                    resultIntent.setClass(getApplicationContext(), ResultActivity.class);
+                    resultIntent.putExtra("searchResult", wrapped);
+                    resultIntent.putStringArrayListExtra("searchQuery", queryParams);
+
+                    dialog.dismiss();
+                    startActivity(resultIntent);
+                } else {
+                    dialog.dismiss();
+                    Snackbar
+                            .make(searchLayout, R.string.no_search_results, Snackbar.LENGTH_LONG)
+                            .show();
+                }
+
             }
 
             @Override

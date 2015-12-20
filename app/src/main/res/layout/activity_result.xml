@@ -1,23 +1,39 @@
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:weightSum="9"
-    >
-    <fragment
-        android:id="@+id/map"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="3"
-        android:name="com.google.android.gms.maps.SupportMapFragment" />
+    android:layout_height="match_parent">
 
-    <fragment
-        android:id="@+id/list"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="6"
-        android:name="de.hs_mannheim.stud.raumsuche.fragments.ResultFragment"
-        />
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:visibility="gone"
+        android:weightSum="9">
 
-</LinearLayout>
+        <FrameLayout
+            android:id="@+id/result_map_container"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="3" />
+
+        <FrameLayout
+            android:id="@+id/result_list_container"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="6" />
+    </LinearLayout>
+
+    <ProgressBar
+        android:id="@+id/result_progress"
+        android:layout_width="30dp"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:indeterminate="true" />
+
+    <TextView
+        android:id="@+id/result_searchresult_empty_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:text="@string/no_search_results"
+        android:visibility="gone" />
+</RelativeLayout>
