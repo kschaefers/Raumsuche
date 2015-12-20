@@ -156,7 +156,12 @@ public class MainActivity extends AppCompatActivity {
         if(user != null){
             query.put("building", user.getBuilding());
         }
+        int today = new GregorianCalendar().get(Calendar.DAY_OF_WEEK) - 1;
+        if(today == 0){
+            today = 7;
+        }
         query.put("hour",String.valueOf(getCurrentTimeSlot()));
+        query.put("day",String.valueOf(today));
         Call<List<Room>> call = roomService.findRooms(query);
         call.enqueue(new Callback<List<Room>>() {
             @Override
@@ -169,11 +174,11 @@ public class MainActivity extends AppCompatActivity {
                     availableRoomName.setText(first.getName());
                     availableRoomAvailability.setText(query.getAvailable());
                     availableRoomProps.setText(TextUtils.join(",", first.getRoomProperties()));
-                    nextRoom.setVisibility(View.VISIBLE);
-                    showRoomButton.setEnabled(true);
-                    Log.e("MainActivity", "yay");
+                    showRoomButton.setVisibility(View.VISIBLE);
+                    wrapped = Parcels.wrap(rooms);
+                }else{
+                    availableRoomName.setText("Derzeit leider keine freien Räume");
                 }
-                wrapped = Parcels.wrap(rooms);
             }
 
             @Override

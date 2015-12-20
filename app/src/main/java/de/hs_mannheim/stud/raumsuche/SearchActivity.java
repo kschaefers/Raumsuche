@@ -20,10 +20,13 @@ import android.widget.LinearLayout;
 import android.widget.Switch;
 import android.widget.TextView;
 
+import com.squareup.timessquare.CalendarPickerView;
+
 import org.parceler.Parcels;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
@@ -125,18 +128,26 @@ public class SearchActivity extends AppCompatActivity {
     }
 
     private void showDialogDate() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        LayoutInflater inflater = this.getLayoutInflater();
-        final CalendarView calendar = (CalendarView) inflater.inflate(R.layout.calendar_dialog, null);
-        calendar.setDate(selectedDate.getTimeInMillis());
-        calendar.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getSupportActionBar().getThemedContext());
+        LayoutInflater inflater = getLayoutInflater();
+        final CalendarPickerView calendar = (CalendarPickerView) inflater.inflate(R.layout.calendar_dialog, null);
+        Calendar nextYear = Calendar.getInstance();
+        nextYear.add(Calendar.YEAR, 1);
+        calendar.init(new Date(),nextYear.getTime()).withSelectedDate(selectedDate.getTime());
+        calendar.setOnDateSelectedListener(new CalendarPickerView.OnDateSelectedListener() {
             @Override
-            public void onSelectedDayChange(CalendarView view, int year, int month, int dayOfMonth) {
-                selectedDate = new GregorianCalendar(year, month, dayOfMonth);
+            public void onDateSelected(Date date) {
+                selectedDate = new GregorianCalendar();
+                selectedDate.setTime(date);
                 selectedDate.set(Calendar.HOUR_OF_DAY, 0);
                 selectedDate.set(Calendar.MINUTE, 0);
                 selectedDate.set(Calendar.SECOND, 0);
                 selectedDate.set(Calendar.MILLISECOND, 0);
+            }
+
+            @Override
+            public void onDateUnselected(Date date) {
+
             }
         });
         builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
