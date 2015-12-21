@@ -13,7 +13,7 @@
         android:layout_marginLeft="5dp"
         android:layout_centerVertical="true"
         style="@style/Base.Widget.AppCompat.Button.Borderless"
-        android:src="@android:drawable/ic_delete"
+        android:src="@drawable/ic_account_remove_grey600_24dp"
         />
 
     <TextView
