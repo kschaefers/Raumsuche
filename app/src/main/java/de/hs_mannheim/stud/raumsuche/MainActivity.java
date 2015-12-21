@@ -200,7 +200,7 @@ public class MainActivity extends AppCompatActivity {
                     query.setRoom(first);
                     availableRoomName.setText(first.getName());
                     availableRoomAvailability.setText(query.getAvailable());
-                    availableRoomProps.setText(TextUtils.join(",", first.getRoomProperties()));
+                    availableRoomProps.setText(TextUtils.join(", ", first.getRoomProperties()));
                     showRoomButton.setVisibility(View.VISIBLE);
                     wrapped = Parcels.wrap(rooms);
                 } else {
