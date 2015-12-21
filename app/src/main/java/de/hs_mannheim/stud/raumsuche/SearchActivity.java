@@ -35,6 +35,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import de.hs_mannheim.stud.raumsuche.models.Room;
+import de.hs_mannheim.stud.raumsuche.models.RoomQuery;
 import de.hs_mannheim.stud.raumsuche.network.ApiServiceFactory;
 import de.hs_mannheim.stud.raumsuche.network.services.RoomService;
 import retrofit.Call;
@@ -72,6 +73,8 @@ public class SearchActivity extends AppCompatActivity {
 
     private GregorianCalendar selectedDate = new GregorianCalendar();
 
+    private RoomQuery searchQuery;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -83,6 +86,7 @@ public class SearchActivity extends AppCompatActivity {
         mSelectedBuilding = new boolean[getResources().getStringArray(R.array.buildings).length];
         mSelectedRoomSize = -1;
         mSelectedTimes = new boolean[getResources().getStringArray(R.array.times).length];
+        searchQuery = new RoomQuery();
 
         initializeTextViews();
     }
@@ -311,6 +315,7 @@ public class SearchActivity extends AppCompatActivity {
             query.put("building", selectedBuildings.substring(1));
         }
         if (!textSearchDate.getText().toString().equals("Heute")) {
+            searchQuery.setSearchDate(selectedDate.getTime());
             query.put("day", selectedDate.get(Calendar.DAY_OF_WEEK) + "");
         }
         if (!textSearchTime.getText().toString().equals("Jede Zeitstunde")) {
@@ -342,6 +347,8 @@ public class SearchActivity extends AppCompatActivity {
             queryParams.add("Lose Bestuhlung");
         }
 
+        searchQuery.setProperties(queryParams);
+
         Call<List<Room>> call = roomService.findRooms(query);
         call.enqueue(new Callback<List<Room>>() {
             @Override
@@ -354,7 +361,7 @@ public class SearchActivity extends AppCompatActivity {
                     Intent resultIntent = new Intent();
                     resultIntent.setClass(getApplicationContext(), ResultActivity.class);
                     resultIntent.putExtra("searchResult", wrapped);
-                    resultIntent.putStringArrayListExtra("searchQuery", queryParams);
+                    resultIntent.putExtra("searchQuery", Parcels.wrap(searchQuery));
 
                     dialog.dismiss();
                     startActivity(resultIntent);

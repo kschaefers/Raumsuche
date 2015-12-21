@@ -3,6 +3,7 @@ package de.hs_mannheim.stud.raumsuche.views.widgets;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.text.TextUtils;
@@ -12,11 +13,14 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.parceler.Parcels;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Locale;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -26,6 +30,7 @@ import de.hs_mannheim.stud.raumsuche.managers.UserManager;
 import de.hs_mannheim.stud.raumsuche.models.Group;
 import de.hs_mannheim.stud.raumsuche.models.Meeting;
 import de.hs_mannheim.stud.raumsuche.models.Room;
+import de.hs_mannheim.stud.raumsuche.models.RoomQuery;
 import de.hs_mannheim.stud.raumsuche.models.RoomResult;
 import de.hs_mannheim.stud.raumsuche.models.User;
 import de.hs_mannheim.stud.raumsuche.network.ApiServiceFactory;
@@ -40,6 +45,9 @@ import retrofit.Retrofit;
  */
 public class CreateMeetingDialog extends DialogFragment {
 
+    @Bind(R.id.create_meeting_hour_label)
+    TextView hourLabel;
+
     @Bind(R.id.create_meeting_hour)
     Spinner hourSpinner;
 
@@ -48,6 +56,7 @@ public class CreateMeetingDialog extends DialogFragment {
 
     public static final String BK_GROUPS = "bk_groups";
     public static final String BK_ROOMRESULT = "bk_roomresult";
+    public static final String BK_QUERY = "bk_query";
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -55,8 +64,14 @@ public class CreateMeetingDialog extends DialogFragment {
         ButterKnife.bind(this, view);
 
         final List<Group> groups = Parcels.unwrap(getArguments().getParcelable(BK_GROUPS));
-        RoomResult roomResult = Parcels.unwrap(getArguments().getParcelable(BK_ROOMRESULT));
+        final RoomResult roomResult = Parcels.unwrap(getArguments().getParcelable(BK_ROOMRESULT));
+        final RoomQuery query = Parcels.unwrap(getArguments().getParcelable(BK_QUERY));
         final Room room = roomResult.getRoom();
+
+        SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault());
+        Resources res = getResources();
+        String hourLabelFormatString = res.getString(R.string.create_meeting_hour_label);
+        hourLabel.setText(String.format(hourLabelFormatString, formatter.format(query.getSearchDate())));
 
         final String[] hourNumbers = TextUtils.split(room.getHour(), ",");
         String[] hours = new String[hourNumbers.length];
@@ -88,9 +103,11 @@ public class CreateMeetingDialog extends DialogFragment {
                 ApiServiceFactory serviceFactory = ApiServiceFactory.getInstance();
                 MeetingService meetingService = serviceFactory.getMeetingService(myUser.getMtklNr(), userManager.getUserPassword());
 
+                SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+
                 Meeting newMeeting = new Meeting();
                 newMeeting.setRoom(room.getName());
-                newMeeting.setDay("2015-12-21");
+                newMeeting.setDay(formatter.format(query.getSearchDate()));
                 newMeeting.setGroup(group);
                 newMeeting.setHour(hour);
 

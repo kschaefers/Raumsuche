@@ -85,7 +85,7 @@
                     android:layout_alignParentLeft="true"
                     android:layout_below="@id/main_room_nextroom"
                     android:layout_marginLeft="10dp" />
-                
+
                 <Button
                     android:id="@+id/main_showroom_button"
                     style="?android:attr/borderlessButtonStyle"

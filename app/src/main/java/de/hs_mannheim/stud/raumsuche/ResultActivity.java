@@ -137,6 +137,7 @@ public class ResultActivity extends AppCompatActivity implements OnMapReadyCallb
             Bundle arguments = new Bundle();
             arguments.putParcelable(CreateMeetingDialog.BK_GROUPS, Parcels.wrap(groups));
             arguments.putParcelable(CreateMeetingDialog.BK_ROOMRESULT, Parcels.wrap(roomResult));
+            arguments.putParcelable(CreateMeetingDialog.BK_QUERY, Parcels.wrap(query));
             dlg.setArguments(arguments);
 
             dlg.show(getSupportFragmentManager(), null);
@@ -172,11 +173,10 @@ public class ResultActivity extends AppCompatActivity implements OnMapReadyCallb
             }
         }
 
-        if (getIntent().getStringArrayListExtra("searchQuery") != null) {
-            ArrayList<String> queryParams = getIntent().getStringArrayListExtra("searchQuery");
-            RoomQuery searchQuery = new RoomQuery();
-            searchQuery.setProperties(queryParams);
-            query = searchQuery;
+        if (getIntent().hasExtra("searchQuery")) {
+            query= Parcels.unwrap(getIntent().getParcelableExtra("searchQuery"));
+        } else {
+            query = new RoomQuery();
         }
 
         userManager = UserManager.getInstance(this);

@@ -109,7 +109,7 @@
     <string name="room_notify_group">Gruppe benachrichtigen</string>
     <string name="result_meeting_created">Gruppentreffen versendet</string>
     <string name="send_notification">Benachrichtigen</string>
-    <string name="create_meeting_hour_label">Treffen zum</string>
+    <string name="create_meeting_hour_label">Treffen am %1$s zum</string>
     <string name="create_meeting_groups_label">Termin an Gruppe senden</string>
 
 </resources>
