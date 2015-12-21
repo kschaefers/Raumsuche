@@ -1,17 +1,27 @@
 package de.hs_mannheim.stud.raumsuche;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Parcelable;
+import android.provider.CalendarContract;
+import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import org.parceler.Parcels;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
@@ -21,10 +31,12 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import de.hs_mannheim.stud.raumsuche.managers.UserManager;
+import de.hs_mannheim.stud.raumsuche.models.Meeting;
 import de.hs_mannheim.stud.raumsuche.models.Room;
 import de.hs_mannheim.stud.raumsuche.models.RoomResult;
 import de.hs_mannheim.stud.raumsuche.models.User;
 import de.hs_mannheim.stud.raumsuche.network.ApiServiceFactory;
+import de.hs_mannheim.stud.raumsuche.network.services.MeetingService;
 import de.hs_mannheim.stud.raumsuche.network.services.RoomService;
 import retrofit.Call;
 import retrofit.Callback;
@@ -34,8 +46,13 @@ import retrofit.Retrofit;
 public class MainActivity extends AppCompatActivity {
 
     public static final int REQUEST_LOGIN = 100;
+    public static final int PERMISSION_WRITE_CALENDAR = 123;
 
     Parcelable wrapped;
+    Meeting nextMeetingObject;
+
+    @Bind(R.id.main_scrollView)
+    View scrollView;
 
     @Bind(R.id.main_registered_view)
     View registeredUserView;
@@ -54,6 +71,15 @@ public class MainActivity extends AppCompatActivity {
     @Bind(R.id.main_showroom_button)
     Button showRoomButton;
 
+    @Bind(R.id.main_next_meeting)
+    View nextMeeting;
+    @Bind(R.id.main_meeting_text)
+    TextView nextMeetingText;
+    @Bind(R.id.main_meeting_topic)
+    TextView nextMeetingTopic;
+    @Bind(R.id.main_meeting_add_to_calendar)
+    ImageButton nextMeetingButton;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,9 +87,10 @@ public class MainActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         loadNextRoom();
-
+        loadNextMeeting();
         initComponents();
     }
+
 
     @OnClick(R.id.main_searchroom_button)
     public void openSearch() {
@@ -161,13 +188,13 @@ public class MainActivity extends AppCompatActivity {
             today = 7;
         }
         query.put("hour",String.valueOf(getCurrentTimeSlot()));
-        query.put("day",String.valueOf(today));
+        query.put("day", String.valueOf(today));
         Call<List<Room>> call = roomService.findRooms(query);
         call.enqueue(new Callback<List<Room>>() {
             @Override
             public void onResponse(Response<List<Room>> response, Retrofit retrofit) {
                 List<Room> rooms = response.body();
-                if(rooms.size()>0) {
+                if (rooms.size() > 0) {
                     Room first = rooms.get(0);
                     RoomResult query = new RoomResult();
                     query.setRoom(first);
@@ -176,7 +203,7 @@ public class MainActivity extends AppCompatActivity {
                     availableRoomProps.setText(TextUtils.join(",", first.getRoomProperties()));
                     showRoomButton.setVisibility(View.VISIBLE);
                     wrapped = Parcels.wrap(rooms);
-                }else{
+                } else {
                     availableRoomName.setText("Derzeit leider keine freien Räume");
                 }
             }
@@ -185,6 +212,82 @@ public class MainActivity extends AppCompatActivity {
             public void onFailure(Throwable t) {
             }
         });
+    }
+
+    private void loadNextMeeting() {
+
+        UserManager manager = UserManager.getInstance(this);
+        if(manager.isUserLoggedIn()){
+            ApiServiceFactory services = ApiServiceFactory.getInstance();
+            MeetingService meetingService = services.getMeetingService(manager.getUser().getMtklNr(), manager.getUserPassword());
+            Call<List<Meeting>> call = meetingService.listUserMeetings(manager.getUser().getMtklNr());
+            call.enqueue(new Callback<List<Meeting>>() {
+                @Override
+                public void onResponse(Response<List<Meeting>> response, Retrofit retrofit) {
+                    nextMeeting.setVisibility(View.VISIBLE);
+                    List<Meeting> meetings = response.body();
+                    if (meetings.size() > 0) {
+                        Meeting first = meetings.get(0);
+                        nextMeetingObject = first;
+                        nextMeetingTopic.setText(first.getGroup().getName());
+                        nextMeetingText.setText(first.getDay().substring(8,10)+"."+first.getDay().substring(5,7) + ". - " + first.getHour() + ". Block in " + first.getRoom());
+                        nextMeetingButton.setVisibility(View.VISIBLE);
+                        nextMeetingButton.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                checkCalendarPermissions();
+                            }
+                        });
+                    } else {
+                        nextMeetingText.setText("Keine Treffen geplant");
+                        nextMeetingButton.setVisibility(View.GONE);
+
+                    }
+                }
+
+                @Override
+                public void onFailure(Throwable t) {
+                    nextMeeting.setVisibility(View.GONE);
+                }
+            });
+        }
+    }
+
+    private void checkCalendarPermissions(){
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+            int permissionCheck = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_CALENDAR);
+            if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_CALENDAR}, PERMISSION_WRITE_CALENDAR);
+            }else{
+                addEventToCalendar();
+            }
+        }else{
+            addEventToCalendar();
+        }
+    }
+
+    private void addEventToCalendar(){
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        try {
+            sdf.parse(nextMeetingObject.getDay());
+            Calendar cal = sdf.getCalendar();
+            Intent intent = new Intent(Intent.ACTION_EDIT);
+            intent.setData(CalendarContract.Events.CONTENT_URI);
+            GregorianCalendar gregorianCalendar = getTimeForTimeSlot(nextMeetingObject.getHour(),cal);
+            if(gregorianCalendar != null){
+                intent.putExtra("beginTime", gregorianCalendar.getTimeInMillis());
+                intent.putExtra("endTime", gregorianCalendar.getTimeInMillis()+60*90*1000);
+                intent.putExtra("allDay", false);
+            }else{
+                intent.putExtra("beginTime", cal.getTimeInMillis());
+                intent.putExtra("endTime", cal.getTimeInMillis()+60*60*1000);
+                intent.putExtra("allDay", true);
+            }
+            intent.putExtra("title", "Treffen mit "+nextMeetingObject.getGroup().getName());
+            startActivity(intent);
+        } catch (ParseException e) {
+            Log.e("MainActivity","Parsing failed",e);
+        }
     }
 
     private int getCurrentTimeSlot(){
@@ -213,4 +316,44 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    private GregorianCalendar getTimeForTimeSlot(int hour, Calendar cal){
+        switch (hour){
+            case 1:
+                return new GregorianCalendar(cal.get(Calendar.YEAR),cal.get(Calendar.MONTH),cal.get(Calendar.DAY_OF_MONTH),8,0);
+            case 2:
+                return new GregorianCalendar(cal.get(Calendar.YEAR),cal.get(Calendar.MONTH),cal.get(Calendar.DAY_OF_MONTH),9,30);
+            case 3:
+                return new GregorianCalendar(cal.get(Calendar.YEAR),cal.get(Calendar.MONTH),cal.get(Calendar.DAY_OF_MONTH),11,15);
+            case 4:
+                return new GregorianCalendar(cal.get(Calendar.YEAR),cal.get(Calendar.MONTH),cal.get(Calendar.DAY_OF_MONTH),13,30);
+            case 5:
+                return new GregorianCalendar(cal.get(Calendar.YEAR),cal.get(Calendar.MONTH),cal.get(Calendar.DAY_OF_MONTH),15,10);
+            case 6:
+                return new GregorianCalendar(cal.get(Calendar.YEAR),cal.get(Calendar.MONTH),cal.get(Calendar.DAY_OF_MONTH),16,50);
+            default:
+                return null;
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        switch (requestCode) {
+            case PERMISSION_WRITE_CALENDAR: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    addEventToCalendar();
+                } else {
+                    Snackbar.make(scrollView,"Ohne die Rechte kann kein Event hinzugefügt werden",Snackbar.LENGTH_LONG).setAction("Ups", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            checkCalendarPermissions();
+                        }
+                    }).show();
+                }
+                break;
+            }
+            default:
+                super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        }
+    }
 }

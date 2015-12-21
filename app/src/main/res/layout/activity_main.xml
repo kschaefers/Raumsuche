@@ -2,6 +2,7 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_scrollView"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -118,6 +119,76 @@
             </RelativeLayout>
         </android.support.v7.widget.CardView>
 
+        <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/main_next_meeting"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            card_view:cardCornerRadius="2dp"
+            card_view:cardUseCompatPadding="true"
+            android:visibility="gone">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:id="@+id/imageViewMeetings"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/treffen"
+                    android:tint="#55616161" />
+
+                <TextView
+                    android:id="@+id/main_meeting_headline"
+                    style="@style/TextCardHeadline"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@+id/imageViewMeetings"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginLeft="16dp"
+                    android:text="Nächstes Treffen" />
+
+                <TextView
+                    android:id="@+id/main_meeting_topic"
+                    style="@style/TextNormal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/imageViewMeetings"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginTop="16dp"
+                    android:text="Gruppenname" />
+
+
+                <TextView
+                    android:id="@+id/main_meeting_text"
+                    style="@style/TextHeadline"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/main_meeting_topic"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginBottom="16dp"
+                    android:text="22.10. -  1.-3., 5.-6.Block in H0408" />
+
+                <ImageButton
+                    android:id="@+id/main_meeting_add_to_calendar"
+                    style="?android:attr/borderlessButtonStyle"
+                    android:layout_width="48dp"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_calendar_check_grey600_24dp"
+                    android:fontFamily="sans-serif"
+                    android:layout_alignTop="@+id/main_meeting_topic"
+                    android:layout_alignRight="@+id/main_meeting_topic"
+                    android:layout_alignEnd="@+id/main_meeting_topic" />
+
+            </RelativeLayout>
+
+        </android.support.v7.widget.CardView>
+
         <LinearLayout
             android:id="@+id/main_registered_view"
             android:layout_width="match_parent"
@@ -209,76 +280,6 @@
                 </RelativeLayout>
             </android.support.v7.widget.CardView>
         </LinearLayout>
-
-        <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/main_next_meeting"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            card_view:cardCornerRadius="2dp"
-            card_view:cardUseCompatPadding="true"
-            android:visibility="gone">
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <ImageView
-                    android:id="@+id/imageViewMeetings"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentTop="true"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/treffen"
-                    android:tint="#55616161" />
-
-                <TextView
-                    android:id="@+id/main_meeting_headline"
-                    style="@style/TextCardHeadline"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_alignBottom="@+id/imageViewMeetings"
-                    android:layout_marginBottom="10dp"
-                    android:layout_marginLeft="16dp"
-                    android:text="Nächstes Treffen" />
-
-                <TextView
-                    android:id="@+id/main_meeting_topic"
-                    style="@style/TextNormal"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/imageViewMeetings"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginRight="16dp"
-                    android:layout_marginTop="16dp"
-                    android:text="Gruppenname" />
-
-
-                <TextView
-                    android:id="@+id/main_meeting_text"
-                    style="@style/TextHeadline"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/main_meeting_topic"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginRight="16dp"
-                    android:layout_marginBottom="16dp"
-                    android:text="22.10. -  1.-3., 5.-6.Block in H0408" />
-
-                <ImageButton
-                    android:id="@+id/main_meeting_add_to_calendar"
-                    style="?android:attr/borderlessButtonStyle"
-                    android:layout_width="48dp"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_calendar_check_grey600_24dp"
-                    android:fontFamily="sans-serif"
-                    android:layout_alignTop="@+id/main_meeting_topic"
-                    android:layout_alignRight="@+id/main_meeting_topic"
-                    android:layout_alignEnd="@+id/main_meeting_topic" />
-
-            </RelativeLayout>
-
-        </android.support.v7.widget.CardView>
 
         <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
             android:id="@+id/main_unregistered_view"

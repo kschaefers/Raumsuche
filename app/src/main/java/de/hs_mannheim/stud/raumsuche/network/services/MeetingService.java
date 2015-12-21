@@ -34,4 +34,7 @@ public interface MeetingService {
 
     @GET("/groups/{groupId}/meetings")
     Call<List<Meeting>> listGroupMeetings(@Path("groupId") String groupId);
+
+    @GET("/users/{studentId}/meetings")
+    Call<List<Meeting>> listUserMeetings(@Path("studentId") String studentId);
 }
