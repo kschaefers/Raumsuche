@@ -103,7 +103,7 @@ public class RoomResultListAdapter extends BaseAdapter {
                 @Override
                 public void onClick(View view) {
                     if(onGroupAction != null) {
-                        onGroupAction.onGroupNotify(room);
+                        onGroupAction.onGroupNotify(roomResult);
                     }
                 }
             });
@@ -116,7 +116,6 @@ public class RoomResultListAdapter extends BaseAdapter {
 
         return view;
     }
-
 
     private SpannableStringBuilder buildPropertiesSpannable(List<String> properties, int color) {
 
@@ -170,6 +169,6 @@ public class RoomResultListAdapter extends BaseAdapter {
     }
 
     public interface OnGroupActionListener {
-        public void onGroupNotify(Room room);
+        void onGroupNotify(RoomResult room);
     }
 }

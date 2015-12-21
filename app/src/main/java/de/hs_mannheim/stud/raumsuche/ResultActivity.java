@@ -1,10 +1,8 @@
 package de.hs_mannheim.stud.raumsuche;
 
-import android.app.AlertDialog;
-import android.app.Dialog;
-import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
@@ -37,12 +35,16 @@ import de.hs_mannheim.stud.raumsuche.managers.BuildingFactory;
 import de.hs_mannheim.stud.raumsuche.managers.UserManager;
 import de.hs_mannheim.stud.raumsuche.models.Building;
 import de.hs_mannheim.stud.raumsuche.models.Group;
+import de.hs_mannheim.stud.raumsuche.models.Meeting;
 import de.hs_mannheim.stud.raumsuche.models.Room;
 import de.hs_mannheim.stud.raumsuche.models.RoomQuery;
 import de.hs_mannheim.stud.raumsuche.models.RoomResult;
 import de.hs_mannheim.stud.raumsuche.models.User;
 import de.hs_mannheim.stud.raumsuche.network.ApiServiceFactory;
 import de.hs_mannheim.stud.raumsuche.network.services.GroupService;
+import de.hs_mannheim.stud.raumsuche.network.services.MeetingService;
+import de.hs_mannheim.stud.raumsuche.views.widgets.CreateMeetingDialog;
+import retrofit.Call;
 import retrofit.Callback;
 import retrofit.Response;
 import retrofit.Retrofit;
@@ -58,6 +60,8 @@ public class ResultActivity extends AppCompatActivity implements OnMapReadyCallb
     private ResultFragment listFragment;
 
     private List<Group> groups;
+    private User myUser;
+    private UserManager userManager;
 
     @Bind(R.id.result_progress)
     ProgressBar resultProgress;
@@ -126,23 +130,16 @@ public class ResultActivity extends AppCompatActivity implements OnMapReadyCallb
     }
 
     @Override
-    public void onGroupNotify(Room room) {
+    public void onGroupNotify(final RoomResult roomResult) {
         if(groups != null && groups.size() > 0) {
-            CharSequence[] groupNames = new CharSequence[groups.size()];
+            DialogFragment dlg = new CreateMeetingDialog();
 
-            for (int i = 0; i < groups.size(); i++) {
-                groupNames[i] = groups.get(i).getName();
-            }
+            Bundle arguments = new Bundle();
+            arguments.putParcelable(CreateMeetingDialog.BK_GROUPS, Parcels.wrap(groups));
+            arguments.putParcelable(CreateMeetingDialog.BK_ROOMRESULT, Parcels.wrap(roomResult));
+            dlg.setArguments(arguments);
 
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setItems(groupNames, new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int which) {
-                    // The 'which' argument contains the index position
-                    // of the selected item
-                }
-            });
-            Dialog dlg = builder.create();
-            dlg.show();
+            dlg.show(getSupportFragmentManager(), null);
         } else {
             Toast.makeText(this, "Du hast keine Gruppen :(", Toast.LENGTH_SHORT).show();
         }
@@ -182,11 +179,11 @@ public class ResultActivity extends AppCompatActivity implements OnMapReadyCallb
             query = searchQuery;
         }
 
-        UserManager manager = UserManager.getInstance(this);
-        User myUser = manager.getUser();
+        userManager = UserManager.getInstance(this);
+        myUser = userManager.getUser();
 
         ApiServiceFactory serviceFactory = ApiServiceFactory.getInstance();
-        GroupService groupService = serviceFactory.getGroupService(myUser.getMtklNr(), manager.getUserPassword());
+        GroupService groupService = serviceFactory.getGroupService(myUser.getMtklNr(), userManager.getUserPassword());
 
         groupService.listUserGroups(myUser.getMtklNr()).enqueue(new Callback<List<Group>>() {
             @Override

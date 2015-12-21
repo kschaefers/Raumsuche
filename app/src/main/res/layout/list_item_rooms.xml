@@ -61,6 +61,7 @@
         android:layout_height="45dp"
         android:layout_below="@id/room_size"
         android:layout_centerHorizontal="true"
-        android:text="@string/room_notify_group" />
+        android:text="@string/room_notify_group"
+        android:textColor="@color/colorPrimary"/>
 
 </RelativeLayout>

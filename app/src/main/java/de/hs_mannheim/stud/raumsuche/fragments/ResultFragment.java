@@ -85,13 +85,13 @@ public class ResultFragment extends Fragment implements RoomResultListAdapter.On
 
     public interface OnListItemAcionListener {
         void onResultSelected(RoomResult selectedResult);
-        void onGroupNotify(Room room);
+        void onGroupNotify(RoomResult room);
     }
 
     @Override
-    public void onGroupNotify(Room room) {
+    public void onGroupNotify(RoomResult roomResult) {
         if(callback != null) {
-            callback.onGroupNotify(room);
+            callback.onGroupNotify(roomResult);
         }
     }
 }

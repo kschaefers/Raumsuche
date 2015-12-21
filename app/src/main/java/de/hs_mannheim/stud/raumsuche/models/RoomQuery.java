@@ -9,6 +9,7 @@ import java.util.List;
  */
 @Parcel
 public class RoomQuery {
+
     private List<String> properties;
 
     public List<String> getProperties() {
