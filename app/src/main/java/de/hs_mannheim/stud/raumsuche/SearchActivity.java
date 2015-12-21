@@ -44,8 +44,6 @@ import retrofit.Retrofit;
 
 public class SearchActivity extends AppCompatActivity {
 
-    @Bind(R.id.buttonAddGroupToRoomSearch)
-    protected Button buttonAddGroupToRoomSearch;
     @Bind(R.id.textSearchDate)
     protected TextView textSearchDate;
     @Bind(R.id.textSearchTime)
@@ -89,13 +87,6 @@ public class SearchActivity extends AppCompatActivity {
         initializeTextViews();
     }
 
-
-    @OnClick(R.id.buttonAddGroupToRoomSearch)
-    public void addGroup() {
-        Intent groups = new Intent();
-        groups.setClass(getApplicationContext(), GroupActivity.class);
-        startActivity(groups);
-    }
 
     private void initializeTextViews() {
         textSearchDate.setOnClickListener(new View.OnClickListener() {

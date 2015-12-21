@@ -103,10 +103,5 @@
         android:paddingTop="8dp"
         android:paddingBottom="8dp" />
 
-    <Button
-        android:id="@+id/buttonAddGroupToRoomSearch"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/addGroup" />
 
 </LinearLayout>
