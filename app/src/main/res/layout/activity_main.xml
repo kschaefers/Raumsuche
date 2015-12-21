@@ -66,8 +66,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentLeft="true"
-                        android:text=""
-                        android:layout_toLeftOf="@id/room_availability" />
+                        android:layout_toLeftOf="@id/room_availability"
+                        android:text="" />
 
                     <TextView
                         android:id="@+id/room_properties"
@@ -82,20 +82,18 @@
                     android:id="@+id/main_roombuttons_spacer"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
                     android:layout_alignParentLeft="true"
                     android:layout_below="@id/main_room_nextroom"
-                    />
-
-
+                    android:layout_marginLeft="10dp" />
+                
                 <Button
                     android:id="@+id/main_showroom_button"
                     style="?android:attr/borderlessButtonStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_toRightOf="@id/main_roombuttons_spacer"
                     android:layout_below="@id/main_room_nextroom"
                     android:layout_marginTop="6dp"
+                    android:layout_toRightOf="@id/main_roombuttons_spacer"
                     android:fontFamily="sans-serif"
                     android:padding="6dp"
                     android:text="Raum anzeigen"
@@ -108,10 +106,10 @@
                     style="?android:attr/borderlessButtonStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_toRightOf="@id/main_showroom_button"
                     android:layout_below="@id/main_room_nextroom"
-                    android:layout_marginTop="6dp"
                     android:layout_marginRight="10dp"
+                    android:layout_marginTop="6dp"
+                    android:layout_toRightOf="@id/main_showroom_button"
                     android:fontFamily="sans-serif"
                     android:padding="6dp"
                     android:text="Erweiterte Suche"
