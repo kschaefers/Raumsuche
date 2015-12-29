@@ -10,21 +10,19 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/create_meeting_hour_label"
-        style="@style/TextNormal"
-        />
+        style="@style/TextNormal" />
+
     <Spinner
         android:id="@+id/create_meeting_hour"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        />
+        android:layout_marginBottom="10dp" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/create_meeting_groups_label"
-        style="@style/TextNormal"
-        />
+        style="@style/TextNormal" />
 
     <ListView
         android:id="@+id/create_meeting_groups"

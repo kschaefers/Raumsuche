@@ -93,7 +93,7 @@ public class GroupAddListAdapter extends BaseAdapter {
             }
         });
 
-        if(myUser.getMtklNr().equals(group.getOwner())) {
+        if (myUser.getMtklNr().equals(group.getOwner())) {
             holder.deleteButton.setVisibility(View.VISIBLE);
         } else {
             holder.deleteButton.setVisibility(View.GONE);

@@ -19,7 +19,6 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.squareup.okhttp.ResponseBody;
 
 import org.parceler.Parcels;
 
@@ -35,16 +34,13 @@ import de.hs_mannheim.stud.raumsuche.managers.BuildingFactory;
 import de.hs_mannheim.stud.raumsuche.managers.UserManager;
 import de.hs_mannheim.stud.raumsuche.models.Building;
 import de.hs_mannheim.stud.raumsuche.models.Group;
-import de.hs_mannheim.stud.raumsuche.models.Meeting;
 import de.hs_mannheim.stud.raumsuche.models.Room;
 import de.hs_mannheim.stud.raumsuche.models.RoomQuery;
 import de.hs_mannheim.stud.raumsuche.models.RoomResult;
 import de.hs_mannheim.stud.raumsuche.models.User;
 import de.hs_mannheim.stud.raumsuche.network.ApiServiceFactory;
 import de.hs_mannheim.stud.raumsuche.network.services.GroupService;
-import de.hs_mannheim.stud.raumsuche.network.services.MeetingService;
 import de.hs_mannheim.stud.raumsuche.views.widgets.CreateMeetingDialog;
-import retrofit.Call;
 import retrofit.Callback;
 import retrofit.Response;
 import retrofit.Retrofit;
@@ -131,7 +127,7 @@ public class ResultActivity extends AppCompatActivity implements OnMapReadyCallb
 
     @Override
     public void onGroupNotify(final RoomResult roomResult) {
-        if(groups != null && groups.size() > 0) {
+        if (groups != null && groups.size() > 0) {
             DialogFragment dlg = new CreateMeetingDialog();
 
             Bundle arguments = new Bundle();
@@ -174,7 +170,7 @@ public class ResultActivity extends AppCompatActivity implements OnMapReadyCallb
         }
 
         if (getIntent().hasExtra("searchQuery")) {
-            query= Parcels.unwrap(getIntent().getParcelableExtra("searchQuery"));
+            query = Parcels.unwrap(getIntent().getParcelableExtra("searchQuery"));
         } else {
             query = new RoomQuery();
         }
@@ -190,7 +186,7 @@ public class ResultActivity extends AppCompatActivity implements OnMapReadyCallb
             public void onResponse(Response<List<Group>> response, Retrofit retrofit) {
                 List<Group> groups = response.body();
 
-                if(groups != null) {
+                if (groups != null) {
                     ResultActivity.this.groups = groups;
                 }
             }
@@ -205,7 +201,7 @@ public class ResultActivity extends AppCompatActivity implements OnMapReadyCallb
     private void initComponents() {
         resultProgress.setVisibility(View.GONE);
 
-        if(results.size() > 0) {
+        if (results.size() > 0) {
             mapFragment = SupportMapFragment.newInstance();
 
             Bundle arguments = new Bundle();

@@ -1,7 +1,5 @@
 package de.hs_mannheim.stud.raumsuche.network.services;
 
-import com.squareup.okhttp.ResponseBody;
-
 import java.util.List;
 import java.util.Map;
 

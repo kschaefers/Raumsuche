@@ -1,10 +1,8 @@
 package de.hs_mannheim.stud.raumsuche.managers;
 
-import android.app.Application;
 import android.content.Context;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
-import android.os.Build;
 import android.text.TextUtils;
 
 import java.util.HashMap;

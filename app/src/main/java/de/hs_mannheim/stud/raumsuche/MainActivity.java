@@ -4,13 +4,13 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
+import android.os.Bundle;
 import android.os.Parcelable;
 import android.provider.CalendarContract;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -102,7 +102,7 @@ public class MainActivity extends AppCompatActivity {
     @OnClick(R.id.main_showroom_button)
     public void openResult() {
         Intent result = new Intent();
-        if(this.wrapped != null){
+        if (this.wrapped != null) {
             result.putExtra("searchResult", this.wrapped);
         }
         result.setClass(getApplicationContext(), ResultActivity.class);
@@ -179,15 +179,15 @@ public class MainActivity extends AppCompatActivity {
         User user = manager.getUser();
         ApiServiceFactory services = ApiServiceFactory.getInstance();
         RoomService roomService = services.getRoomService();
-        HashMap<String,String> query = new HashMap<>();
-        if(user != null){
+        HashMap<String, String> query = new HashMap<>();
+        if (user != null) {
             query.put("building", user.getBuilding());
         }
         int today = new GregorianCalendar().get(Calendar.DAY_OF_WEEK) - 1;
-        if(today == 0){
+        if (today == 0) {
             today = 7;
         }
-        query.put("hour",String.valueOf(getCurrentTimeSlot()));
+        query.put("hour", String.valueOf(getCurrentTimeSlot()));
         query.put("day", String.valueOf(today));
         Call<List<Room>> call = roomService.findRooms(query);
         call.enqueue(new Callback<List<Room>>() {
@@ -217,7 +217,7 @@ public class MainActivity extends AppCompatActivity {
     private void loadNextMeeting() {
 
         UserManager manager = UserManager.getInstance(this);
-        if(manager.isUserLoggedIn()){
+        if (manager.isUserLoggedIn()) {
             ApiServiceFactory services = ApiServiceFactory.getInstance();
             MeetingService meetingService = services.getMeetingService(manager.getUser().getMtklNr(), manager.getUserPassword());
             Call<List<Meeting>> call = meetingService.listUserMeetings(manager.getUser().getMtklNr());
@@ -230,7 +230,7 @@ public class MainActivity extends AppCompatActivity {
                         Meeting first = meetings.get(0);
                         nextMeetingObject = first;
                         nextMeetingTopic.setText(first.getGroup().getName());
-                        nextMeetingText.setText(first.getDay().substring(8,10)+"."+first.getDay().substring(5,7) + ". - " + first.getHour() + ". Block in " + first.getRoom());
+                        nextMeetingText.setText(first.getDay().substring(8, 10) + "." + first.getDay().substring(5, 7) + ". - " + first.getHour() + ". Block in " + first.getRoom());
                         nextMeetingButton.setVisibility(View.VISIBLE);
                         nextMeetingButton.setOnClickListener(new View.OnClickListener() {
                             @Override
@@ -253,83 +253,83 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void checkCalendarPermissions(){
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+    private void checkCalendarPermissions() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             int permissionCheck = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_CALENDAR);
             if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
                 ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_CALENDAR}, PERMISSION_WRITE_CALENDAR);
-            }else{
+            } else {
                 addEventToCalendar();
             }
-        }else{
+        } else {
             addEventToCalendar();
         }
     }
 
-    private void addEventToCalendar(){
+    private void addEventToCalendar() {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         try {
             sdf.parse(nextMeetingObject.getDay());
             Calendar cal = sdf.getCalendar();
             Intent intent = new Intent(Intent.ACTION_EDIT);
             intent.setData(CalendarContract.Events.CONTENT_URI);
-            GregorianCalendar gregorianCalendar = getTimeForTimeSlot(nextMeetingObject.getHour(),cal);
-            if(gregorianCalendar != null){
+            GregorianCalendar gregorianCalendar = getTimeForTimeSlot(nextMeetingObject.getHour(), cal);
+            if (gregorianCalendar != null) {
                 intent.putExtra("beginTime", gregorianCalendar.getTimeInMillis());
-                intent.putExtra("endTime", gregorianCalendar.getTimeInMillis()+60*90*1000);
+                intent.putExtra("endTime", gregorianCalendar.getTimeInMillis() + 60 * 90 * 1000);
                 intent.putExtra("allDay", false);
-            }else{
+            } else {
                 intent.putExtra("beginTime", cal.getTimeInMillis());
-                intent.putExtra("endTime", cal.getTimeInMillis()+60*60*1000);
+                intent.putExtra("endTime", cal.getTimeInMillis() + 60 * 60 * 1000);
                 intent.putExtra("allDay", true);
             }
-            intent.putExtra("title", "Treffen mit "+nextMeetingObject.getGroup().getName());
+            intent.putExtra("title", "Treffen mit " + nextMeetingObject.getGroup().getName());
             startActivity(intent);
         } catch (ParseException e) {
-            Log.e("MainActivity","Parsing failed",e);
+            Log.e("MainActivity", "Parsing failed", e);
         }
     }
 
-    private int getCurrentTimeSlot(){
+    private int getCurrentTimeSlot() {
         GregorianCalendar now = new GregorianCalendar();
-        GregorianCalendar slot1 = new GregorianCalendar(now.get(Calendar.YEAR),now.get(Calendar.MONTH),now.get(Calendar.DAY_OF_MONTH),8,0);
-        GregorianCalendar slot2 = new GregorianCalendar(now.get(Calendar.YEAR),now.get(Calendar.MONTH),now.get(Calendar.DAY_OF_MONTH),9,30);
-        GregorianCalendar slot3 = new GregorianCalendar(now.get(Calendar.YEAR),now.get(Calendar.MONTH),now.get(Calendar.DAY_OF_MONTH),11,15);
-        GregorianCalendar slot4 = new GregorianCalendar(now.get(Calendar.YEAR),now.get(Calendar.MONTH),now.get(Calendar.DAY_OF_MONTH),13,30);
-        GregorianCalendar slot5 = new GregorianCalendar(now.get(Calendar.YEAR),now.get(Calendar.MONTH),now.get(Calendar.DAY_OF_MONTH),15,10);
-        GregorianCalendar slot6 = new GregorianCalendar(now.get(Calendar.YEAR),now.get(Calendar.MONTH),now.get(Calendar.DAY_OF_MONTH),16,50);
+        GregorianCalendar slot1 = new GregorianCalendar(now.get(Calendar.YEAR), now.get(Calendar.MONTH), now.get(Calendar.DAY_OF_MONTH), 8, 0);
+        GregorianCalendar slot2 = new GregorianCalendar(now.get(Calendar.YEAR), now.get(Calendar.MONTH), now.get(Calendar.DAY_OF_MONTH), 9, 30);
+        GregorianCalendar slot3 = new GregorianCalendar(now.get(Calendar.YEAR), now.get(Calendar.MONTH), now.get(Calendar.DAY_OF_MONTH), 11, 15);
+        GregorianCalendar slot4 = new GregorianCalendar(now.get(Calendar.YEAR), now.get(Calendar.MONTH), now.get(Calendar.DAY_OF_MONTH), 13, 30);
+        GregorianCalendar slot5 = new GregorianCalendar(now.get(Calendar.YEAR), now.get(Calendar.MONTH), now.get(Calendar.DAY_OF_MONTH), 15, 10);
+        GregorianCalendar slot6 = new GregorianCalendar(now.get(Calendar.YEAR), now.get(Calendar.MONTH), now.get(Calendar.DAY_OF_MONTH), 16, 50);
 
-        if(now.compareTo(slot1) == -1){
+        if (now.compareTo(slot1) == -1) {
             return 0;
-        }else if(now.compareTo(slot1) > -1 && now.compareTo(slot2) == -1){
+        } else if (now.compareTo(slot1) > -1 && now.compareTo(slot2) == -1) {
             return 1;
-        }else if(now.compareTo(slot2) > -1 && now.compareTo(slot3) == -1){
+        } else if (now.compareTo(slot2) > -1 && now.compareTo(slot3) == -1) {
             return 2;
-        }else if(now.compareTo(slot3) > -1 && now.compareTo(slot4) == -1){
+        } else if (now.compareTo(slot3) > -1 && now.compareTo(slot4) == -1) {
             return 3;
-        }else if(now.compareTo(slot4) > -1 && now.compareTo(slot5) == -1){
+        } else if (now.compareTo(slot4) > -1 && now.compareTo(slot5) == -1) {
             return 4;
-        }else if(now.compareTo(slot5) > -1 && now.compareTo(slot6) == -1){
+        } else if (now.compareTo(slot5) > -1 && now.compareTo(slot6) == -1) {
             return 5;
-        }else{
+        } else {
             return 6;
         }
     }
 
-    private GregorianCalendar getTimeForTimeSlot(int hour, Calendar cal){
-        switch (hour){
+    private GregorianCalendar getTimeForTimeSlot(int hour, Calendar cal) {
+        switch (hour) {
             case 1:
-                return new GregorianCalendar(cal.get(Calendar.YEAR),cal.get(Calendar.MONTH),cal.get(Calendar.DAY_OF_MONTH),8,0);
+                return new GregorianCalendar(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH), 8, 0);
             case 2:
-                return new GregorianCalendar(cal.get(Calendar.YEAR),cal.get(Calendar.MONTH),cal.get(Calendar.DAY_OF_MONTH),9,30);
+                return new GregorianCalendar(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH), 9, 30);
             case 3:
-                return new GregorianCalendar(cal.get(Calendar.YEAR),cal.get(Calendar.MONTH),cal.get(Calendar.DAY_OF_MONTH),11,15);
+                return new GregorianCalendar(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH), 11, 15);
             case 4:
-                return new GregorianCalendar(cal.get(Calendar.YEAR),cal.get(Calendar.MONTH),cal.get(Calendar.DAY_OF_MONTH),13,30);
+                return new GregorianCalendar(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH), 13, 30);
             case 5:
-                return new GregorianCalendar(cal.get(Calendar.YEAR),cal.get(Calendar.MONTH),cal.get(Calendar.DAY_OF_MONTH),15,10);
+                return new GregorianCalendar(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH), 15, 10);
             case 6:
-                return new GregorianCalendar(cal.get(Calendar.YEAR),cal.get(Calendar.MONTH),cal.get(Calendar.DAY_OF_MONTH),16,50);
+                return new GregorianCalendar(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH), 16, 50);
             default:
                 return null;
         }
@@ -343,7 +343,7 @@ public class MainActivity extends AppCompatActivity {
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     addEventToCalendar();
                 } else {
-                    Snackbar.make(scrollView,"Ohne die Rechte kann kein Event hinzugefügt werden",Snackbar.LENGTH_LONG).setAction("Ups", new View.OnClickListener() {
+                    Snackbar.make(scrollView, "Ohne die Rechte kann kein Event hinzugefügt werden", Snackbar.LENGTH_LONG).setAction("Ups", new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
                             checkCalendarPermissions();

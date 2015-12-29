@@ -68,8 +68,8 @@ public class User {
         return mtklNr.equals(((User) other).getMtklNr());
     }
 
-    public String getBuilding(){
-        switch (getFaculty()){
+    public String getBuilding() {
+        switch (getFaculty()) {
             case "Informatik":
                 return "A";
             case "Biotechnologie":

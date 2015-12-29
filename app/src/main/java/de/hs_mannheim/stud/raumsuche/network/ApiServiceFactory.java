@@ -1,6 +1,5 @@
 package de.hs_mannheim.stud.raumsuche.network;
 
-import android.content.Context;
 import android.util.Base64;
 
 import com.squareup.okhttp.Interceptor;
@@ -58,6 +57,7 @@ public class ApiServiceFactory {
     public GroupService getGroupService(String studentId, String password) {
         return createService(GroupService.class, studentId, password);
     }
+
     public MeetingService getMeetingService(String studentId, String password) {
         return createService(MeetingService.class, studentId, password);
     }

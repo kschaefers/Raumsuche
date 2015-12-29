@@ -1,6 +1,5 @@
 package de.hs_mannheim.stud.raumsuche;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -15,7 +14,6 @@ import com.mobsandgeeks.saripaar.Validator;
 import com.mobsandgeeks.saripaar.annotation.NotEmpty;
 import com.squareup.okhttp.ResponseBody;
 
-import java.util.Arrays;
 import java.util.List;
 
 import butterknife.Bind;
@@ -29,7 +27,6 @@ import retrofit.Call;
 import retrofit.Callback;
 import retrofit.Response;
 import retrofit.Retrofit;
-import retrofit.http.HTTP;
 
 public class ProfileActivity extends AppCompatActivity implements Validator.ValidationListener {
 

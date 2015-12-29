@@ -1,9 +1,9 @@
 package de.hs_mannheim.stud.raumsuche;
 
 import android.content.DialogInterface;
+import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -20,7 +20,6 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import de.hs_mannheim.stud.raumsuche.managers.UserManager;
 import de.hs_mannheim.stud.raumsuche.models.User;
 import de.hs_mannheim.stud.raumsuche.network.ApiServiceFactory;
 import de.hs_mannheim.stud.raumsuche.network.services.UserService;

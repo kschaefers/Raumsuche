@@ -1,9 +1,9 @@
 package de.hs_mannheim.stud.raumsuche.fragments;
 
 import android.app.Activity;
+import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,10 +18,8 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import de.hs_mannheim.stud.raumsuche.R;
 import de.hs_mannheim.stud.raumsuche.managers.UserManager;
-import de.hs_mannheim.stud.raumsuche.models.Room;
 import de.hs_mannheim.stud.raumsuche.models.RoomQuery;
 import de.hs_mannheim.stud.raumsuche.models.RoomResult;
-import de.hs_mannheim.stud.raumsuche.models.User;
 import de.hs_mannheim.stud.raumsuche.views.adapters.RoomResultListAdapter;
 
 public class ResultFragment extends Fragment implements RoomResultListAdapter.OnGroupActionListener {
@@ -85,12 +83,13 @@ public class ResultFragment extends Fragment implements RoomResultListAdapter.On
 
     public interface OnListItemAcionListener {
         void onResultSelected(RoomResult selectedResult);
+
         void onGroupNotify(RoomResult room);
     }
 
     @Override
     public void onGroupNotify(RoomResult roomResult) {
-        if(callback != null) {
+        if (callback != null) {
             callback.onGroupNotify(roomResult);
         }
     }

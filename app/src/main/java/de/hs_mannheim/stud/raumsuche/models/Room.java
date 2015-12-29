@@ -97,27 +97,27 @@ public class Room {
         this.video = video;
     }
 
-    public List<String> getRoomProperties(){
+    public List<String> getRoomProperties() {
         List<String> list = new ArrayList<>();
-        if(hasBeamer()){
+        if (hasBeamer()) {
             list.add("Beamer");
         }
-        if(hasComputer()){
+        if (hasComputer()) {
             list.add("Computer");
         }
-        if(hasLooseSeating()){
+        if (hasLooseSeating()) {
             list.add("Lose Bestuhlung");
         }
-        if(hasPool()){
+        if (hasPool()) {
             list.add("Poolraum");
         }
-        if(hasVideo()){
+        if (hasVideo()) {
             list.add("Video");
         }
         return list;
     }
 
-    public String getBuilding(){
-        return getName().substring(0,1);
+    public String getBuilding() {
+        return getName().substring(0, 1);
     }
 }

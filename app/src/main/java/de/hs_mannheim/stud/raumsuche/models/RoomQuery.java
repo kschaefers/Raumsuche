@@ -29,7 +29,7 @@ public class RoomQuery {
     }
 
     public Date getSearchDate() {
-        if(searchDate == null) {
+        if (searchDate == null) {
             return new Date();
         }
 

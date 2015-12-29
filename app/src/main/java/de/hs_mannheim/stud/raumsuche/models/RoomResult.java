@@ -1,11 +1,8 @@
 package de.hs_mannheim.stud.raumsuche.models;
 
 import android.text.TextUtils;
-import android.util.Log;
 
 import org.parceler.Parcel;
-
-import de.hs_mannheim.stud.raumsuche.models.Room;
 
 /**
  * Created by Martin on 12/3/15.

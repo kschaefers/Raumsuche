@@ -151,7 +151,7 @@ public class GroupFormActivity extends AppCompatActivity implements Validator.Va
         adapter = new GroupAddListAdapter(this, group);
         userList.setAdapter(adapter);
 
-        if(!myUser.getMtklNr().equals(group.getOwner())) {
+        if (!myUser.getMtklNr().equals(group.getOwner())) {
             userInputLayout.setVisibility(View.GONE);
             addUserButton.setVisibility(View.GONE);
         }

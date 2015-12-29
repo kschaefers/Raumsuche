@@ -97,12 +97,12 @@ public class RoomResultListAdapter extends BaseAdapter {
         holder.properties.setText(propertiesSpannable, TextView.BufferType.SPANNABLE);
         holder.size.setText(room.getSize() + " Plätze");
 
-        if(enableGroupActions && position == selectedRoomResult) {
+        if (enableGroupActions && position == selectedRoomResult) {
             holder.notifyGroup.setVisibility(View.VISIBLE);
             holder.notifyGroup.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if(onGroupAction != null) {
+                    if (onGroupAction != null) {
                         onGroupAction.onGroupNotify(roomResult);
                     }
                 }

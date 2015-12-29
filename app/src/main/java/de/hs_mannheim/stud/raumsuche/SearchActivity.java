@@ -8,14 +8,11 @@ import android.os.Parcelable;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
-import android.widget.CalendarView;
 import android.widget.LinearLayout;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -33,7 +30,6 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import de.hs_mannheim.stud.raumsuche.models.Room;
 import de.hs_mannheim.stud.raumsuche.models.RoomQuery;
 import de.hs_mannheim.stud.raumsuche.network.ApiServiceFactory;
@@ -128,7 +124,7 @@ public class SearchActivity extends AppCompatActivity {
         final CalendarPickerView calendar = (CalendarPickerView) inflater.inflate(R.layout.calendar_dialog, null);
         Calendar nextYear = Calendar.getInstance();
         nextYear.add(Calendar.YEAR, 1);
-        calendar.init(new Date(),nextYear.getTime()).withSelectedDate(selectedDate.getTime());
+        calendar.init(new Date(), nextYear.getTime()).withSelectedDate(selectedDate.getTime());
         calendar.setOnDateSelectedListener(new CalendarPickerView.OnDateSelectedListener() {
             @Override
             public void onDateSelected(Date date) {
@@ -355,7 +351,7 @@ public class SearchActivity extends AppCompatActivity {
             public void onResponse(Response<List<Room>> response, Retrofit retrofit) {
                 List<Room> rooms = response.body();
 
-                if(rooms.size() > 0) {
+                if (rooms.size() > 0) {
                     Parcelable wrapped = Parcels.wrap(rooms);
 
                     Intent resultIntent = new Intent();

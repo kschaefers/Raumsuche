@@ -2,7 +2,6 @@ package de.hs_mannheim.stud.raumsuche.views.widgets;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.DialogInterface;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
@@ -12,7 +11,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Spinner;
-import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,7 +23,6 @@ import java.util.Locale;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import de.hs_mannheim.stud.raumsuche.R;
-import de.hs_mannheim.stud.raumsuche.ResultActivity;
 import de.hs_mannheim.stud.raumsuche.managers.UserManager;
 import de.hs_mannheim.stud.raumsuche.models.Group;
 import de.hs_mannheim.stud.raumsuche.models.Meeting;
@@ -76,7 +73,7 @@ public class CreateMeetingDialog extends DialogFragment {
         final String[] hourNumbers = TextUtils.split(room.getHour(), ",");
         String[] hours = new String[hourNumbers.length];
 
-        for(int i=0; i < hours.length; i++) {
+        for (int i = 0; i < hours.length; i++) {
             hours[i] = hourNumbers[i] + ". Block";
         }
 

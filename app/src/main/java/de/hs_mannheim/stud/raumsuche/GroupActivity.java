@@ -19,7 +19,6 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnItemClick;
-import butterknife.OnItemSelected;
 import de.hs_mannheim.stud.raumsuche.managers.UserManager;
 import de.hs_mannheim.stud.raumsuche.models.Group;
 import de.hs_mannheim.stud.raumsuche.models.User;
