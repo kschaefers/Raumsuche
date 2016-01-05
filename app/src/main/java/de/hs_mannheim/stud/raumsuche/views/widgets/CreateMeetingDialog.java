@@ -77,7 +77,7 @@ public class CreateMeetingDialog extends DialogFragment {
             hours[i] = hourNumbers[i] + ". Block";
         }
 
-        hourSpinner.setAdapter(new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1, hours));
+        hourSpinner.setAdapter(new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, hours));
 
         String[] groupNames = new String[groups.size()];
 
@@ -85,7 +85,7 @@ public class CreateMeetingDialog extends DialogFragment {
             groupNames[i] = groups.get(i).getName();
         }
 
-        groupList.setAdapter(new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1, groupNames));
+        groupList.setAdapter(new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, groupNames));
         groupList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {

@@ -159,7 +159,7 @@ public class ResultActivity extends AppCompatActivity implements OnMapReadyCallb
 
         if (getIntent().getParcelableExtra("searchResult") != null) {
             List<Room> rooms = Parcels.unwrap(getIntent().getParcelableExtra("searchResult"));
-            results = new ArrayList<RoomResult>();
+            results = new ArrayList<>();
             for (Room room : rooms) {
                 RoomResult result = new RoomResult();
                 result.setRoom(room);

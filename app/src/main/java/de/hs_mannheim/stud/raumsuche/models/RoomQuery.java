@@ -13,7 +13,7 @@ import java.util.List;
 public class RoomQuery {
 
     public RoomQuery() {
-        properties = new ArrayList<String>();
+        properties = new ArrayList<>();
     }
 
     private Date searchDate;

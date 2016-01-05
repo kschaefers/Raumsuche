@@ -73,8 +73,6 @@ public class UserManager {
     }
 
     public String getUserPassword() {
-        String password = prefs.getString(SP_PASSWORD, null);
-
-        return password;
+        return prefs.getString(SP_PASSWORD, null);
     }
 }

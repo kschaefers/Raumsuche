@@ -314,7 +314,7 @@ public class SearchActivity extends AppCompatActivity {
             searchQuery.setSearchDate(selectedDate.getTime());
             query.put("day", selectedDate.get(Calendar.DAY_OF_WEEK) + "");
         }
-        if (!textSearchTime.getText().toString().equals("Jede Zeitstunde")) {
+        if (!textSearchTime.getText().toString().equals(getString(R.string.anyTime))) {
             String selectedTimes = "";
             for (int i = 0; i < mSelectedTimes.length; i++) {
                 selectedTimes += mSelectedTimes[i] ? "," + (i + 1) : "";

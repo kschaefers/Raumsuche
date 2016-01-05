@@ -34,7 +34,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentTop="true"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/raumsuche2" />
+                    android:src="@drawable/raumsuche" />
 
                 <TextView
                     android:id="@+id/info_text"
@@ -98,7 +98,7 @@
                     android:layout_toRightOf="@id/main_roombuttons_spacer"
                     android:fontFamily="sans-serif"
                     android:padding="6dp"
-                    android:text="Raum anzeigen"
+                    android:text="@string/show_room"
                     android:textColor="@color/colorPrimary"
                     android:textStyle="bold"
                     android:visibility="gone" />
@@ -114,7 +114,7 @@
                     android:layout_toRightOf="@id/main_showroom_button"
                     android:fontFamily="sans-serif"
                     android:padding="6dp"
-                    android:text="Erweiterte Suche"
+                    android:text="@string/custom_search"
                     android:textColor="@color/colorPrimary" />
 
             </RelativeLayout>
@@ -157,7 +157,7 @@
                         android:layout_alignBottom="@+id/imageViewMeetings"
                         android:layout_marginBottom="10dp"
                         android:layout_marginLeft="16dp"
-                        android:text="Nächstes Treffen" />
+                        android:text="@string/next_meeting" />
 
                     <TextView
                         android:id="@+id/main_meeting_topic"
@@ -168,7 +168,7 @@
                         android:layout_marginLeft="16dp"
                         android:layout_marginRight="16dp"
                         android:layout_marginTop="16dp"
-                        android:text="Gruppenname" />
+                        android:text="" />
 
 
                     <TextView
@@ -179,7 +179,7 @@
                         android:layout_below="@+id/main_meeting_topic"
                         android:layout_marginLeft="16dp"
                         android:layout_marginRight="16dp"
-                        android:text="22.10. -  1.-3., 5.-6.Block in H0408" />
+                        android:text="" />
 
                     <ImageButton
                         android:id="@+id/main_meeting_add_to_calendar"
@@ -203,7 +203,7 @@
                         android:layout_marginTop="6dp"
                         android:fontFamily="sans-serif"
                         android:padding="6dp"
-                        android:text="Alle Treffen anzeigen"
+                        android:text="@string/all_meetings"
                         android:textColor="@color/colorPrimary" />
 
                 </RelativeLayout>
@@ -246,7 +246,7 @@
                             android:padding="6dp"
                             android:paddingLeft="0dp"
                             android:paddingRight="0dp"
-                            android:text="Meine Gruppen"
+                            android:text="@string/my_groups"
                             android:textColor="@color/colorPrimary" />
 
                     </RelativeLayout>
@@ -281,7 +281,7 @@
                             android:layout_marginLeft="10dp"
                             android:fontFamily="sans-serif"
                             android:padding="6dp"
-                            android:text="Mein Profil"
+                            android:text="@string/profile"
                             android:textColor="@color/colorPrimary" />
 
                         <Button
@@ -293,7 +293,7 @@
                             android:layout_below="@id/main_profile_button"
                             android:fontFamily="sans-serif"
                             android:padding="6dp"
-                            android:text="Abmelden"
+                            android:text="@string/logout"
                             android:textColor="@color/colorPrimary" />
 
                     </RelativeLayout>
@@ -329,7 +329,7 @@
                     android:layout_alignBottom="@+id/imageViewGroups"
                     android:layout_marginBottom="10dp"
                     android:layout_marginLeft="16dp"
-                    android:text="Lerne in Gruppen" />
+                    android:text="@string/group_headline" />
 
                 <TextView
                     android:id="@+id/main_login_topic"
@@ -340,7 +340,7 @@
                     android:layout_marginLeft="16dp"
                     android:layout_marginRight="16dp"
                     android:layout_marginTop="16dp"
-                    android:text="Benutzeraccount" />
+                    android:text="@string/account" />
 
 
                 <Button
@@ -352,7 +352,7 @@
                     android:layout_marginLeft="8dp"
                     android:fontFamily="sans-serif"
                     android:padding="6dp"
-                    android:text="Anmelden"
+                    android:text="@string/login"
                     android:textColor="@color/colorPrimary" />
 
                 <Button
@@ -364,7 +364,7 @@
                     android:layout_toRightOf="@id/main_login_loginbutton"
                     android:fontFamily="sans-serif"
                     android:padding="6dp"
-                    android:text="Registrieren"
+                    android:text="@string/signUp"
                     android:textColor="@color/colorPrimary" />
 
             </RelativeLayout>

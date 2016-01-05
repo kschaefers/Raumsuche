@@ -124,7 +124,7 @@ public class GroupFormActivity extends AppCompatActivity implements Validator.Va
             group.setName("");
             group.setOwner(myUser.getMtklNr());
 
-            List<User> users = new ArrayList<User>();
+            List<User> users = new ArrayList<>();
             users.add(myUser);
             group.setUsers(users);
         }

@@ -14,7 +14,6 @@
         android:background="@drawable/circle_background"
         android:fontFamily="sans-serif-light"
         android:gravity="center"
-        android:text="A"
         android:textColor="@android:color/white"
         android:textSize="28sp" />
 
@@ -23,8 +22,7 @@
         style="@style/TextNormal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:text="1. Block, 5 - 6. Block" />
+        android:layout_alignParentRight="true" />
 
     <TextView
         android:id="@+id/room_identifier"
@@ -33,7 +31,7 @@
         android:layout_height="wrap_content"
         android:layout_toLeftOf="@id/room_availability"
         android:layout_toRightOf="@id/room_building"
-        android:text="A206" />
+        android:text=""/>
 
     <TextView
         android:id="@+id/room_properties"
@@ -41,8 +39,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@id/room_identifier"
-        android:layout_below="@id/room_identifier"
-        android:text="Beamer, Lose Bestuhlung, Poolraum" />
+        android:layout_below="@id/room_identifier"/>
 
     <TextView
         android:id="@+id/room_size"
@@ -51,8 +48,7 @@
         android:layout_height="wrap_content"
         android:layout_alignLeft="@id/room_identifier"
         android:layout_below="@id/room_properties"
-        android:layout_marginTop="1dp"
-        android:text="90 Platze" />
+        android:layout_marginTop="1dp" />
 
     <Button
         android:id="@+id/room_notify_group"

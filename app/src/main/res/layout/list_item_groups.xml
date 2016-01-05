@@ -19,7 +19,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_toLeftOf="@id/group_item_owner"
-        android:text="MSO Semesterprojekt" />
+        android:text="" />
 
     <TextView
         android:id="@+id/group_item_users"
@@ -27,7 +27,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@id/group_item_name"
-        android:layout_below="@id/group_item_name"
-        android:text="Katrin Schäfers, Christoph Reiser, +1" />
+        android:layout_below="@id/group_item_name"/>
 
 </RelativeLayout>

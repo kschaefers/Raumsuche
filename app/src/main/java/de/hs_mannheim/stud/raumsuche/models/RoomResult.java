@@ -12,7 +12,6 @@ import org.parceler.Parcel;
 public class RoomResult {
     long id;
     Room room;
-    String available;
 
     public String getAvailable() {
         String[] hourArray = TextUtils.split(room.getHour(), ",");

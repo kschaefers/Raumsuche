@@ -1,10 +1,7 @@
 <resources>
     <string name="app_name">Raumsuche</string>
     <string name="title_activity_group">Meine Gruppen</string>
-    <string name="welcome">Willkommen</string>
     <string name="nextAvailableRoom">Nächster freier Raum</string>
-    <string name="searchForOtherRoom">anderen Raum suchen</string>
-    <string name="organizeGroups">Gruppen organisieren</string>
     <string name="login">Anmelden</string>
     <string name="studentId">Matrikelnummer</string>
     <string name="name">Name</string>
@@ -19,15 +16,11 @@
     <string name="beamer">Beamer</string>
     <string name="video">Video</string>
     <string name="looseSeating">Lose Bestuhlung</string>
-    <string name="addGroup">Gruppe hinzufügen</string>
     <string name="Cancel">Cancel</string>
 
     <string name="anyBuilding">Gebäude beliebig</string>
     <string name="anyRoomSize">Raumgröße beliebig</string>
     <string name="anyTime">Zeitstunde beliebig</string>
-
-    <string name="availability_single_block">%1$d. Block</string>
-    <string name="availability_multiple_blocks">%1$d. - %2$d. Block</string>
     <string name="title_activity_result">Freie Räume</string>
 
     <string-array name="buildings">
@@ -111,5 +104,14 @@
     <string name="send_notification">Benachrichtigen</string>
     <string name="create_meeting_hour_label">Treffen am %1$s zum</string>
     <string name="create_meeting_groups_label">Termin an Gruppe senden</string>
+    <string name="account">Benutzeraccount</string>
+    <string name="group_headline">Lerne in Gruppen</string>
+    <string name="logout">Abmelden</string>
+    <string name="profile">Mein Profil</string>
+    <string name="my_groups">Meine Gruppen</string>
+    <string name="all_meetings">Alle Treffen anzeigen</string>
+    <string name="next_meeting">Nächstes Treffen</string>
+    <string name="custom_search">Erweiterte Suche</string>
+    <string name="show_room">Raum anzeigen</string>
 
 </resources>
